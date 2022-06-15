@@ -1,0 +1,26 @@
+let handler = async (m, { conn, args, isOwner, isAdmin }) => {
+  if (!(isAdmin || isOwner)) {
+    global.dfail('admin', m, conn)
+    throw false
+  }
+  let ownerGroup = m.chat.split`-`[0] + '@s.whatsapp.net'
+  let users = m.mentionedJid ? m.mentionedJid.filter(u => !(u == ownerGroup || u.includes(conn.user.jid))) : m.quoted.sender
+  if (!users) throw `Tag atau reply orang nya`
+  for (let user of users) if (user.endsWith('@s.whatsapp.net')) await conn.groupRemove(m.chat, [user])
+}
+handler.help = ['kick @user / reply']
+handler.tags = ['admin']
+handler.command = /^(kick|\-)$/i
+handler.owner = false
+handler.mods = false
+handler.premium = false
+handler.group = true
+handler.private = false
+
+handler.botAdmin = true
+
+handler.fail = null
+handler.limit = true
+
+module.exports = handler
+
