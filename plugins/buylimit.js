@@ -41,7 +41,7 @@ handler.all = async function (m) {
   if (/^(y(es|a)?)$/i.test(m.text)) {
     global.db.data.users[m.sender].exp -= xpperlimit * count
     global.db.data.users[m.sender].limit += count
-    this.sendButton(m.chat, `_Sukses menukarkan_\n-${xpperlimit * count} XP\n\n+ ${count} Limit`, `Tidak perlu satu persatu, kamu juga bisa memasukkan jumlah\n\nContoh\n.buy 5`, 'Buy All', '.buyall', m)
+    this.sendButton(m.chat, `_Sukses menukarkan_\n-${xpperlimit * count} XP\n\n+ ${count} Limit`, `Tidak perlu satu persatu, kamu juga bisa memasukkan jumlah\n\nContoh\n.buy 5`, 1, ['Buy All', '.buyall'], m)
     clearTimeout(timeout)
     delete confirmbuy[m.sender]
     return !0

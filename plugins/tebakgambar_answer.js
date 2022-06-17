@@ -11,7 +11,7 @@ handler.before = async function (m) {
   if (/(.hint|bantuan|^$)/i.test(m.text)) return !0
   if (m.text.toLowerCase() == json.jawaban.toLowerCase()) {
     global.db.data.users[m.sender].exp += this.tebakgambar[id][2]
-    this.sendButton(m.chat, `*Benar!*\n+${this.tebakgambar[id][2]} XP`, '', 'Tebak Gambar', '.tebakgambar', m)
+    this.sendButton(m.chat, `*Benar!*\n+${this.tebakgambar[id][2]} XP`, '', 1, ['Tebak Gambar', '.tebakgambar'], m)
     this.deleteMessage(m.chat, this.tebakgambar[id][0].key).catch(e => e)
     clearTimeout(this.tebakgambar[id][3])
     delete this.tebakgambar[id]

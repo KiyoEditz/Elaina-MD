@@ -16,7 +16,7 @@ handler.all = async function (m) {
                 m.reply(`Tolong @${m.sender.split('@')[0]} untuk tidak spam`, m.chat, { contextInfo: { mentionedJid: [m.sender] } })
             } else if (this.spam[m.sender].count > 10) {
                 db.data.users[m.sender].banned = true
-                await this.sendButton(m.chat, `_*Kamu sekarang dibanned/diblokir!*_ Karena kamu Spam`, 'Hubungi Owner untuk membuka banned', 'Owner', '.owner', m)
+                await this.sendButton(m.chat, `_*Kamu sekarang dibanned/diblokir!*_ Karena kamu Spam`, 'Hubungi Owner untuk membuka banned', 1, ['Owner', '.owner'], m)
             }
             this.spam[m.sender].count = 0
             this.spam[m.sender].lastspam = m.messageTimestamp.toNumber()

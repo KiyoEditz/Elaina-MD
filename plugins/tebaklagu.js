@@ -25,10 +25,10 @@ Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*
 Jangan audio nya!!!!!`.trim()
         conn.tebaklagu[id] = [
-            await conn.sendButton(m.chat, caption, '*TEBAK JUDUL LAGU*\nBantuan mengyrangi 1 limit', 'Bantuan', '.hintlagu', m),
+            await conn.sendButton(m.chat, caption, '*TEBAK JUDUL LAGU*\nBantuan mengyrangi 1 limit', 1, ['Bantuan', '.hintlagu'], m),
             judul, poin,
             setTimeout(() => {
-                if (conn.tebaklagu[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${judul}*`, '', 'Tebak Lagu', `${usedPrefix}tebaklagu`, conn.tebaklagu[id][0])
+                if (conn.tebaklagu[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${judul}*`, '', 1, ['Tebak Lagu', `${usedPrefix}tebaklagu`], conn.tebaklagu[id][0])
                 delete conn.tebaklagu[id]
             }, timeout)
         ]

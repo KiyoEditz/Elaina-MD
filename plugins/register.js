@@ -2,7 +2,7 @@ const { createHash } = require('crypto')
 let Reg = /(.*)([.|])([0-9]*)$/i
 let handler = async function (m, { conn, text, usedPrefix }) {
   let user = global.db.data.users[m.sender]
-  if (user.registered === true) return conn.sendButton(m.chat, '_Kamu sudah terdaftar_', `Klik *Daftar ulang* atau ketik ${usedPrefix}daftarulang`, 'Daftar Ulang', '.daftarulang', 'Profile', '.profile', m)
+  if (user.registered === true) return conn.sendButton(m.chat, '_Kamu sudah terdaftar_', `Klik *Daftar ulang* atau ketik ${usedPrefix}daftarulang`, 2, ['Daftar Ulang', '.daftarulang', 'Profile', '.profile'], m)
   if (!Reg.test(text)) throw `Format salah!\nContoh: *${usedPrefix}daftar Regi|18*`
   let [_, name, splitter, age] = text.match(Reg)
   let totalreg = Object.keys(global.db.data.users).length

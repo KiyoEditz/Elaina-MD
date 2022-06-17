@@ -16,7 +16,7 @@ let handler = (m, { conn, text, args, isROwner, usedPrefix }) => {
             from: m.sender.split`@`[0],
             who: who.split`@`[0], reason, time
         }
-        conn.sendButton(global.owner[0] + '@s.whatsapp.net', `*REQ BAN*\n(${db.data.users[m.sender].name})\n${Object.entries(acc[who]).map(v => `*${v[0][0].toUpperCase() + v[0].substring(1)}:* ${v[1]}`).join('\n')}`, '', 'Accept', `${usedPrefix}ban ${text}`, 'Reject', ``])
+        conn.sendButton(global.owner[0] + '@s.whatsapp.net', `*REQ BAN*\n(${db.data.users[m.sender].name})\n${Object.entries(acc[who]).map(v => `*${v[0][0].toUpperCase() + v[0].substring(1)}:* ${v[1]}`).join('\n')}`, '', 2, ['Accept', `${usedPrefix}ban ${text}`, 'Reject', ``])
         m.reply(`_Permintaan banned telah di kirim ke owner utama_\nSilahkan tunggu persetujuan dari Owner Utama`)
         return !0
     }

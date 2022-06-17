@@ -27,7 +27,7 @@ Bonus: ${poin} XP
         await m.reply(caption),
         json, poin,
         setTimeout(() => {
-            if (conn.susunkata[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.jawaban}*`, '', 'Susun Kata', `.susunkata`, conn.susunkata[id][0])
+            if (conn.susunkata[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.jawaban}*`, '', 1, ['Susun Kata', `.susunkata`], conn.susunkata[id][0])
             delete conn.susunkata[id]
         }, timeout)
     ]

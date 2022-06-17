@@ -29,7 +29,7 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, isPrems
         if (objhalf.includes(args[0])) masa = 15
         if (obj.includes(args[0])) masa = 30
         if (obj2.includes(args[0])) masa = 60
-        await conn.sendButton(m.chat, `Berhasil inisialisasi\nBot akan keluar dari *${conn.getName(m.chat)}* dalam ${masa} Hari`, `Ketik ${usedPrefix}statusgc`, 'Status Group', `.statusgc`, m)
+        await conn.sendButton(m.chat, `Berhasil inisialisasi\nBot akan keluar dari *${conn.getName(m.chat)}* dalam ${masa} Hari`, `Ketik ${usedPrefix}statusgc`, 1, ['Status Group', `.statusgc`], m)
         chat.gcdate = new Date() * 1 + 86400000 * masa
         dataJson.expired = new Date() * 1 + 86400000 * masa
     }

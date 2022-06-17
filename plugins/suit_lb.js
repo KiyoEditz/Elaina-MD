@@ -13,7 +13,7 @@ let handler = async (m, { conn, args, participants, command }) => {
 Kamu: *${usersExp.indexOf(m.sender) + 1}* dari *${usersExp.length}*
 ${sortedExp.slice(0, len).map(({ name, jid, suit }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${name}) wa.me/${jid.split`@`[0]}` : name} - ${suit} MMR`).join`\n`}
 `.trim()
-    conn.sendButton(m.chat, text, '', 'Top Suit Group', (!isGC ? '.topsuitgc' : ''), m, {
+    conn.sendButton(m.chat, text, '', 1, ['Top Suit Group', (!isGC ? '.topsuitgc' : '')], m, {
         contextInfo: {
             mentionedJid: [...usersExp.slice(0, len)].filter(v => !participants.some(p => v === p.jid))
         }

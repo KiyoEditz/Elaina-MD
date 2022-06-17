@@ -10,7 +10,7 @@ let handler = async (m, { conn, isPrems, isMods, command }) => {
   let xpAfter = (isPrems ? prem : free) * levelpast / 100 + free
   let time = users.lastclaim + ((isPrems || isMods) ? 86400000 : 43200000)
   if (new Date - users.lastclaim < ((isPrems || isMods) ? 86400000 : 43200000)) throw `Kamu sudah mengklaim klaim harian hari ini\ntunggu selama ${msToTime(time - new Date())} lagi`
-  if (!users.autolevelup && !/force/i.test(command) && levelling.canLevelUp(users.level, users.exp, global.multiplier)) return conn.sendButton(m.chat, `_Kamu memiliki XP yang cukup untuk menaikan level_ *${level + ' - ' + levelpast}*`, `Naikann level! kamu akan dapat lebih banyak XP setiap claim harian\n\nClaim sekarang : ${xp}\nClaim setelah naik level : ${xpAfter}`, 'Ya, naikan level', '.levelup', 'Tidak, claim biasa', '.claimforce', m)
+  if (!users.autolevelup && !/force/i.test(command) && levelling.canLevelUp(users.level, users.exp, global.multiplier)) return conn.sendButton(m.chat, `_Kamu memiliki XP yang cukup untuk menaikan level_ *${level + ' - ' + levelpast}*`, `Naikann level! kamu akan dapat lebih banyak XP setiap claim harian\n\nClaim sekarang : ${xp}\nClaim setelah naik level : ${xpAfter}`, 2, ['Ya, naikan level', '.levelup', 'Tidak, claim biasa', '.claimforce'], m)
   if (isPrems) users.limit += 10
 
 

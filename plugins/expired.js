@@ -19,7 +19,7 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, isPrems
 
     if (/permanent/i.test(args[0])) {
         if (!isOwner) throw `Hanya owner yang bisa membuat permanent`
-        conn.sendButton(m.chat, `Berhasil menetapkan permanent untuk *${conn.getName(m.chat)}*`, `Ketik ${usedPrefix}statusgc`, 'Status Group', `.statusgc`, m)
+        conn.sendButton(m.chat, `Berhasil menetapkan permanent untuk *${conn.getName(m.chat)}*`, `Ketik ${usedPrefix}statusgc`, 1, ['Status Group', `.statusgc`], m)
         chat.permanent = true
         chat.gcdate = 0
         dataJson.permanent = true
@@ -28,16 +28,16 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, isPrems
         if (!args[0]) throw `Masukkan angka`
         if (chat.gcdate == 0) chat.gcdate = new Date() * 1 + 86400000 * 30
         chat.permanent = false
-        conn.sendButton(m.chat, `Berhasil menambah masa aktif untuk *${conn.getName(m.chat)}* selama ${args[0]} hari`, `Ketik ${usedPrefix}statusgc`, 'Status Group', `.statusgc`, m)
+        conn.sendButton(m.chat, `Berhasil menambah masa aktif untuk *${conn.getName(m.chat)}* selama ${args[0]} hari`, `Ketik ${usedPrefix}statusgc`, 1, ['Status Group', `.statusgc`], m)
         chat.gcdate += args[0] * 86400000
     } else {
         if (!(isOwner || isPrems)) {
-            if (chat.trial) return conn.sendButton(m.chat, `Group ini sudah pernah trial\nHarap sewa ke owner`, 'Harap seea ke owner untuk lebih lanjut', 'Owner', '.owner', m)
+            if (chat.trial) return conn.sendButton(m.chat, `Group ini sudah pernah trial\nHarap sewa ke owner`, 'Harap seea ke owner untuk lebih lanjut', 1, ['Owner', '.owner'], m)
             chat.trial = 1
         }
         chat.gcdate = new Date() * 1 + 86400000 * masa
         dataJson.expired = new Date() * 1 + 86400000 * masa
-        conn.sendButton(m.chat, `Berhasil inisialisasi\nBot akan keluar dari *${conn.getName(m.chat)}* dalam ${masa} Hari`, `Ketik ${usedPrefix}statusgc`, 'Status Group', `.statusgc`, m)
+        conn.sendButton(m.chat, `Berhasil inisialisasi\nBot akan keluar dari *${conn.getName(m.chat)}* dalam ${masa} Hari`, `Ketik ${usedPrefix}statusgc`, 1, ['Status Group', `.statusgc`], m)
     }
     dataJson.nama = `${conn.getName(m.chat)} (${m.chat})`
     dataJson.owner_group = m.chat.split`-`[0]

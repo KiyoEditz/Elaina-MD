@@ -21,12 +21,12 @@ Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*`.trim()
 
-    let btn = await conn.sendButton(m.chat, caption, '*SIAPA AKU*\nBantuan mengurangi 1 limit', 'Bantuan', '.siapasih', m)
+    let btn = await conn.sendButton(m.chat, caption, '*SIAPA AKU*\nBantuan mengurangi 1 limit', 1, ['Bantuan', '.siapasih'], m)
     conn.siapaaku[id] = [
         btn,
         json, poin,
         setTimeout(() => {
-            if (conn.siapaaku[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.answer}*`, '', 'Siapa Aku', `.siapaaku`, conn.siapaaku[id][0])
+            if (conn.siapaaku[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.answer}*`, '', 1, ['Siapa Aku', `.siapaaku`], conn.siapaaku[id][0])
             delete conn.siapaaku[id]
         }, timeout)
     ]

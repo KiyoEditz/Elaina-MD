@@ -24,12 +24,12 @@ Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*`.trim()
 
 
-    let btn = await conn.sendButton(m.chat, caption, '*TEBAK JENAKA*\nBantuan mengurangi 1 limit', 'Bantuan', '.hintjenaka', m)
+    let btn = await conn.sendButton(m.chat, caption, '*TEBAK JENAKA*\nBantuan mengurangi 1 limit', 1, ['Bantuan', '.hintjenaka'], m)
     conn.tebakjenaka[id] = [
         btn,
         json, poin,
         setTimeout(() => {
-            if (conn.tebakjenaka[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${answer}*`, '', 'Tebak Jenaka', '.tebakjenaka', conn.tebakjenaka[id][0])
+            if (conn.tebakjenaka[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${answer}*`, '', 1, ['Tebak Jenaka', '.tebakjenaka'], conn.tebakjenaka[id][0])
             delete conn.tebakjenaka[id]
         }, timeout)
     ]

@@ -21,7 +21,7 @@ Selamat bergabung di _Member Premium_
 ${usedPrefix}join <link> => Untuk menambahkan bot ke dalam group melalui link
 ${usedPrefix}jadibot => untuk manjadikan kamu sebagai bot
 
-Selengkapnya klik di Menu Premium`.trim(), `Menu Premium`, `${usedPrefix}menu premium`], 0, { contextInfo: { mentionedJid: [who] } })
+Selengkapnya klik di Menu Premium`.trim(), 1, [`Menu Premium`, `${usedPrefix}menu premium`], 0, { contextInfo: { mentionedJid: [who] } })
     global.db.data.users[who].premdate = new Date() * 1 + long_time
     delete require.cache[require.resolve('../config')]
     require('../config')

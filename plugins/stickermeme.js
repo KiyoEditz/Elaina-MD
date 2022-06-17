@@ -27,9 +27,7 @@ let handler = async (m, { conn, text, usedPrefix, isPrems, command }) => {
   let sender = global.db.data.users[m.sender]
   let author = isPrems ? sender.name : global.author
   let stiker = await sticker(false, hasil, 'mememaker', author)
-  conn.sendMessage(m.chat, stiker, MessageType.sticker, {
-    quoted: m
-  })
+  conn.sendFile(m.chat, stiker, 'stikermeme.webp', '', m)
 }
 handler.help = ['smeme', 'stikermeme'].map(v => v + ' <teks|teks>')
 handler.tags = ['stickerother']

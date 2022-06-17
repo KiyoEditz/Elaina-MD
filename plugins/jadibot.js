@@ -40,7 +40,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     conn.regenerateQRIntervalMs = null
     conn.connect().then(async ({ user }) => {
       parent.reply(m.chat, 'Berhasil tersambung dengan WhatsApp - mu.\n*NOTE: Ini cuma numpang*\n' + JSON.stringify(user, null, 2), m)
-      if (!global.db.data.settings[user.jid].owner) parent.sendButton(m.chat, `Silahkan atur nomor Owner mu`, 'Ketik .setowner', 'Set Owner', '.setowner'], 0)
+      if (!global.db.data.settings[user.jid].owner) parent.sendButton(m.chat, `Silahkan atur nomor Owner mu`, 'Ketik .setowner', 1, ['Set Owner', '.setowner'], 0)
       if (auth) return
       await parent.sendMessage(user.jid, `Kamu bisa login tanpa qr dengan pesan dibawah ini. untuk mendapatkan kode lengkapnya, silahkan kirim *${usedPrefix}getcode* untuk mendapatkan kode yang akurat`, MessageType.extendedText)
       parent.sendMessage(user.jid, `${usedPrefix + command} ${Buffer.from(JSON.stringify(conn.base64EncodedAuthInfo())).toString('base64')}`, MessageType.extendedText)

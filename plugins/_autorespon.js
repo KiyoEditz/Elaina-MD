@@ -24,7 +24,7 @@ handler.all = async function (m, { isBlocked, isOwner }) {
         if (m.isGroup && chats.isBanned) return
         this.sendButton(m.chat, `
 Hai, Selamat ${ucap()} ${user.registered ? name : await this.getName(m.sender, true)} 
-${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 'Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd', m, {
+${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 3, ['Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd'], m, {
             contextInfo: {
                 mentionedJid: conn.parseMention(teks2)
             }
@@ -124,7 +124,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
                 'Sudah faham', '.sayasudahfaham', 'Apa itu Bot?', '.help']
 
             let or = chatSender.faham ? init : notInit
-            await this.sendButton(m.chat, or[0].trim(), or[1].trim(), isinit ? 3 : or[2], or[3], or[4], or[5], or[6], or[7], m, { contextInfo: { mentionedJid: conn.parseMention(teks2) } })
+            await this.sendButton(m.chat, or[0].trim(), or[1].trim(), isinit ? 3 : 2, [or[2], or[3], or[4], or[5], or[6], or[7]], m, { contextInfo: { mentionedJid: conn.parseMention(teks2) } })
         }
 
         // ketika ada yang invite/kirim link grup di chat pribadi
@@ -138,7 +138,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
 ║
 ╟ Hubungi Owner
 ╚════
-`.trim(), '', 'List Harga', '.sewa', 'Owner', '.owner', m, { contextInfo: { mentionedJid: [global.owner[2] + '@s.whatsapp.net'] } })
+`.trim(), '', 2, ['List Harga', '.sewa', 'Owner', '.owner'], m, { contextInfo: { mentionedJid: [global.owner[2] + '@s.whatsapp.net'] } })
         }
     }
 

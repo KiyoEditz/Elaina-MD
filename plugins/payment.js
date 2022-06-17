@@ -18,7 +18,7 @@ ${conn.readmore}
 3. Pilih tab *Bayar*, maka akan di arahkan ke opsi kamera
 4. Pilih icon galery di pojok, lalu pilih kode yg sudah didownload
 5. Masukkan nominal
-6. Pembayaran berhasil`, 'Owner', '.owner', m)
+6. Pembayaran berhasil`, 1, ['Owner', '.owner'], m)
 }
 handler.command = /^payment$/i
 

@@ -1,5 +1,5 @@
 let handler = async (m, { conn, usedPrefix }) => {
-  conn.sendButton(m.chat, `
+     conn.sendButton(m.chat, `
 *Harga Kode Redeem*
 ===================
 *Silver (Gratis)*
@@ -39,7 +39,7 @@ _Bot aktif di group kamu selama 24 Jam_
 
 Sudah tau mau paket apa?
 Silahkan klik https://wa.me/${global.owner[2]}?text=Saya+mau+paket+Silver/Gold/Premium+(Pilih+salah+satu)
-`, `Pembayaran via pulsa dikenakan biaya tambahan sebesar Rp. 5000`, 'Payment', '.payment', 'Owner', '.owner', m)
+`, `Pembayaran via pulsa dikenakan biaya tambahan sebesar Rp. 5000`, 2, ['Payment', '.payment', 'Owner', '.owner'], m)
 
 }
 handler.help = ['sewabot', 'premium']

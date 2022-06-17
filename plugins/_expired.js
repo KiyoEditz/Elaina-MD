@@ -22,7 +22,7 @@ handler.before = async function (m) {
             fs.writeFileSync('./src/premium.json', JSON.stringify(json))
             delete require.cache[require.resolve('../config')]
             require('../config')
-            this.sendButton(m.sender, `_Dear ${await conn.getName(m.sender)}, Masa aktif premium kamu telah habis_`, 'Silahkan perpanjang ke Owner', 'Perpanjang', '.premium', 'Owner', '.owner', m)
+            this.sendButton(m.sender, `_Dear ${await conn.getName(m.sender)}, Masa aktif premium kamu telah habis_`, 'Silahkan perpanjang ke Owner', 2, ['Perpanjang', '.premium', 'Owner', '.owner'], m)
             db.data.users[m.sender].premdate = 0
         }
     }

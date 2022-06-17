@@ -18,7 +18,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isBotAdmin, 
 		}[(args[0] || '')]
 		await conn.updatePresence(m.chat, Presence.composing)
 		if (isClose === undefined)
-			return conn.sendButton(m.chat, '_Silahkan pilih opsi_', 'Pilih aku atau dia hayoo..', 'Buka', '.gc open', 'Tutup', '.gc close', m)
+			return conn.sendButton(m.chat, '_Silahkan pilih opsi_', 'Pilih aku atau dia hayoo..', 2, ['Buka', '.gc open', 'Tutup', '.gc close'], m)
 		await conn.groupSettingChange(m.chat, GroupSettingChange.messageSend, isClose)
 	} else {
 		m.reply(`Gabung group Bot dan bersenang senang dengan pengguna lainya

@@ -9,7 +9,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   let json = await res.json()
   if (json.result.length == 0) throw 'Tidak ada hasil'
   let pint = json.result[Math.floor(Math.random() * json.result.length)];
-  await conn.sendButtonImg(m.chat, pint, '_Klik *Next* untuk mencari gambar lain_', `_Hasil dari ${text}_`, '⏩ Next', `${usedPrefix + command + ' ' + text}`, '💾 Source', `.reply ${pint}`, m)
+  await conn.sendButtonImg(m.chat, pint, '_Klik *Next* untuk mencari gambar lain_', `_Hasil dari ${text}_`, 2, ['⏩ Next', `${usedPrefix + command + ' ' + text}`, '💾 Source', `.reply ${pint}`], m)
 }
 handler.help = ['pinterest <keyword>']
 handler.tags = ['image', 'search']

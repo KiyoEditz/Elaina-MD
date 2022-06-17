@@ -21,7 +21,7 @@ Selamat, anda telah naik level!
 *${before}* -> *${user.level}*
 Reward: Claim lebih banyak XP Harian seiring naiknya level 
 Role kamu sekarang: *${user.role}*
-	`.trim(), '', 'Claim', '.daily', 'Profile', '.cek', m)
+	`.trim(), '', 2, ['Claim', '.daily', 'Profile', '.cek'], m)
   }
 }
 

@@ -33,12 +33,12 @@ Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*
     `.trim()
-  let msg = await conn.sendButtonImg(m.chat, json.img, caption, '*TEBAK GAMBAR*\nBantuan mengurangi 1 limit', 'Bantuan', '.hint', m)
+  let msg = await conn.sendButtonImg(m.chat, json.img, caption, '*TEBAK GAMBAR*\nBantuan mengurangi 1 limit', 1, ['Bantuan', '.hint'], m)
   conn.tebakgambar[id] = [
     msg,
     json, poin,
     setTimeout(() => {
-      if (conn.tebakgambar[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, '', 'Tebak Gambar', `.tebakgambar`, m)
+      if (conn.tebakgambar[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, '', 1, ['Tebak Gambar', `.tebakgambar`], m)
       conn.deleteMessage(m.chat, msg.key)
       delete conn.tebakgambar[id]
     }, timeout)

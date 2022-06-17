@@ -25,10 +25,10 @@ Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*
     `.trim()
     conn.tebakanime[id] = [
-      await conn.sendButtonImg(m.chat, json.result.image, caption, '*TEBAK ANIME*\nBantuan mengurangi 1 limit', 'Bantuan', '.hintanime', m),
+      await conn.sendButtonImg(m.chat, json.result.image, caption, '*TEBAK ANIME*\nBantuan mengurangi 1 limit', 1, ['Bantuan', '.hintanime'], m),
       json, poin,
       setTimeout(() => {
-        if (conn.tebakanime[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.name}*`, '', 'Tebak Anime', `.tebakanime`, conn.tebakanime[id][0])
+        if (conn.tebakanime[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.name}*`, '', 1, ['Tebak Anime', `.tebakanime`], conn.tebakanime[id][0])
         delete conn.tebakanime[id]
       }, timeout)
     ]

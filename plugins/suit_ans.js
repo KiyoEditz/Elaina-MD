@@ -29,9 +29,9 @@ klik wa.me/${this.user.jid.split`@`[0]}`, m.chat, {
         }
       })
 
-      if (!room.pilih) this.sendButton(room.p, 'Silahkan pilih', `Menang +${room.poin}XP\nKalah -${room.poin_lose}XP`, 'Batu🗿', 'Batu', 'Kertas📄', 'Kertas', 'Gunting✂️', 'Gunting', m)
+      if (!room.pilih) this.sendButton(room.p, 'Silahkan pilih', `Menang +${room.poin}XP\nKalah -${room.poin_lose}XP`, 3, ['Batu🗿', 'Batu', 'Kertas📄', 'Kertas', 'Gunting✂️', 'Gunting'], m)
       await delay(1500)
-      if (!room.pilih2) this.sendButton(room.p2, 'Silahkan pilih', `Menang +${room.poin}XP\nKalah -${room.poin_lose}XP`, 'Batu🗿', 'Batu', 'Kertas📄', 'Kertas', 'Gunting✂️', 'Gunting', m)
+      if (!room.pilih2) this.sendButton(room.p2, 'Silahkan pilih', `Menang +${room.poin}XP\nKalah -${room.poin_lose}XP`, 3, ['Batu🗿', 'Batu', 'Kertas📄', 'Kertas', 'Gunting✂️', 'Gunting'], m)
       room.waktu_milih = setTimeout(() => {
         if (!room.pilih && !room.pilih2) this.reply(m.chat, `Kedua pemain tidak niat main,\nSuit dibatalkan`)
         else if (!room.pilih || !room.pilih2) {
@@ -80,7 +80,7 @@ _*Hasil Suit*_${tie ? '\nSERI' : ''}
 
 @${room.p.split`@`[0]} (${room.text}) ${tie ? '' : room.p == win ? ` Menang \n+${room.poin}XP\n+${mmr}MMR` : ` Kalah \n-${room.poin_lose}XP\n-${mmr / 2}MMR`}
 @${room.p2.split`@`[0]} (${room.text2}) ${tie ? '' : room.p2 == win ? ` Menang \n+${room.poin}XP\n+${mmr}MMR` : ` Kalah \n-${room.poin_lose}XP\n-${mmr / 2}MMR`}
-`.trim(), 'Ketik .topsuit untuk leaderboard', 'Leaderboard', '.topsuit', m, { contextInfo: { mentionedJid: [room.p, room.p2] } })
+`.trim(), 'Ketik .topsuit untuk leaderboard', 1, ['Leaderboard', '.topsuit'], m, { contextInfo: { mentionedJid: [room.p, room.p2] } })
       if (!tie) {
         db.data.users[win == room.p ? room.p : room.p2].exp += room.poin
         db.data.users[win == room.p ? room.p2 : room.p].exp -= room.poin_lose

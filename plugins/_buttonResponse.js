@@ -1,13 +1,12 @@
-// thanks to bochilgaming
-const { MessageType, newMessagesDB } = require("@adiwajshing/baileys")
-//const util = require('util')
+const { proto, generateWAMessage, areJidsSameUser } = require('@adiwajshing/baileys')
 
 module.exports = {
     async all(m, chatUpdate) {
         if (m.isBaileys) return
-        if (!m.message) return // selectedButtonId
-        if (m.mtype !== 'buttonsResponseMessage' && m.type !== 1) return
-        let id = m.msg.selectedButtonId
+        if (!m.message) return
+        if (!(m.message.buttonsResponseMessage || m.message.templateButtonReplyMessage || m.message.listResponseMessage)) return
+        let id = m.message.buttonsResponseMessage?.selectedButtonId || m.message.templateButtonReplyMessage?.selectedId || m.message.listResponseMessage.singleSelectReply?.selectedRowId
+        let text = m.message.buttonsResponseMessage?.selectedDisplayText || m.message.templateButtonReplyMessage?.selectedDisplayText || m.message.listResponseMessage?.title
         let isIdMessage = false, usedPrefix
         for (let name in global.plugins) {
             let plugin = global.plugins[name]
@@ -51,22 +50,19 @@ module.exports = {
             }
 
         }
-        //m.reply(util.format(isIdMessage ? m.msg.selectedButtonId : m.msg.selectedDisplayText))
-        this.emit('chat-update', {
-            ...chatUpdate,
-            messages: newMessagesDB([
-                this.cMod(m.chat,
-                    await this.prepareMessage(m.chat, isIdMessage ? m.msg.selectedButtonId : m.msg.selectedDisplayText, MessageType.extendedText, {
-                        contextInfo: {
-                            mentionedJid: m.msg.contextInfo && m.msg.contextInfo.mentionedJid ? m.msg.contextInfo.mentionedJid : []
-                        },
-                        ...(m.quoted ? { quoted: m.quoted.fakeObj } : {}),
-                        messageId: m.id,
-                    }),
-                    isIdMessage ? m.msg.selectedButtonId : m.msg.selectedDisplayText,
-                    m.sender
-                )
-            ])
+        let messages = await generateWAMessage(m.chat, { text: isIdMessage ? id : text, mentions: await m.mentionedJid }, {
+            userJid: this.user.id,
+            quoted: m.quoted && m.quoted.fakeObj
         })
+        messages.key.fromMe = areJidsSameUser(m.sender, this.user.id)
+        messages.key.id = m.key.id
+        messages.pushName = await m.name
+        if (m.isGroup) messages.participant = m.sender
+        let msg = {
+            ...chatUpdate,
+            messages: [proto.WebMessageInfo.fromObject(messages)],
+            type: 'append'
+        }
+        this.ev.emit('messages.upsert', msg)
     }
 }

@@ -40,7 +40,7 @@ let handler = async (m, { conn, text, isPrems, isROwner, usedPrefix, command }) 
 			delete conn.skata[id]
 		}
 		if (text == 'start' && room.status == 'wait') {
-			if (!member.includes(m.sender)) return conn.sendButton(m.chat, `Kamu belum ikut`, '', 'Ikut', `${usedPrefix + command}`, m)
+			if (!member.includes(m.sender)) return conn.sendButton(m.chat, `Kamu belum ikut`, '', 1, ['Ikut', `${usedPrefix + command}`], m)
 			if (room.status == 'play') return conn.reply(m.chat, `Sambung kata sudah dimulai`, room.chat)
 			if (member.length < 2) throw `Minimal 2 orang`
 			room.curr = member[0]
@@ -59,7 +59,7 @@ let handler = async (m, { conn, text, isPrems, isROwner, usedPrefix, command }) 
 				member.splice(index, 1)
 				room.curr = member[0]
 				if (room.player.length == 1 && room.status == 'play') {
-					this.sendButton(m.chat, `@${member[0].split`@`[0]} Menang`, `+${room.win_point}XP`, 'Sambung Kata', '.skata', 'Top Player', '.topskata', room.chat, { contextInfo: { mentionedJid: member } })
+					this.sendButton(m.chat, `@${member[0].split`@`[0]} Menang`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } })
 					users[member[0]].exp += room.win_point
 					delete this.skata[id]
 					return !0
@@ -87,7 +87,7 @@ ${member.map((v, i) => `╟ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 ╚════
 Sambung kata akan dimainkan sesuai urutan player ( *Bergiliran* )
 Dan hanya bisa dimainkan oleh player yang terdaftar`.trim()
-			room.chat = await conn.sendButton(m.chat, caption, `Ketik\n*${usedPrefix + command}* untuk join/ikut\n*${usedPrefix + command} start* untuk memulai`, 'Ikut', `${usedPrefix}skata`, m, { contextInfo: { mentionedJid: conn.parseMention(caption) } })
+			room.chat = await conn.sendButton(m.chat, caption, `Ketik\n*${usedPrefix + command}* untuk join/ikut\n*${usedPrefix + command} start* untuk memulai`, 1, ['Ikut', `${usedPrefix}skata`], m, { contextInfo: { mentionedJid: conn.parseMention(caption) } })
 		}
 	} else {
 		conn.skata[id] = {
@@ -102,7 +102,7 @@ Dan hanya bisa dimainkan oleh player yang terdaftar`.trim()
 			kata,
 			filter,
 			genKata,
-			chat: conn.sendButton(m.chat, game, conn.readmore + rules, 'Bergabung', `${usedPrefix + command}`, m),
+			chat: conn.sendButton(m.chat, game, conn.readmore + rules, 1, ['Bergabung', `${usedPrefix + command}`], m),
 			waktu: false
 
 		}

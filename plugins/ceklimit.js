@@ -20,7 +20,7 @@ ${usedPrefix}buy
 Bagaimana cara menambah XP? 
 
 Kamu bisa mengumpulkan XP dengan bermain game yg ada di *${usedPrefix}menu game*
-`.trim(), 'Buy', '.buy', 'Claim', `${usedPrefix}claim`, m)
+`.trim(), 2, ['Buy', '.buy', 'Claim', `${usedPrefix}claim`], m)
 }
 handler.help = ['cek']
 handler.tags = ['xp']

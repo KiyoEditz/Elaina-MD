@@ -4,7 +4,7 @@ async function handler(m) {
     this.game = this.game ? this.game : {}
     let id = 'family100_' + m.chat
     if (id in this.game) {
-        if (this.game[id].id !== undefined) return this.sendButton(m.chat, 'Masih ada kuis yang belum terjawab di chat ini', 'Ketik *Nyerah* untuk mengakhiri', 'Nyerah', 'nyerah'], this.game[id].msg)
+        if (this.game[id].id !== undefined) return this.sendButton(m.chat, 'Masih ada kuis yang belum terjawab di chat ini', 'Ketik *Nyerah* untuk mengakhiri', 1, ['Nyerah', 'nyerah'], this.game[id].msg)
         delete this.game[id]
         throw false
     }

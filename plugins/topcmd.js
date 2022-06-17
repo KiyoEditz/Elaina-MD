@@ -15,7 +15,7 @@ let handler = async (m, { conn, args, participants }) => {
 ╔══「 *${len} Perintah Populer* 」
 ${sortedCmd.slice(0, len).map(({ name, total }, i) => `╟ ${i + 1}. ${name.split`.js`[0]} ( *${total}* Used )`).join`\n`}
 ╚════════════════ `.trim()
-    conn.sendButton(m.chat, capt, '', 'Info Detail', '.info', m)
+    conn.sendButton(m.chat, capt, '', 1, ['Info Detail', '.info'], m)
 }
 handler.help = ['topcmd']
 handler.tags = ['info']

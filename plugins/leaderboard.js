@@ -24,7 +24,7 @@ ${sortedLim.slice(0, len).map(({ jid, limit, name }, i) => `${i + 1}. ${particip
 Kamu: *${usersLevel.indexOf(m.sender) + 1}* dari *${usersLevel.length}*
 ${sortedLevel.slice(0, len).map(({ jid, level, name }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *Level ${level}*`).join`\n`}
 `.trim()
-  conn.sendButton(m.chat, text, '', 'Leaderboard Group', (!isGC ? '.lbgc' : ''), m, {
+  conn.sendButton(m.chat, text, '', 1, ['Leaderboard Group', (!isGC ? '.lbgc' : '')], m, {
     contextInfo: {
       mentionedJid: [...usersExp.slice(0, len), ...usersLim.slice(0, len), ...usersLevel.slice(0, len)].filter(v => !participants.some(p => v === p.jid))
     }

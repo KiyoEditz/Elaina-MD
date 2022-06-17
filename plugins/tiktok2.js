@@ -29,7 +29,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isPrems }) => {
     else m.reply('Tunggu sebentar...')
     await conn.sendFile(m.chat, (mp3 ? audio : link), (title || new Date * 1) + (mp3 ? '.mp3' : '.mp4'), caption, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
     if (!mp3) {
-      conn.sendButton(m.chat, 'Mau ambil lagu nya?', 'No limit', 'Get', '.ttmusic ' + args[0, m)
+      conn.sendButton(m.chat, 'Mau ambil lagu nya?', 'No limit', 1, ['Get', '.ttmusic ' + args[0]], m)
     }
   }
 }

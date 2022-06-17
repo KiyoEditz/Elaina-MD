@@ -70,7 +70,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isPrems, isOwner }) =
 ╟   
 ╟   Sekian, Terimakasih.. Have fun ^_^
 ╚════════════════
-    `.trim(), 'Jika ada yang ditanyakan, hubungi Owner', 'Menu', '.menu', 'Setting', '.setting', 'Owner', '.owner', m)
+    `.trim(), 'Jika ada yang ditanyakan, hubungi Owner', 3, ['Menu', '.menu', 'Setting', '.setting', 'Owner', '.owner'], m)
     let masa
     if (isOwner) masa = 30
     else if (isPrems) masa = Math.floor((db.data.users[m.sender].premdate - new Date * 1) / 86400000)

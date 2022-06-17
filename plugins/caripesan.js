@@ -1,7 +1,7 @@
 let handler = async (m, { conn, text }) => {
     if (!text) throw 'masukan pesan yg mo dicari!'
     let split = text.split`|`
-    let result = await conn.searchMessages(split[0, m.chat, split[1], 1)
+    let result = await conn.searchMessages(split[0], m.chat, split[1], 1)
     if (result.messages.length > 0) {
         let total = result.messages.length
         let sp = total < Number(split[1]) ? `Hanya ditemukan ${total} pesan ngab` : `Ditemukan ${total} pesan`

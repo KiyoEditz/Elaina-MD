@@ -16,11 +16,11 @@ let handler = async (m, { conn, usedPrefix, isAdmin, isOwner, text }) => {
 			}
 				break
 			default: {
-				conn.sendButton(m.chat, '_Silahkan pilih opsi_', 'Opsi ini untuk mengaktifkan/nonaktifkan bot untuk group', 'ON', '.bot on', 'OFF', '.bot off', m)
+				conn.sendButton(m.chat, '_Silahkan pilih opsi_', 'Opsi ini untuk mengaktifkan/nonaktifkan bot untuk group', 2, ['ON', '.bot on', 'OFF', '.bot off'], m)
 			}
 				break
 		}
-	} else conn.sendButton(m.chat, `Silahkan ketik ${usedPrefix}menu`, '', 'Menu', `${usedPrefix}menu`, m)
+	} else conn.sendButton(m.chat, `Silahkan ketik ${usedPrefix}menu`, '', 1, ['Menu', `${usedPrefix}menu`], m)
 }
 handler.help = ['bot [on/off]']
 handler.tags = ['group']
