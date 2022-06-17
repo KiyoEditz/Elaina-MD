@@ -4,11 +4,11 @@ let handler = async (m, { conn, usedPrefix }) => {
   let pp = false
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
   try {
-    pp = await conn.getProfilePicture(who)
+    pp = await conn.profilePictureUrl(who)
   } catch (e) {
 
   } finally {
-    let about = (await conn.getStatus(who).catch(console.error) || {}).status || ''
+    let about = (await conn.fetchStatus(who).catch(console.error) || {}).status || ''
     let { name, limit, exp, lastclaim, registered, regTime, age, level, role, banned } = global.db.data.users[who]
     if (!(who in global.db.data.users)) throw 'User belum terdaftar'
     let { min, xp, max } = levelling.xpRange(level, global.multiplier)

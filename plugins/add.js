@@ -17,7 +17,7 @@ let handler = async (m, { conn, text, participants, usedPrefix, command, isAdmin
   )).filter(v => v[1]).map(v => v[0] + '@c.us')
   let response = await conn.groupAdd(m.chat, users)
   if (response[users] == 408) throw `_Gagal!_\n\nNomor tersebut telah keluar baru² ini\nHanya bisa masuk lewat *${usedPrefix}link* group`
-  let pp = await conn.getProfilePicture(m.chat).catch(_ => false)
+  let pp = await conn.profilePictureUrl(m.chat).catch(_ => false)
   let jpegThumbnail = pp ? await (await fetch(pp)).buffer() : false
   for (let user of response.participants.filter(user => Object.values(user)[0].code == 403)) {
     let [[jid, {
