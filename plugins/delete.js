@@ -5,10 +5,12 @@ let handler = function (m) {
   if (!fromMe && isBaileys) return
   if (!fromMe) throw 'Hanya bisa menghapus pesan dari bot'
   if (!isBaileys) throw 'Pesan tersebut bukan dikirim oleh bot'
-  this.deleteMessage(m.chat, {
-    fromMe,
-    id,
-    remoteJid: m.chat
+  this.sendMessage(m.chat, {
+    delete: {
+      fromMe,
+      id,
+      remoteJid: m.chat
+    }
   })
 }
 handler.help = ['delete']
