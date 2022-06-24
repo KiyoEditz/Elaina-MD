@@ -237,7 +237,7 @@ module.exports = {
                         let user = global.db.data.users[m.sender]
                         if (!['groupInfo.js', 'unbanchat.js', 'bot-on-off.js', 'sapa.js', 'setting.js'].includes(name) && chat && chat.isBanned && !isOwner) return m.reply(`_Bot telah dinonaktifkan untuk chat ${await this.getName(m.chat)}_ ${this.readmore}\n\n${m.isGroup && isAdmin ? `Silahkan aktifkan ketik ${usedPrefix}bot pada group` : m.isGroup ? `Tunggu hingga admin mengaktikan kembali` : `Silahkan aktifkan ketik ${usedPrefix}bot`}`, m.sender)
                         if (m.chat.endsWith('g.us') && chat.gcdate > (new Date * 1)) chat.init = true
-                        if (!['expired.js', 'bot-on-off.js', 'setting.js', 'redeem_use.js', 'sewa.js'].includes(name) && m.chat.endsWith('g.us') && !chat.init && !chat.isBanned) return m.reply(`Group ini belum di inisialiasi\nSilahkan ketik ${usedPrefix}use _KODEREDEEM_\nJika kamu belum punya kode, silahkan hubungi Owner atau ketik ${usedPrefix}premium`, m.chat, m, { contextInfo: { mentionedJid: global.prems.map(v => v + '@s.whatsapp.net') } })
+                        if (!['expired.js', 'bot-on-off.js', 'setting.js', 'redeem_use.js', 'sewa.js'].includes(name) && m.chat.endsWith('g.us') && !chat.init && !chat.isBanned) return m.reply(`Group ini belum di inisialiasi\nSilahkan ketik ${usedPrefix}use _KODEREDEEM_\nJika kamu belum punya kode, silahkan hubungi Owner atau ketik ${usedPrefix}premium`, m.chat, m, { mentions: global.prems.map(v => v + '@s.whatsapp.net') })
                         if (!['unbanuser.js', '_banned.js', 'profile.js', 'creator.js'].includes(name) && user && user.banned) return m.reply(`*Kamu telah dibanned..*\n_Dikarena kamu telah melakukan pelanggaran Bot_\nHitung mundur:${clockString(user.bannedtime - new Date * 1)}\n\natau Silahkan hubungi owner untuk membuka ban`, m.sender)
                         if (!global.db.data.chats[m.chat].game) {
                             if (plugin.tags && plugin.tags.includes('game')) return m.reply(`Game sedang dimatikan untuk chat ini${this.readmore}\nSilahkan ketik ${usedPrefix}setting`)
@@ -413,9 +413,7 @@ module.exports = {
                         } finally {
 
                             this.sendFile(id, pp, 'pp.jpg', text, null, false, {
-                                contextInfo: {
-                                    mentionedJid: [user]
-                                }
+                                mentions: [user]
                             })
                         }
                     }
@@ -427,9 +425,9 @@ module.exports = {
                 if (!text) text = (chat.sDemote || this.sdemote || conn.sdemote || '@user ```is no longer Admin```')
                 text = text.replace('@user', '@' + participants[0].split('@')[0])
                 if (chat.detect) this.sendMessage(id, text, {
-                    contextInfo: {
-                        mentionedJid: this.parseMention(text)
-                    }
+
+                    mentions: this.parseMention(text)
+
                 })
                 break
         }
@@ -455,7 +453,7 @@ module.exports = {
             if (groupUpdate.restrict == false) text = (chats.sRestrictOff || this.sRestrictOff || conn.sRestrictOff || '```Group has been only admin!')
             //console.log('=============\n\ngroupsUpdate \n\n============\n\n' + await groupUpdate)
             if (!text) continue
-            await this.sendButton(id, text, wm, 'Matikan Fitur', `.off detect`, global.ftroli, { contextInfo: { mentionedJid: this.parseMention(text) }, mentions: await this.parseMention(text) })
+            await this.sendButton(id, text, wm, 'Matikan Fitur', `.off detect`, global.ftroli, { mentions: this.parseMention(text) })
         }
     },
     async delete({ remoteJid, fromMe, id, participant }) {
