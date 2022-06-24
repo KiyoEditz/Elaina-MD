@@ -1,3 +1,4 @@
+
 let fs = require('fs')
 let levelling = require('../lib/levelling')
 let fakeOption = {
@@ -252,103 +253,99 @@ Klik untuk melihat fitur bot ini
       /*conn.sendButton(m.chat, text.trim(), `
 *%week %weton, %date*
 *Waktu Server:* %time WIB`.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name]).trim(), 'Owner', '.owner', 'Sewa / Premium', '#sewa', { quoted: fakeOption })*/
-      conn.relayWAMessage(conn.prepareMessageFromContent(m.chat, {
-        "listMessage": {
-          "description": text.trim(),
-          "buttonText": "Klik Disini",
-          "listType": "SINGLE_SELECT",
-          "sections": [
+      const sections = [
+        {
+          "rows": [
             {
-              "rows": [
-                {
-                  "title": `Stiker`,
-                  "description": "",
-                  "rowId": `${_p}menu stiker`
-                }, {
-                  "title": "Anonymous",
-                  "description": "",
-                  "rowId": `${_p}menu anony`
+              "title": `Stiker`,
+              "description": "",
+              "rowId": `${_p}menu stiker`
+            }, {
+              "title": "Anonymous",
+              "description": "",
+              "rowId": `${_p}menu anony`
 
-                }, {
-                  "title": "Download",
-                  "description": "",
-                  "rowId": `${_p}menu download`
+            }, {
+              "title": "Download",
+              "description": "",
+              "rowId": `${_p}menu download`
 
-                }, {
-                  "title": "Media Lagu & Video",
-                  "description": "",
-                  "rowId": `${_p}menu media`
-                }, {
-                  "title": "Edukasi",
-                  "description": "",
-                  "rowId": `${_p}menu edukasi`
-                }, {
-                  "title": "Gambar",
-                  "description": "",
-                  "rowId": `${_p}menu gambar`
-                }, {
-                  "title": "Maker",
-                  "description": "",
-                  "rowId": `${_p}menu maker `
-                }, {
-                  "title": "Pencarian",
-                  "description": "",
-                  "rowId": `${_p}menu pencarian`
-                }, {
-                  "title": "Alat",
-                  "description": "",
-                  "rowId": `${_p}menu tools`
-                }, {
-                  "title": "Sastra",
-                  "description": "",
-                  "rowId": `${_p}menu sastra`
-                }, {
-                  "title": "Group & Admin",
-                  "description": "",
-                  "rowId": `${_p}menu group `
-                }, {
-                  "title": "Absen & Vote",
-                  "description": "",
-                  "rowId": `${_p}menu kelas`
-                }, {
-                  "title": "Fun",
-                  "description": "",
-                  "rowId": `${_p}menu fun`
-                }, {
-                  "title": "Game",
-                  "description": "",
-                  "rowId": `${_p}menu game`
-                }, {
-                  "title": "Premium",
-                  "description": "",
-                  "rowId": `${_p}menu premium`
-                }, {
-                  "title": "Database",
-                  "description": "",
-                  "rowId": `${_p}menu penyimpanan`
-                }, {
-                  "title": "Editor",
-                  "description": "",
-                  "rowId": `${_p}menu editor`
-                }, {
-                  "title": "Fitur Owner",
-                  "description": "",
-                  "rowId": `${_p}menu owner`
-                }, {
-                  "title": "Info",
-                  "description": "",
-                  "rowId": `${_p}menu info`
-                },
-              ]
-            }
-          ], "contextInfo": {
-            "stanzaId": m.key.id,
-            "participant": m.sender,
-            "quotedMessage": m.message,
-            "mentionedJid": conn.parseMention(before)
-          }
+            }, {
+              "title": "Media Lagu & Video",
+              "description": "",
+              "rowId": `${_p}menu media`
+            }, {
+              "title": "Edukasi",
+              "description": "",
+              "rowId": `${_p}menu edukasi`
+            }, {
+              "title": "Gambar",
+              "description": "",
+              "rowId": `${_p}menu gambar`
+            }, {
+              "title": "Maker",
+              "description": "",
+              "rowId": `${_p}menu maker `
+            }, {
+              "title": "Pencarian",
+              "description": "",
+              "rowId": `${_p}menu pencarian`
+            }, {
+              "title": "Alat",
+              "description": "",
+              "rowId": `${_p}menu tools`
+            }, {
+              "title": "Sastra",
+              "description": "",
+              "rowId": `${_p}menu sastra`
+            }, {
+              "title": "Group & Admin",
+              "description": "",
+              "rowId": `${_p}menu group `
+            }, {
+              "title": "Absen & Vote",
+              "description": "",
+              "rowId": `${_p}menu kelas`
+            }, {
+              "title": "Fun",
+              "description": "",
+              "rowId": `${_p}menu fun`
+            }, {
+              "title": "Game",
+              "description": "",
+              "rowId": `${_p}menu game`
+            }, {
+              "title": "Premium",
+              "description": "",
+              "rowId": `${_p}menu premium`
+            }, {
+              "title": "Database",
+              "description": "",
+              "rowId": `${_p}menu penyimpanan`
+            }, {
+              "title": "Editor",
+              "description": "",
+              "rowId": `${_p}menu editor`
+            }, {
+              "title": "Fitur Owner",
+              "description": "",
+              "rowId": `${_p}menu owner`
+            }, {
+              "title": "Info",
+              "description": "",
+              "rowId": `${_p}menu info`
+            },
+          ]
         }
-      }, {}), { waitForAck: true })
+      ]
+
+      await conn.sendMessage(m.chat, {
+        text: text.trim(),
+        footer: "",
+        title: "",
+        buttonText: "Ini di klik",
+        sections
+      })
     } else {
       let d = new Date
       let hr = d.getHours();

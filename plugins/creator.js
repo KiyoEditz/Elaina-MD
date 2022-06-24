@@ -31,9 +31,14 @@ END: VCARD
     await listContact.push(contact)
   }
   msg = await conn.sendMessage(m.chat, {
-    "displayName": `${listContact.length} Owner`,
-    "contacts": listContact
-  }, 'contactsArrayMessage', { quoted: m })
+    contacts: {
+      displayName: (listContact.length > 1 ? `2013 kontak` : listContact[0].displayName) || null,
+      contacts: listContact,
+    }
+  },
+    {
+      quoted: m,
+    })
   //} //  else msg = await conn.sendContact(m.chat, global.owner[2], 'SyahrulArr', m)
   await conn.reply(m.chat, 'Nomor ini bukan bot, tetapi nomor _*pemilik Bot*_\n\nSilahkan chat jika ada keperluan,jangan minta mutualan/saveback kontak karena tidak bakal di back\nChat "P" tidak akan di balas', msg)
 }

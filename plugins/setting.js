@@ -20,12 +20,11 @@ let handler = async (m, { conn, usedPrefix }) => {
 
     const button = {
         buttonText: 'Klik disini',
-        description: "Silahkan pilih Opsi",
-        sections: sections,
-        listType: 1
+        text: "Silahkan pilih Opsi",
+        sections,
     }
 
-    await conn.sendMessage(m.chat, button, MessageType.listMessage, { quoted: m })
+    await conn.sendMessage(m.chat, button, { quoted: m })
 }
 
 handler.tags = ['info', 'main']
