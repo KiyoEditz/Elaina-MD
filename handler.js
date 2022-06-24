@@ -210,7 +210,7 @@ module.exports = {
                     isPrems,
                     chatUpdate,
                 })) continue
-                if (typeof plugin !== 'function') continue
+
                 if ((usedPrefix = (match[0] || '')[0])) {
                     let noPrefix = m.text.replace(usedPrefix, '')
                     let [command, ...args] = noPrefix.trim().split` `.filter(v => v)
@@ -335,13 +335,7 @@ module.exports = {
                         }
                     } finally {
                         // m.reply(util.format(_user))
-                        if (typeof plugin.after === 'function') {
-                            try {
-                                await plugin.after.call(this, m, extra)
-                            } catch (e) {
-                                console.error(e)
-                            }
-                        }
+
                         if (m.limit) m.reply(+ m.limit + ' Limit terpakai')
                     }
                     break
