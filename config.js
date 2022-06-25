@@ -32,7 +32,7 @@ global.urlnya = "https://www.instagram.com/syahrul_idh"
 
 //============= callButtons =============//
 global.dtc = 'ᴄᴀʟʟ ᴏᴡɴᴇʀ'
-global.phn = '+62 819-9928-4127'
+global.phn = '+62 831-9616-2908'
 
 global.multiplier = 69 // The higher, The harder levelup
 

@@ -12,7 +12,7 @@ handler.before = async function (m) {
   if (/(.hint|bantuan|^$)/i.test(m.text)) return !0
   if (m.text.toLowerCase() == json.result.name.toLowerCase()) {
     global.db.data.users[m.sender].exp += this.tebakanime[id][2]
-    this.sendButton(m.chat, `*Benar!*\n+${this.tebakanime[id][2]} XP`, '', 'Tebak Anime', '.tebakanime', m)
+    this.sendButton(m.chat, `*Benar!*\n+${this.tebakanime[id][2]} XP`, '',1,[ 'Tebak Anime', '.tebakanime'], m)
     clearTimeout(this.tebakanime[id][3])
     delete this.tebakanime[id]
   } else if (similarity(m.text.toLowerCase(), json.result.name.toLowerCase().trim()) >= threshold) m.reply(`*Dikit Lagi!*`)
