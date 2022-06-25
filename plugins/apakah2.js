@@ -1,7 +1,7 @@
 let handler = async (m, { conn, command, text }) => {
   conn.reply(m.chat, `
 *Pertanyaan:* ${m.text}
-*Jawaban:* ${pickRandom(['Yayayaya', 'Mungkin iya', 'Bisa jadi', 'G', 'Tidak', 'Y', 'Woiya jelas!', 'jelas iya!! gak bisa ditawar lagi', 'ngga mungkin', 'Ngga mungkin dan gak akan pernah', 'iya, kenapa? ga terima? sini bergelud!', 'ngga titik.'])}
+*Jawaban:* ${conn.pickRandom(['Yayayaya', 'Mungkin iya', 'Bisa jadi', 'G', 'Tidak', 'Y', 'Woiya jelas!', 'jelas iya!! gak bisa ditawar lagi', 'ngga mungkin', 'Ngga mungkin dan gak akan pernah', 'iya, kenapa? ga terima? sini bergelud!', 'ngga titik.'])}
 `.trim(), m, m.mentionedJid ? {
     contextInfo: {
       mentionedJid: m.mentionedJid
@@ -15,7 +15,4 @@ handler.disabled = true
 
 module.exports = handler
 
-function pickRandom(list) {
-  return list[Math.floor(Math.random() * list.length)]
-}
 

@@ -28,7 +28,7 @@ let handler = async (m, { conn, usedPrefix, command, args }) => {
         let random = Math.floor(Math.random() * json.data.length)
         let hasil = json.data[random]
         let { author, bio, quote } = hasil
-        await conn.sendButton(m.chat, `“${quote}”`.trim(), `${author} - ${bio}`, 2, [`KATA BIJAK ${args[0].toUpperCase()}`, `${usedPrefix + command} ${args[0]}`, `RANDOM`, `${usedPrefix + command} ${pickRandom(['rindu', 'mimpi', 'sendiri', 'sabar', 'kesedihan', 'pernikahan', 'kemerdekaan'])}`], m)
+        await conn.sendButton(m.chat, `“${quote}”`.trim(), `${author} - ${bio}`, 2, [`KATA BIJAK ${args[0].toUpperCase()}`, `${usedPrefix + command} ${args[0]}`, `RANDOM`, `${usedPrefix + command} ${conn.pickRandom(['rindu', 'mimpi', 'sendiri', 'sabar', 'kesedihan', 'pernikahan', 'kemerdekaan'])}`], m)
       })
       break
     default:
@@ -41,7 +41,3 @@ handler.command = /^(bijak)$/i
 
 module.exports = handler
 
-
-function pickRandom(list) {
-  return list[Math.floor(list.length * Math.random())]
-}

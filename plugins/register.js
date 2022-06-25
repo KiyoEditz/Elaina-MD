@@ -31,6 +31,3 @@ handler.command = /^(daftar|reg(ister)?)$/i
 
 module.exports = handler
 
-function pickRandom(list) {
-  return list[Math.floor(Math.random() * list.length)]
-}

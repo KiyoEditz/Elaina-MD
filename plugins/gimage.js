@@ -6,7 +6,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
   if (!text) throw `_Masukkan keyword!_\nContoh,\n\n${usedPrefix + command} kucing`
   let results = await gis(text) || []
   m.reply('_Sedang mencari..._')
-  let { url, width, height } = pickRandom(results) || {}
+  let { url, width, height } = conn.pickRandom(results) || {}
   if (!url) throw 'Tidak ditemukan'
   await conn.sendButtonImg(m.chat, url, '_Klik *Next* untuk mencari gambar lain_', `*Width*: ${width}\n*Height*: ${height}`, 2, ['⏩ Next', `${usedPrefix + command + ' ' + text}`, '💾 Source', `.reply ${url}`], m)
 }
@@ -15,7 +15,3 @@ handler.tags = ['image', 'search']
 handler.command = /^(gimage|image)$/i
 
 module.exports = handler
-
-function pickRandom(arr) {
-  return arr[Math.floor(Math.random() * arr.length)]
-}

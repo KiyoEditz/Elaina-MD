@@ -19,12 +19,12 @@ let handler = async (m, { conn, text }) => {
     if (m.quoted && m.quoted.mtype === 'conversation' && !text) _m = conn.sendMessage('status@broadcast', {
         text: m.quoted.text,
         textArgb: 0xffffffff,
-        backgroundArgb: pickRandom(colors)
+        backgroundArgb: conn.pickRandom(colors)
     }, 'extendedTextMessage')
     if (!m.quoted && text) _m = conn.sendMessage('status@broadcast', {
         text,
         textArgb: 0xffffffff,
-        backgroundArgb: pickRandom(colors)
+        backgroundArgb: conn.pickRandom(colors)
     }, 'extendedTextMessage')
     if (m.quoted && text) _m = conn.forwardMessage('status@broadcast', await m.quoted.cMod('status@broadcast', text))
     m.reply((await _m).key.id)
@@ -37,7 +37,3 @@ handler.command = /^upsw$/i
 handler.owner = true
 
 module.exports = handler
-
-function pickRandom(arr) {
-    return arr[Math.floor(Math.random() * arr.length)]
-}

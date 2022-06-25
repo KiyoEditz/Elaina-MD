@@ -43,7 +43,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             bot: 0,
             date: 0
         }
-        this.reply(m.chat, random(['Iyaa.. Apa?', 'Hai, Bot disini', 'Saya terpanggil', 'Ciee manggil"', 'Apa sob?', 'Apa panggil" -_-', 'Bot bot bot bot tross', 'Kalau mau pakai, pakai aja.. Jngn pnggil" trus..', 'Piuuuu.... Dummmm... ', 'Tetetetetetete mantapu jiwaa']), m)
+        this.reply(m.chat, this.pickRandom(['Iyaa.. Apa?', 'Hai, Bot disini', 'Saya terpanggil', 'Ciee manggil"', 'Apa sob?', 'Apa panggil" -_-', 'Bot bot bot bot tross', 'Kalau mau pakai, pakai aja.. Jngn pnggil" trus..', 'Piuuuu.... Dummmm... ', 'Tetetetetetete mantapu jiwaa']), m)
     }
 
     /*
@@ -54,7 +54,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
 
     if (m.text.length > 25) this.sendMessage(m.chat, {
         react: {
-            text: this.pickRandom(['🌷','🏵️','🌠','🐱','🦄','🐬','🐥','🐠','⛲','🏝️']),
+            text: this.pickRandom(['🌷', '🏵️', '🌠', '🐱', '🦄', '🐬', '🐥', '🐠', '⛲', '🏝️']),
             key: m.key
         }
     })
@@ -183,9 +183,9 @@ function ucap() {
     let ucap
     if (hr >= 2 && hr < 10) {
         ucap = 'Pagi 🌤️🏞️'
-    } else if (hr >= 10 && hr <= 13) {
+    } else if (hr >= 10 && hr <= 14) {
         ucap = 'Siang ☀️🏝️'
-    } else if (hr > 13 && hr <= 17) {
+    } else if (hr > 14 && hr <= 17) {
         ucap = 'Sore ⛅🌅'
     } else {
         ucap = 'Malam 🌙🌌'
@@ -197,8 +197,4 @@ function clockString(ms) {
     let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
     let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
     return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}
-
-function random(arr) {
-    return arr[Math.floor(Math.random() * arr.length)]
 }
