@@ -8,8 +8,8 @@ let format = sizeFormatter({
   render: (literal, symbol) => `${literal} ${symbol}B`,
 })
 let handler = async (m, { conn }) => {
-  const chats = conn.chats.all()
-  const groups = chats.filter(v => v.jid.endsWith('g.us'))
+  const chats = Object.keys(conn.chats)
+  const groups = chats.filter(v => v.endsWith('g.us'))
 
   let old = performance.now()
   await m.reply('_Testing speed..._')
@@ -23,14 +23,6 @@ let handler = async (m, { conn }) => {
 ╟ Total Groups: *${groups.length}*
 ╟ Total Chat Pribadi: *${chats.length - groups.length}*
 ╟ Total Seluruh Chat: *${chats.length}* 
-║ 
-╟ 📱 *Info Device* :
-${`
-╟ Nama: ${conn.user.phone.device_manufacturer}
-╟ OS: ${conn.user.phone.os_version}
-╟ Baterai : ${conn.battery ? `${conn.battery.value}% ${conn.battery.live ? '🔌 Sedang charging...' : '⚡ Tidak charging'}` : '404'}
-`.trim()}
-╟ Versi WA: ${conn.user.phone.wa_version}
 ║ 
 ╟ 💻 *Info Server* :
 ╟ Platform: ${os.platform()}
