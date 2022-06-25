@@ -9,8 +9,10 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     .catch(async _ => await instagramdlv3(args[0]))
     .catch(async _ => await instagramdlv4(args[0]))
   await m.reply('_Sedang proses mengirim..._')
-  for (let link of dl) {
-    conn.sendFile(m.chat, link, 'ig.' + (link.includes('mp4') ? 'mp4' : 'jpg'), (username ? ('*Username:* @' + username + '\n\n' + caption) : '') + '\n\n*Server:* ' + server, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+  m.reply(dl)
+  for (let { url: link } of dl) {
+    conn.sendFile(m.chat, link, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
+      , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument })
   }
 }
 handler.help = ['ig', 'instagram'].map(v => v + ' <link>')

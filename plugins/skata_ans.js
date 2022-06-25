@@ -68,8 +68,9 @@ handler.before = async function (m) {
 				room.diam = true
 				room.new = true
 				who = room.curr
-				let msg = await this.preSudo('nextkata', who, m)
-				this.ev.emit('messages.upsert', msg)
+				let msgs = this.preSudo('nextkata', who, m).then(async _ => {
+					this.ev.emit('messages.upsert', _)
+				})
 			}
 		}, 30000)
 	}
@@ -141,7 +142,6 @@ handler.before = async function (m) {
 	}
 	return !0
 }
-
 module.exports = handler
 
 async function genKata() {

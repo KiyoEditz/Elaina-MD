@@ -66,8 +66,10 @@ let handler = async (m, { conn, text, isPrems, isROwner, usedPrefix, command }) 
 				room.diam = true
 				room.new = true
 				let who = room.curr
-				let msg = await conn.preSudo('nextkata', who, m)
-				conn.ev.emit('messages.upsert', msg)
+				let msgs = conn.preSudo('nextkata', who, m).then(async _ => {
+					conn.ev.emit('messages.upsert', _)
+				})
+
 			}, 45000)
 
 		} else if (room.status == 'wait') {
