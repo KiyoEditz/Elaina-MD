@@ -1,7 +1,6 @@
 const limit = 30
 const yts = require('yt-search')
 const fetch = require('node-fetch')
-const { newMessagesDB } = require("@adiwajshing/baileys")
 const { servers, yta, ytv } = require('../lib/y2mate')
 let confirmation = {}
 let confirmation2 = {} //rencana mau bikin audio/video
@@ -33,11 +32,8 @@ ${jutim}
   }
   m.reply(str)
   if (number && !isNaN(number)) {
-    conn.emit('chat-update', {
-      jid: m.sender,
-      hasNewMessage: true,
-      messages: newMessagesDB([conn.cMod(m.chat, m, number, m.sender)])
-    })
+    let msg = await conn.preSudo(number, m.sender, m)
+    conn.ev.emit('messages.upsert', msg)
   }
 }
 

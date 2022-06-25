@@ -1,12 +1,12 @@
 let fs = require('fs')
 let handler = m => m
 
-handler.all = async function (m, { isBlocked, isOwner }) {
+handler.all = async function (m, { isOwner }) {
     let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
     if (m.isBaileys) return
     if (m.fromMe) return
     if (m.chat.endsWith('broadcast')) return
-    if (isBlocked) return // Yang diblock ga direspon
+    // Yang diblock ga direspon
     let setting = global.db.data.settings[this.user.jid]
     let chats = global.db.data.chats[m.chat]
     let user = global.db.data.users[m.sender]
@@ -24,11 +24,7 @@ handler.all = async function (m, { isBlocked, isOwner }) {
         if (m.isGroup && chats.isBanned) return
         this.sendButton(m.chat, `
 Hai, Selamat ${ucap()} ${user.registered ? name : await this.getName(m.sender, true)} 
-${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 3, ['Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd'], m, {
-            contextInfo: {
-                mentionedJid: conn.parseMention(teks2)
-            }
-        })
+${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 3, ['Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd'], m)
         this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, { mimetype: 'audio/mp4' })
     }
 
@@ -55,6 +51,13 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     @respon 
     //////////////
     */
+
+    if (m.text.length > 25) this.sendMessage(m.chat, {
+        react: {
+            text: this.pickRandom(['🌷','🏵️','🌠','🐱','🦄','🐬','🐥','🐠','⛲','🏝️']),
+            key: m.key
+        }
+    })
 
     // salam
 
