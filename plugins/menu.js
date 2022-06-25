@@ -232,7 +232,7 @@ Note: Fiturs ini hanya digunakan di Private Chat /Chat Pribadi
       let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
       let before = conn.menu.before || `
 Hai, 
-_Selamat %ucap *%name*_
+_%ucap *%name*_
 
 Klik untuk melihat fitur bot ini
 `
@@ -442,19 +442,4 @@ function clockString(ms) {
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}
-
-function ucap() {
-  let hr = new Date().getHours();
-  let ucap
-  if (hr >= 2 && hr < 10) {
-    ucap = 'Pagi 🏞️'
-  } else if (hr >= 10 && hr <= 13) {
-    ucap = 'Siang 🏝️'
-  } else if (hr > 13 && hr <= 17) {
-    ucap = 'Sore 🌅'
-  } else {
-    ucap = 'Malam 🌌'
-  }
-  return ucap
 }

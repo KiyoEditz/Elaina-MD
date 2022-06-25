@@ -4,9 +4,6 @@ const util = require('util')
 const isNumber = x => typeof x === 'number' && !isNaN(x)
 const delay = ms => isNumber(ms) && new Promise(resolve => setTimeout(resolve, ms))
 
-const more = String.fromCharCode(8206)
-const readMore = more.repeat(4001)
-
 module.exports = {
     async handler(chatUpdate) {
         if (global.db.data == null) await loadDatabase()

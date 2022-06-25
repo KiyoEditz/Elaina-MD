@@ -23,7 +23,7 @@ handler.all = async function (m, { isOwner }) {
     if (/^bot$/i.test(m.text)) {
         if (m.isGroup && chats.isBanned) return
         this.sendTemplate(m.chat, `
-Hai, Selamat ${ucap()} ${user.registered ? name : await this.getName(m.sender, true)} 
+Hai, ${ucap()} ${user.registered ? name : await this.getName(m.sender, true)} 
 ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 3, ['Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd'], m)
         this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, { mimetype: 'audio/mp4' })
     }
@@ -68,7 +68,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     //hai
 
     if (/^(h(a?i|alo))$/i.test(m.text) && !m.quoted) {
-        m.reply(`Hai *${registered ? name : await conn.getName(m.sender, { withoutContact: true })}, _Selamat ${ucap()}_*!`.trim())
+        m.reply(`Hai *${registered ? name : await conn.getName(m.sender, { withoutContact: true })}, _${ucap()}_*!`.trim())
     }
 
     //sepi
@@ -117,7 +117,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             chatSender.faham = true
             let isinit = chatSender.fahan
             let init = [
-                `Hai, Selamat ${ucap()} 
+                `Hai, ${ucap()} 
             ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : ``}`,
                 'Silahkan gunakan Bot dengan sebaik mungkin\nDilarang spam, telfon, ddos\nJika ada yang ditanyakan silahkan hubungi Owner' + `\n\n${teks2}`,
                 'Menu', '.menu', 'Link Group Bot', `.group`, 'Owner', '.owner']
@@ -177,21 +177,6 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
 }
 
 module.exports = handler
-
-function ucap() {
-    let hr = new Date().getHours();
-    let ucap
-    if (hr >= 2 && hr < 10) {
-        ucap = 'Pagi 🌤️🏞️'
-    } else if (hr >= 10 && hr <= 14) {
-        ucap = 'Siang ☀️🏝️'
-    } else if (hr > 14 && hr <= 17) {
-        ucap = 'Sore ⛅🌅'
-    } else {
-        ucap = 'Malam 🌙🌌'
-    }
-    return ucap
-}
 function clockString(ms) {
     let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
     let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
