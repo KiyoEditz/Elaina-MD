@@ -17,7 +17,7 @@ module.exports = {
         if (chatUpdate.messages.length > 1) console.log(chatUpdate.messages)
         let m = chatUpdate.messages[chatUpdate.messages.length - 1]
         if (!m) return
-        console.log(JSON.stringify(m, null, 4))
+        //console.log(JSON.stringify(m, null, 4))
         try {
             m = simple.smsg(this, m) || m
             if (!m) return
@@ -399,7 +399,7 @@ module.exports = {
                     let groupMetadata = await this.groupMetadata(id) || (conn.chats[id] || {}).metadata
                     for (let user of participants) {
                         let pp = false
-                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@user', '@' + user.split('@')[0]).replace('@subject', groupMetadata.subject).replace('@desc', groupMetadata.desc.toString()) :
+                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', groupMetadata.subject).replace('@desc', groupMetadata.desc.toString()) :
                             (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
                         try {
                             pp = await this.profilePictureUrl(user)
