@@ -399,16 +399,15 @@ module.exports = {
                     let groupMetadata = await this.groupMetadata(id) || (conn.chats[id] || {}).metadata
                     for (let user of participants) {
                         let pp = false
-                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', this.getName(id)).replace('@desc', groupMetadata.desc.toString()) :
+                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@user', '@' + user.split('@')[0]).replace('@subject', groupMetadata.subject).replace('@desc', groupMetadata.desc.toString()) :
                             (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
                         try {
                             pp = await this.profilePictureUrl(user)
-                        } catch (e) {
-                        } finally {
-
                             this.sendFile(id, pp, 'pp.jpg', text, null, false, {
                                 mentions: [user]
                             })
+                        } catch {
+                            await this.reply(id, text)
                         }
                     }
                 }
@@ -418,9 +417,9 @@ module.exports = {
             case 'demote':
                 if (!text) text = (chat.sDemote || this.sdemote || conn.sdemote || '@user ```is no longer Admin```')
                 text = text.replace('@user', '@' + participants[0].split('@')[0])
-                if (chat.detect) this.sendMessage(id, text, {
-
-                    mentions: this.parseMention(text)
+                if (chat.detect) this.sendMessage(id, {
+                    text,
+                    mentions: await this.parseMention(text)
 
                 })
                 break
