@@ -1,4 +1,3 @@
-const { newMessagesDB } = require("@adiwajshing/baileys")
 const skata = require('../lib/sambung-kata')
 const game = `╔══「 *Kata Bersambung* 」
 ╟ Game Kata Bersambung adalah
@@ -67,11 +66,8 @@ let handler = async (m, { conn, text, isPrems, isROwner, usedPrefix, command }) 
 				room.diam = true
 				room.new = true
 				let who = room.curr
-				conn.emit('chat-update', {
-					jid: who,
-					hasNewMessage: true,
-					messages: newMessagesDB([conn.cMod(m.chat, m, 'nextkata', who)])
-				})
+				let msg = await conn.preSudo('nextkata', who, m)
+				conn.ev.emit('messages.upsert', msg)
 			}, 45000)
 
 		} else if (room.status == 'wait') {

@@ -1,6 +1,4 @@
 const skata = require('../lib/sambung-kata')
-const delay = ms => new Promise(res => setTimeout(res, ms))
-const { newMessagesDB } = require("@adiwajshing/baileys")
 let handler = m => m
 
 handler.before = async function (m) {
@@ -70,11 +68,8 @@ handler.before = async function (m) {
 				room.diam = true
 				room.new = true
 				who = room.curr
-				this.emit('chat-update', {
-					jid: who,
-					hasNewMessage: true,
-					messages: newMessagesDB([conn.cMod(m.chat, m, 'nextkata', who)])
-				})
+				let msg = await this.preSudo('nextkata', who, m)
+				this.ev.emit('messages.upsert', msg)
 			}
 		}, 30000)
 	}
@@ -103,11 +98,8 @@ handler.before = async function (m) {
 			room.new = true
 			room.diam = true
 			who = room.curr
-			this.emit('chat-update', {
-				jid: who,
-				hasNewMessage: true,
-				messages: newMessagesDB([conn.cMod(m.chat, m, 'nextkata', who)])
-			})
+			let msg = await this.preSudo('nextkata', who, m)
+			this.ev.emit('messages.upsert', msg)
 		}
 		if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/(Mulai|Tersisa) ?:/i.test(m.quoted.text)) return !0
 		if (m.quoted.id == room.chat.id) {
@@ -134,11 +126,8 @@ handler.before = async function (m) {
 			room.diam = true
 			room.kata = answerF
 			who = room.curr
-			this.emit('chat-update', {
-				jid: who,
-				hasNewMessage: true,
-				messages: newMessagesDB([conn.cMod(m.chat, m, 'nextkata', who)])
-			})
+			let msg = await this.preSudo('nextkata', who, m)
+			this.ev.emit('messages.upsert', msg)
 			return !0
 		}
 	} else if (room.curr !== m.sender) {
