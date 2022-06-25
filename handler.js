@@ -477,7 +477,7 @@ global.dfail = (type, m, conn) => {
         unreg: 'Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*#daftar nama.umur*\n\nContoh: *#daftar Manusia.16*',
         restrict: 'Fitur ini di *disable*!'
     }[type]
-    if (type == 'group') return conn.sendButton(m.chat, msg, 'Ketik #group atau klik tombol dibawah ini', 'Group', '.group', m)
+    if (type == 'group') return conn.sendButton(m.chat, msg, 'Ketik #group atau klik tombol dibawah ini', 1, ['Group', '.group'], m)
     if (type == 'premium') return conn.sendButton(m.chat, msg, 'Ketik #premium atau klik tombol dibawah ini', 'Premium', '.premium', m)
     if (msg) return m.reply(msg)
 }
