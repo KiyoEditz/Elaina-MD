@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const { MessageType } = require('@adiwajshing/baileys')
+
 const { sticker } = require('../lib/sticker')
 const { partialRight } = require('lodash')
 let confirm = {}

@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const { MessageType } = require('@adiwajshing/baileys')
+
 const { sticker } = require('../lib/sticker')
 
 let handler = async (m, { command, conn, text, usedPrefix, args }) => {
@@ -9,9 +9,7 @@ let handler = async (m, { command, conn, text, usedPrefix, args }) => {
   let img = await res.buffer()
   if (!img) throw img
   let stiker = await sticker(img, false, global.packname, global.author)
-  conn.sendMessage(m.chat, stiker, MessageType.sticker, {
-    quoted: m
-  })
+  conn.sendFile(m.chat, stiker, 'ttp5.webp', '', m)
 }
 handler.help = ['ttp5']
 handler.tags = ['stickertext']

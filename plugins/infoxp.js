@@ -1,7 +1,5 @@
-let { MessageType } = require('@adiwajshing/baileys')
 let handler = async (m, { conn, usedPrefix }) => {
-    await conn.sendMessage(m.chat, {
-        contentText: `
+    await conn.sendButton(m.chat, `
 Setiap fitur yang kamu gunakan, 
 ada beberapa fitur yang menggunakan *batasan/limit*
 
@@ -15,16 +13,9 @@ Setelah itu, *tukarkan XP* kamu menjadi limit dengan cara *ketik ${usedPrefix}bu
 
 Kamu bisa melihat jumlah limitmu dengan cara *klik Cek XP* di bawah
 `.trim(),
-        footerText: `Fitur yang memakai limit ditandai dengan *symbol ($) di samping menu*
+        `Fitur yang memakai limit ditandai dengan *symbol ($) di samping menu*
 Selama Limit kamu cukup, Fitur akan bekerja. Dan sebaliknya, 
-Jika limitmu 0, Fitur tidak akan bekerja`.trim(),
-        buttons: [
-            { buttonId: '.profile', buttonText: { displayText: 'Cek XP' }, type: 1 },
-            { buttonId: '.menu game', buttonText: { displayText: 'Main Game' }, type: 1 },
-            { buttonId: '.buy', buttonText: { displayText: 'Tukar' }, type: 1 },
-        ],
-        headerType: 1
-    }, MessageType.buttonsMessage, { quoted: m })
+Jika limitmu 0, Fitur tidak akan bekerja`.trim(), 3, ['Cek XP', '.profile', 'Main Game', '.menu game', 'Tukar', '.buy'], m)
 }
 
 handler.command = /^infoe?xp$/i

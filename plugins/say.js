@@ -1,8 +1,6 @@
-let { MessageType } = require('@adiwajshing/baileys')
-
-let handler = async (m, { conn, text }) => {
+let handler = async (m, { text }) => {
   if (!text) text = m.text
-  conn.sendMessage(m.chat, text, MessageType.extendedText)
+  m.reply(text)
 }
 handler.help = ['say <teks>']
 handler.tags = ['fun']

@@ -1,4 +1,4 @@
-const { MessageType } = require('@adiwajshing/baileys')
+
 const { sticker } = require('../lib/sticker')
 let handler = async (m, { conn, args, usedPrefix }) => {
   let stiker = false

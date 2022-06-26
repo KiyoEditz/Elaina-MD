@@ -1,5 +1,5 @@
 const uploadFile = require('../lib/uploadFile')
-const { MessageType } = require('@adiwajshing/baileys')
+
 const uploadImage = require('../lib/uploadImage')
 const { sticker } = require('../lib/sticker')
 let { webp2png } = require('../lib/webp2mp4')

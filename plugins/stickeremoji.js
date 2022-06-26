@@ -1,7 +1,7 @@
 // Terimakasih kpd RC047 :v
 // Fitur By Xteams
 // Modified by Nurutomo (Update Xteam :v)
-const { MessageType } = require('@adiwajshing/baileys')
+
 const { sticker } = require('../lib/sticker')
 const { EmojiAPI } = require("emoji-api")
 const emoji = new EmojiAPI()

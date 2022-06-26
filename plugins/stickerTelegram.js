@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const { MessageType } = require('@adiwajshing/baileys')
+
 const { sticker } = require('../lib/sticker')
 let handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!args[0]) throw `*Perintah ini untuk mengambil stiker dari Telegram*\n\nContoh:\n${usedPrefix + command} https://t.me/addstickers/menggokil`

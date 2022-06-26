@@ -1,4 +1,4 @@
-const { MessageType } = require('@adiwajshing/baileys')
+
 const { sticker } = require('../lib/sticker')
 let fs = require('fs')
 let sharp = require('sharp')

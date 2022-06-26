@@ -1,6 +1,5 @@
 const { spawn } = require('child_process')
 const util = require('util')
-const { MessageType } = require('@adiwajshing/baileys')
 
 let handler = async (m, { conn }) => {
   if (!global.support.convert &&
@@ -19,9 +18,7 @@ let handler = async (m, { conn }) => {
     im.stdin.write(sticker)
     im.stdin.end()
     im.on('exit', () => {
-      conn.sendMessage(m.chat, Buffer.concat(bufs), MessageType.image, {
-        quoted: m
-      })
+      await conn.sendFile(m.chat, Buffer.concat(bufs), 'img.png', '', m)
     })
   }
 }

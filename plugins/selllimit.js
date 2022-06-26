@@ -1,5 +1,3 @@
-let { MessageType } = require('@adiwajshing/baileys')
-
 const limitperxp = 300
 let confirmsell = {}
 
@@ -21,16 +19,7 @@ let handler = async (m, { conn, command, args, usedPrefix }) => {
     throw false
 
   } else if (global.db.data.users[m.sender].limit <= count) {
-    await conn.sendMessage(m.chat, {
-      contentText: `_Limit kamu tidak mencukupi,\n1 Limit == 300 XP\nSilahkan Cek Limit kamu.. `,
-      footerText: ``,
-      buttons: [
-        { buttonId: '.claim', buttonText: { displayText: 'XP Gratis harian' }, type: 1 },
-        { buttonId: '.profile', buttonText: { displayText: 'Cek XP' }, type: 1 },
-        { buttonId: '.infoxp', buttonText: { displayText: 'Info XP' }, type: 1 },
-      ],
-      headerType: 1
-    }, MessageType.buttonsMessage, { quoted: m })
+    await conn.sendButton(m.chat, `_Limit kamu tidak mencukupi,\n1 Limit == 300 XP\nSilahkan Cek Limit kamu.. `, ``, 3, ['XP Gratis harian', '.claim', 'Cek XP', '.profile', 'Info XP', '.infoxp'], m)
   }
 }
 

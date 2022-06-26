@@ -1,6 +1,6 @@
 const uploadImage = require('../lib/uploadImage')
 const { sticker } = require('../lib/sticker')
-const { MessageType } = require('@adiwajshing/baileys')
+
 let { webp2png } = require('../lib/webp2mp4')
 let fetch = require('node-fetch')
 let handler = async (m, { conn, command }) => {

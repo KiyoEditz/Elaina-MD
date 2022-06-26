@@ -1,5 +1,3 @@
-
-let { MessageType } = require('@adiwajshing/baileys')
 let handler = async (m, { conn, usedPrefix }) => {
     let users = global.db.data.users[m.sender]
     let chats = global.db.data.chats[m.chat]
