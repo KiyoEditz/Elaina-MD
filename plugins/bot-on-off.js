@@ -12,7 +12,7 @@ let handler = async (m, { conn, usedPrefix, isAdmin, isOwner, text }) => {
 				break
 			case 'on': {
 				global.db.data.chats[m.chat].isBanned = false
-				m.reply('Bot telah di nyalakan untuk Group ini\n\nSilahkan ketik ${usedPrefix}menu')
+				m.reply(`Bot telah di nyalakan untuk Group ini\n\nSilahkan ketik ${usedPrefix}menu`)
 			}
 				break
 			default: {

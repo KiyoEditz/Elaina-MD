@@ -27,7 +27,7 @@ let handler = async (m, { conn }) => {
 }
 handler.help = ['toimg (reply stiker)']
 handler.tags = ['stickertomedia']
-handler.command = /^toima?ge?$/i
+handler.command = /^toima?ge?2$/i
 handler.owner = false
 handler.mods = false
 handler.premium = false
