@@ -1,13 +1,17 @@
-let fetch = require('node-fetch')
+let { kbbi } = require('@bochilteam/scraper')
+
 let handler = async (m, { text }) => {
     if (!text) throw `_Masukkan keyword!_`
-    let res = await fetch(global.API('pencarikode', '/kbbi', { kata: text }, 'APIKEY'))
+    const res = await kbbi(text)
     if (!res.ok) throw 'Server Error.. Harap lapor owner'
-    let json = await res.json()
-    let list = json.kata.list.map((v, i) => `${i + 1}. ${v}`).join('\n')
-    m.reply(`${json.kata.word}
-    
-${list}
+    m.reply(`
+${res.map(v => `
+*📌${v.title}*
+${v.means.map(v => '- ' + v).join('\n`')}
+`).join('\n').trim()}
+Note:
+p = Partikel: kelas kata yang meliputi kata depan, kata sambung, kata seru, kata sandang, ucapan salam
+n = Nomina: kata benda
 `.trim())
 }
 handler.help = ['kbbi <teks>']
