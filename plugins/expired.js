@@ -3,7 +3,7 @@ let json = JSON.parse(fs.readFileSync('./src/group.json'))
 
 let handler = async (m, { conn, args, usedPrefix, isOwner, participants, isPrems, command }) => {
     if (conn.user.jid !== global.conn.user.jid) {
-        if (participants.map(v => v.jid).includes(global.conn.user.jid)) throw `Tidak bisa, ada bot master`
+        if (participants.map(v => v.id).includes(global.conn.user.jid)) throw `Tidak bisa, ada bot master`
     }
 
     let chat = global.db.data.chats[m.chat]

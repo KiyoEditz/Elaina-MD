@@ -167,7 +167,7 @@ module.exports = {
             let isPrems = isROwner || global.prems.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 
 
-            let groupMetadata = (m.isGroup ? (this.groupMetadata || {}).metadata : {}) || {}
+            let groupMetadata = (m.isGroup ? (await this.groupMetadata(m.chat)) : {}) || {}
             let participants = (m.isGroup ? groupMetadata.participants : []) || []
             let user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {} // User Data
             let bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {} // Your Data
@@ -455,7 +455,7 @@ module.exports = {
             if (groupUpdate.restrict == false) text = (chats.sRestrictOff || this.sRestrictOff || conn.sRestrictOff || '```Group has been only admin!')
             //console.log('=============\n\ngroupsUpdate \n\n============\n\n' + await groupUpdate)
             if (!text) continue
-            await this.sendButton(id, text, wm, 'Matikan Fitur', `.off detect`, global.ftroli, { mentions: this.parseMention(text) })
+            await this.sendButton(id, text, wm, 1['Matikan Fitur', `.off detect`], global.ftroli, { mentions: awaitthis.parseMention(text) })
         }
     },
     async delete({ remoteJid, fromMe, id, participant }) {

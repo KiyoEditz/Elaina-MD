@@ -6,12 +6,7 @@ let handler = (m, { text }) => {
   let teks = `
   @${m.sender.split`@`[0]} _sekarang AFK/OFF_ ${text ? '\nAlasan: ' + text : ''}
   `.trim()
-  m.reply(teks, m.chat, {
-    contextInfo: {
-      mentionedJid: conn.parseMention(teks)
-    }
-  }
-  )
+  m.reply(teks)
 }
 handler.help = ['afk']
 handler.tags = ['main']

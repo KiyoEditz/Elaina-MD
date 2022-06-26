@@ -3,7 +3,7 @@ let handler = async (m, { conn, args, participants, command }) => {
         return { ...value, jid: key }
     }).filter(v => v.suit !== 0)
     let isGC = /g(c|ro?up)/i.test(command)
-    if (isGC) users = users.filter(v => participants.some(p => p.jid == v.jid))
+    if (isGC) users = users.filter(v => participants.some(p => p.id == v.jid))
     let sortedExp = users.map(toNumber('suit')).sort(sort('suit'))
     let usersExp = sortedExp.map(enumGetKey)
     // console.log(participants)
@@ -11,11 +11,11 @@ let handler = async (m, { conn, args, participants, command }) => {
     let text = `
 *Suit Leaderboard ${isGC ? 'Group' : `Top ${len}*`}
 Kamu: *${usersExp.indexOf(m.sender) + 1}* dari *${usersExp.length}*
-${sortedExp.slice(0, len).map(({ name, jid, suit }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${name}) wa.me/${jid.split`@`[0]}` : name} - ${suit} MMR`).join`\n`}
+${sortedExp.slice(0, len).map(({ name, jid, suit }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${name}) wa.me/${jid.split`@`[0]}` : name} - ${suit} MMR`).join`\n`}
 `.trim()
     conn.sendButton(m.chat, text, '', 1, ['Top Suit Group', (!isGC ? '.topsuitgc' : '')], m, {
         contextInfo: {
-            mentionedJid: [...usersExp.slice(0, len)].filter(v => !participants.some(p => v === p.jid))
+            mentionedJid: [...usersExp.slice(0, len)].filter(v => !participants.some(p => v === p.id))
         }
     })
 }

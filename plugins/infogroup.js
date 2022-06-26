@@ -1,18 +1,11 @@
 let handler = async (m, { conn, participants, groupMetadata }) => {
-    const getGroupAdmins = (participants) => {
-        admins = []
-        for (let i of participants) {
-            i.isAdmin ? admins.push(i.jid) : ''
-        }
-        return admins
-    }
     let pp = './src/avatar_contact.png'
     try {
         pp = await conn.profilePictureUrl(m.chat)
     } catch (e) {
     } finally {
         let { isBanned, welcome, detect, sWelcome, sBye, sPromote, sDemote, antiLink, stiker, game, delete: del, viewonce } = global.db.data.chats[m.chat]
-        const groupAdmins = participants.filter(v => v.isAdmin).map(v => v.jid)
+        const groupAdmins = participants.filter(v => v.Admin).map(v => v.id)
         let listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.split('@')[0]}`).join('\n')
         let text = `*「 Group Information 」*\n
 *Name:* 
@@ -22,7 +15,7 @@ ${groupMetadata.subject}
 *Description:* 
 ${groupMetadata.desc}
 
-*Group Owner:* @${m.chat.split`-`[0]}
+*Group Owner:* @${groupMetadata.owner || m.chat.split`-`[0] || ''}
 *Group Admins:*
 ${listAdmin}
 

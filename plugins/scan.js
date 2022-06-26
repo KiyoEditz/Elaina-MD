@@ -4,14 +4,14 @@
 let handler = async (m, { conn, args }) => {
     if (!args || !args[0] || args.length === 0) throw 'Masukkan nomor untuk dipindai!'
     if (args[0].startsWith('0')) throw 'Gunakan code Negara!'
-    let user = await conn.isOnWhatsApp(args[0].replace(/[^0-9]/g, ''))
+    let user = await conn.onWhatsApp(args[0].replace(/[^0-9]/g, ''))
     let exists = user && user.exists ? true : false
     if (exists) {
         let sameGroup = [], isInDatabase = false
         let chat = conn.chats.all().filter(v => v.jid.endsWith('g.us') && !v.read_only)
         for (let gc of chat) {
             let participants = gc && gc.metadata && gc.metadata.participants ? gc.metadata.participants : []
-            if (participants.some(v => v.jid === user.jid)) sameGroup.push(gc.jid)
+            if (participants.some(v => v.id === user.jid)) sameGroup.push(gc.jid)
         }
         if (user.jid in global.db.data.users) isInDatabase = true
         let str = ` 

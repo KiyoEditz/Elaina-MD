@@ -3,7 +3,7 @@ let handler = async (m, { conn, args, participants, command }) => {
     return { ...value, jid: key }
   })
   let isGC = /g(c|ro?up)/i.test(command)
-  if (isGC) users = users.filter(v => participants.some(p => p.jid == v.jid))
+  if (isGC) users = users.filter(v => participants.some(p => p.id == v.jid))
   let sortedExp = users.map(toNumber('exp')).sort(sort('exp'))
   let sortedLim = users.map(toNumber('limit')).sort(sort('limit'))
   let sortedLevel = users.map(toNumber('level')).sort(sort('level'))
@@ -14,20 +14,18 @@ let handler = async (m, { conn, args, participants, command }) => {
   let text = `
 • *XP Leaderboard ${isGC ? 'Group' : `Top ${len}*`} •
 Kamu: *${usersExp.indexOf(m.sender) + 1}* dari *${usersExp.length}*
-${sortedExp.slice(0, len).map(({ jid, exp, name }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *${exp} Exp*`).join`\n`}
+${sortedExp.slice(0, len).map(({ jid, exp, name }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *${exp} Exp*`).join`\n`}
 
 • *Limit Leaderboard ${isGC ? 'Group' : `Top ${len}*`} •
 Kamu: *${usersLim.indexOf(m.sender) + 1}* dari *${usersLim.length}*
-${sortedLim.slice(0, len).map(({ jid, limit, name }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *${limit} Limit*`).join`\n`}
+${sortedLim.slice(0, len).map(({ jid, limit, name }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *${limit} Limit*`).join`\n`}
 
 • *Level Leaderboard ${isGC ? 'Group' : `Top ${len}*`} •
 Kamu: *${usersLevel.indexOf(m.sender) + 1}* dari *${usersLevel.length}*
-${sortedLevel.slice(0, len).map(({ jid, level, name }, i) => `${i + 1}. ${participants.some(p => jid === p.jid) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *Level ${level}*`).join`\n`}
+${sortedLevel.slice(0, len).map(({ jid, level, name }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *Level ${level}*`).join`\n`}
 `.trim()
   conn.sendButton(m.chat, text, '', 1, ['Leaderboard Group', (!isGC ? '.lbgc' : '')], m, {
-    contextInfo: {
-      mentionedJid: [...usersExp.slice(0, len), ...usersLim.slice(0, len), ...usersLevel.slice(0, len)].filter(v => !participants.some(p => v === p.jid))
-    }
+    mentions: [...usersExp.slice(0, len), ...usersLim.slice(0, len), ...usersLevel.slice(0, len)].filter(v => !participants.some(p => v === p.id))
   })
 }
 handler.help = ['leaderboard', 'leaderboardgroup', 'lb'].map(v => v + ' [jumlah]')

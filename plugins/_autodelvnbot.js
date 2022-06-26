@@ -4,8 +4,8 @@ module.exports = {
         if (chat.autodelvn && !m.fromMe && m.isBaileys && m.mtype === 'audioMessage' && m.msg.ptt && m.quoted) {
             let { key } = await m.reply('.delete', null, {
                 messageId: '3EB0' + require('crypto').randomBytes(12).toString('hex')
-            }).catch(_ => {})
-            if (key) this.deleteMessage(m.chat, key)
+            }).catch(_ => { })
+            if (key) this.sendMessage(m.chat, { delete: key })
         }
     }
 }
