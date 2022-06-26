@@ -68,10 +68,10 @@ handler.before = async function (m) {
 				room.diam = true
 				room.new = true
 				who = room.curr
-				let msgs = this.preSudo('nextkata', who, m).then(async _ => {
-					this.ev.emit('messages.upsert', _)
-				})
 			}
+			let msgs = conn.preSudo('nextkata', who, m).then(async _ => {
+				conn.ev.emit('messages.upsert', _)
+			})
 		}, 30000)
 	}
 	if (room.curr == m.sender) {
@@ -100,7 +100,7 @@ handler.before = async function (m) {
 			room.diam = true
 			who = room.curr
 			let msg = await this.preSudo('nextkata', who, m)
-			this.ev.emit('messages.upsert', msg)
+			conn.ev.emit('messages.upsert', msg)
 		}
 		if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/(Mulai|Tersisa) ?:/i.test(m.quoted.text)) return !0
 		if (m.quoted.id == room.chat.id) {
@@ -128,7 +128,7 @@ handler.before = async function (m) {
 			room.kata = answerF
 			who = room.curr
 			let msg = await this.preSudo('nextkata', who, m)
-			this.ev.emit('messages.upsert', msg)
+			conn.ev.emit('messages.upsert', msg)
 			return !0
 		}
 	} else if (room.curr !== m.sender) {

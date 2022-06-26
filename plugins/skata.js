@@ -35,7 +35,7 @@ let handler = async (m, { conn, text, isPrems, isROwner, usedPrefix, command }) 
 		let room = conn.skata[id]
 		let member = room.player
 		if (room.status == 'play') {
-			if (!room.waktu._destroyed) return conn.reply(m.chat, `Hii @${m.sender.split`@`[0]}, Masih ada game berlangsung di chat ini\nTunggu hingga game berakhir\nLalu ikut bergabung`, room.chat).catch(e => { return !1 })// ketika naileys err
+			if (!room.waktu._destroyed && !room.diam) return conn.reply(m.chat, `Hii @${m.sender.split`@`[0]}, Masih ada game berlangsung di chat ini\nTunggu hingga game berakhir\nLalu ikut bergabung`, room.chat).catch(e => { return !1 })// ketika naileys err
 			delete conn.skata[id]
 		}
 		if (text == 'start' && room.status == 'wait') {
@@ -129,6 +129,12 @@ function filter(text) {
 	let mati = ["q", "w", "r", "t", "y", "p", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"]
 	let misah
 	if (text.length < 3) return text
+// alarm
+if (/([qwrtypsdfghjklzxcvbnm][qwrtypsdfhjklzxcvbnm])$/.test(text)) {
+	let mid = /([qwrtypsdfhjklzxcvbnm])$/.exec(text)[0]
+	return mid
+}
+
 	// mati + voc + ng {kijang, pisang, dalang, dll}
 
 	if (/([qwrtypsdfghjklzxcvbnm][aiueo]ng)$/.test(text)) {
