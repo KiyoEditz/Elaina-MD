@@ -9,7 +9,7 @@ let obj2 = data.group.two
 
 let all = obj_.concat(objhalf).concat(obj).concat(obj2)
 
-let handler = async (m, { conn, args, usedPrefix, isOwner, participants, isPrems, command }) => {
+let handler = async (m, { conn, args, usedPrefix, isOwner, participants, groupMetadata, command }) => {
     if (conn.user.jid !== global.conn.user.jid) {
         if (participants.map(v => v.id).includes(global.conn.user.jid)) throw `Tidak bisa, ada bot master`
     }
@@ -29,11 +29,11 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, isPrems
         if (objhalf.includes(args[0])) masa = 15
         if (obj.includes(args[0])) masa = 30
         if (obj2.includes(args[0])) masa = 60
-        await conn.sendButton(m.chat, `Berhasil inisialisasi\nBot akan keluar dari *${conn.getName(m.chat)}* dalam ${masa} Hari`, `Ketik ${usedPrefix}statusgc`, 1, ['Status Group', `.statusgc`], m)
+        await conn.sendButton(m.chat, `Berhasil inisialisasi\nBot akan keluar dari *${groupMetadata.subject}* dalam ${masa} Hari`, `Ketik ${usedPrefix}statusgc`, 1, ['Status Group', `.statusgc`], m)
         chat.gcdate = new Date() * 1 + 86400000 * masa
         dataJson.expired = new Date() * 1 + 86400000 * masa
     }
-    dataJson.nama = `${conn.getName(m.chat)} (${m.chat})`
+    dataJson.nama = `${groupMetadata.subject} (${m.chat})`
     dataJson.owner_group = m.chat.split`-`[0]
     dataJson.joiner = m.sender
     chat.init = true

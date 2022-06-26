@@ -51,4 +51,6 @@ handler.tags = ['owner']
 handler.command = /^(init|ext(end)?)$/i
 handler.group = true
 handler.premium = true
+
+handler.disabled = 1
 module.exports = handler

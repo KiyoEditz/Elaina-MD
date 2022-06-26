@@ -60,7 +60,7 @@ handler.before = async function (m) {
 			if (index == member.length) room.curr = member[0]
 			else room.curr = member[index]
 			if (member.length == 1 && room.status == 'play') {
-				this.sendButton(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } })
+				await this.sendButton(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } })
 				users[member[0]].exp += room.win_point
 				delete this.skata[id]
 				return !0
@@ -68,10 +68,11 @@ handler.before = async function (m) {
 				room.diam = true
 				room.new = true
 				who = room.curr
+				conn.preSudo('nextkata', who, m).then(async _ => {
+					this.ev.emit('messages.upsert', _)
+				})
 			}
-			let msgs = conn.preSudo('nextkata', who, m).then(async _ => {
-				conn.ev.emit('messages.upsert', _)
-			})
+
 		}, 30000)
 	}
 	if (room.curr == m.sender) {
@@ -90,7 +91,7 @@ handler.before = async function (m) {
 			if (index == (member.length)) room.curr = member[0]
 			else room.curr = member[index]
 			if (member.length == 1 && room.status == 'play') {
-				this.sendButton(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan`, `+${room.win_point}XP\n+${win_skata} MMR`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } })
+				await this.sendButton(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } })
 				users[member[0]].skata += win_skata
 				users[member[0]].exp += room.win_point
 				delete this.skata[id]
@@ -99,8 +100,8 @@ handler.before = async function (m) {
 			room.new = true
 			room.diam = true
 			who = room.curr
-			let msg = await this.preSudo('nextkata', who, m)
-			conn.ev.emit('messages.upsert', msg)
+			let msg = await conn.preSudo('nextkata', who, m)
+			this.ev.emit('messages.upsert', msg)
 		}
 		if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/(Mulai|Tersisa) ?:/i.test(m.quoted.text)) return !0
 		if (m.quoted.id == room.chat.id) {
@@ -127,8 +128,8 @@ handler.before = async function (m) {
 			room.diam = true
 			room.kata = answerF
 			who = room.curr
-			let msg = await this.preSudo('nextkata', who, m)
-			conn.ev.emit('messages.upsert', msg)
+			let msg = await conn.preSudo('nextkata', who, m)
+			this.ev.emit('messages.upsert', msg)
 			return !0
 		}
 	} else if (room.curr !== m.sender) {
