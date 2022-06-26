@@ -4,7 +4,11 @@ let handler = async (m, { conn, args, isOwner, isAdmin }) => {
     throw false
   }
   let users = m.mentionedJid
-  conn.groupMakeAdmin(m.chat, users)
+  conn.groupParticipantsUpdate(
+    m.chat,
+    users,
+    "promote" // replace this parameter with "remove", "demote" or "promote"
+  )
 }
 handler.help = ['promote @user']
 handler.tags = ['admin']

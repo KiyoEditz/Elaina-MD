@@ -5,7 +5,7 @@ let handler = async (m, { conn, text, participants, usedPrefix, command, isAdmin
     throw false
   }
   if (!text) throw `_Masukkan nomor!_ \nContoh:\n\n${usedPrefix + command + ' ' + global.owner[2]}`
-  let _participants = participants.map(user => user.jid)
+  let _participants = participants.map(user => user.id)
   let users = (await Promise.all(
     text.split(',')
       .map(v => v.replace(/[^0-9]/g, ''))
@@ -15,7 +15,11 @@ let handler = async (m, { conn, text, participants, usedPrefix, command, isAdmin
         await conn.isOnWhatsApp(v + '@s.whatsapp.net')
       ])
   )).filter(v => v[1]).map(v => v[0] + '@c.us')
-  let response = await conn.groupAdd(m.chat, users)
+  let response = await await conn.groupParticipantsUpdate(
+    m.chat,
+    users,
+    "add" // replace this parameter with "remove", "demote" or "promote"
+  )
   if (response[users] == 408) throw `_Gagal!_\n\nNomor tersebut telah keluar baru² ini\nHanya bisa masuk lewat *${usedPrefix}link* group`
   let pp = await conn.profilePictureUrl(m.chat).catch(_ => false)
   let jpegThumbnail = pp ? await (await fetch(pp)).buffer() : false
