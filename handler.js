@@ -155,11 +155,9 @@ module.exports = {
             }
             if (m.isBaileys) return
             if (m.chat.endsWith('broadcast')) return // Supaya tidak merespon di status
-            if (!m.isGroup && global.db.data.settings[this.user.jid].groupOnly) return m.reply('Saat ini bot sedang *mode grup* jadi hanya bisa digunakan digrup saja\n\n' + global.group) // Ketika mode grup diaktifkan
-
             m.exp += Math.ceil(Math.random() * 10)
 
-            if (global.db.data.settings[this.user.jid].autoread) await this.chatRead(m.chat, m.isGroup ? m.sender : undefined, m.id || m.key.id).catch(() => { })
+
             let usedPrefix
             let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
 
@@ -167,7 +165,9 @@ module.exports = {
             let isOwner = isROwner || global.db.data.settings[this.user.jid].owner == m.sender || m.fromMe
             let isMods = isOwner || global.mods.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
             let isPrems = isROwner || global.prems.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
-            let groupMetadata = (m.isGroup ? (conn.chats[m.chat] || {}).metadata : {}) || {}
+
+
+            let groupMetadata = (m.isGroup ? (this.groupMetadata || {}).metadata : {}) || {}
             let participants = (m.isGroup ? groupMetadata.participants : []) || []
             let user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {} // User Data
             let bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {} // Your Data
@@ -177,6 +177,7 @@ module.exports = {
                 let plugin = global.plugins[name]
                 if (!plugin) continue
                 if (plugin.disabled) continue
+
                 if (!(opts['restrict'] || global.db.data.settings[this.user.jid].restrict)) { if (plugin.tags && plugin.tags.includes('admin')) continue }
                 const str2Regex = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&')
                 let _prefix = plugin.customPrefix ? plugin.customPrefix : conn.prefix ? conn.prefix : global.prefix
@@ -207,7 +208,8 @@ module.exports = {
                     isPrems,
                     chatUpdate,
                 })) continue
-
+                if (typeof plugin !== 'function')
+                    continue
                 if ((usedPrefix = (match[0] || '')[0])) {
                     let noPrefix = m.text.replace(usedPrefix, '')
                     let [command, ...args] = noPrefix.trim().split` `.filter(v => v)
@@ -232,6 +234,9 @@ module.exports = {
                     if (m.chat in global.db.data.chats || m.sender in global.db.data.users) {
                         let chat = global.db.data.chats[m.chat]
                         let user = global.db.data.users[m.sender]
+
+                        if (!m.isGroup && global.db.data.settings[this.user.jid].groupOnly) return m.reply('Saat ini bot sedang *mode grup* jadi hanya bisa digunakan digrup saja\n\n' + global.group) // Ketika mode grup diaktifkan
+
                         if (!['groupInfo.js', 'unbanchat.js', 'bot-on-off.js', 'sapa.js', 'setting.js'].includes(name) && chat && chat.isBanned && !isOwner) return m.reply(`_Bot telah dinonaktifkan untuk chat ${await this.getName(m.chat)}_ ${this.readmore}\n\n${m.isGroup && isAdmin ? `Silahkan aktifkan ketik ${usedPrefix}bot pada group` : m.isGroup ? `Tunggu hingga admin mengaktikan kembali` : `Silahkan aktifkan ketik ${usedPrefix}bot`}`, m.sender)
                         if (m.chat.endsWith('g.us') && chat.gcdate > (new Date * 1)) chat.init = true
                         if (!['expired.js', 'bot-on-off.js', 'setting.js', 'redeem_use.js', 'sewa.js'].includes(name) && m.chat.endsWith('g.us') && !chat.init && !chat.isBanned) return m.reply(`Group ini belum di inisialiasi\nSilahkan ketik ${usedPrefix}use _KODEREDEEM_\nJika kamu belum punya kode, silahkan hubungi Owner atau ketik ${usedPrefix}premium`, m.chat, m, { mentions: global.prems.map(v => v + '@s.whatsapp.net') })
@@ -332,7 +337,13 @@ module.exports = {
                         }
                     } finally {
                         // m.reply(util.format(_user))
-
+                        if (typeof plugin.after === 'function') {
+                            try {
+                                await plugin.after.call(this, m, extra)
+                            } catch (e) {
+                                console.error(e)
+                            }
+                        }
                         if (m.limit) m.reply(+ m.limit + ' Limit terpakai')
                     }
                     break
@@ -378,7 +389,8 @@ module.exports = {
             } catch (e) {
                 console.log(m, m.quoted, e)
             }
-            if (opts['autoread']) await this.chatRead(m.chat, m.isGroup ? m.sender : undefined, m.id || m.key.id).catch(() => { })
+            if (global.db.data.settings[this.user.jid].autoread) await await this.readMessages([m.key])
+
             let quequeIndex = this.msgqueque.indexOf(m.id || m.key.id)
             if (opts['queque'] && m.text && quequeIndex !== -1) this.msgqueque.splice(quequeIndex, 1)
         }
