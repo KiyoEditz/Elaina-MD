@@ -52,24 +52,25 @@ let handler = async (m, { conn, text, isPrems, isROwner, usedPrefix, command }) 
 			}
 			clearTimeout(room.waktu_list)
 			room.waktu = setTimeout(() => {
-				conn.reply(m.chat, `Waktu jawab habis\n@${room.curr.split`@`[0]} tereliminasi`, room.chat)
-				room.eliminated.push(room.curr)
-				let index = member.indexOf(room.curr)
-				member.splice(index, 1)
-				room.curr = member[0]
-				if (room.player.length == 1 && room.status == 'play') {
-					this.sendButton(m.chat, `@${member[0].split`@`[0]} Menang`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } })
-					users[member[0]].exp += room.win_point
-					delete this.skata[id]
-					return !0
-				}
-				room.diam = true
-				room.new = true
-				let who = room.curr
-				let msgs = conn.preSudo('nextkata', who, m).then(async _ => {
-					conn.ev.emit('messages.upsert', _)
+				conn.reply(m.chat, `Waktu jawab habis\n@${room.curr.split`@`[0]} tereliminasi`, room.chat).then(_ => {
+					room.eliminated.push(room.curr)
+					let index = member.indexOf(room.curr)
+					member.splice(index, 1)
+					room.curr = member[0]
+					if (room.player.length == 1 && room.status == 'play') {
+						db.data.users[member[0]].exp += room.win_point
+						conn.sendButton(m.chat, `@${member[0].split`@`[0]} Menang`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } }).then(_ => {
+							delete conn.skata[id]
+							return !0
+						})
+					}
+					room.diam = true
+					room.new = true
+					let who = room.curr
+					conn.preSudo('nextkata', who, m).then(async _ => {
+						conn.ev.emit('messages.upsert', _)
+					})
 				})
-
 			}, 45000)
 
 		} else if (room.status == 'wait') {
@@ -129,11 +130,11 @@ function filter(text) {
 	let mati = ["q", "w", "r", "t", "y", "p", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"]
 	let misah
 	if (text.length < 3) return text
-// alarm
-if (/([qwrtypsdfghjklzxcvbnm][qwrtypsdfhjklzxcvbnm])$/.test(text)) {
-	let mid = /([qwrtypsdfhjklzxcvbnm])$/.exec(text)[0]
-	return mid
-}
+	// alarm
+	if (/([qwrtypsdfghjklzxcvbnm][qwrtypsdfhjklzxcvbnm])$/.test(text)) {
+		let mid = /([qwrtypsdfhjklzxcvbnm])$/.exec(text)[0]
+		return mid
+	}
 
 	// mati + voc + ng {kijang, pisang, dalang, dll}
 

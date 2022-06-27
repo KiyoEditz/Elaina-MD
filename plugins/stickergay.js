@@ -16,11 +16,9 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     }
     let wasted = `https://some-random-api.ml/canvas/gay?avatar=${url}`
     let stiker = await sticker(null, wasted, 'LGBT -_-', global.author)
-    conn.sendMessage(m.chat, stiker, MessageType.sticker, {
-      quoted: m
-    })
+    conn.sendFile(m.chat, stiker, 'sgay.webp', '', m)
   } catch (e) {
-    throw '_Error.._\n\nCoba matikan pesan sementara'
+    throw '_Error.._'
   }
 }
 handler.help = ['stikergay (caption|reply gambar)']
