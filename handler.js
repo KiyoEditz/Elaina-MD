@@ -455,7 +455,7 @@ module.exports = {
             if (groupUpdate.restrict == false) text = (chats.sRestrictOff || this.sRestrictOff || conn.sRestrictOff || '```Group has been only admin!')
             //console.log('=============\n\ngroupsUpdate \n\n============\n\n' + await groupUpdate)
             if (!text) continue
-            await this.sendButton(id, text, wm, 1['Matikan Fitur', `.off detect`], global.ftroli, { mentions: awaitthis.parseMention(text) })
+            await this.sendButton(id, text, wm, 1, ['Matikan Fitur', `.off detect`], global.ftroli, { mentions: await this.parseMention(text) })
         }
     },
     async delete({ remoteJid, fromMe, id, participant }) {
