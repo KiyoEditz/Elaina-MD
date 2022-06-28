@@ -21,9 +21,7 @@ let handler = async (m, { conn, command }) => {
   let link = `https://some-random-api.ml/canvas/${anu}ed?avatar=${url}`
   // if (wasted.status !== 200) throw e  'Server Error.. Harap lapor owner'
   let stiker = await sticker(null, link, 'hm', global.author)
-  conn.sendMessage(m.chat, stiker, MessageType.sticker, {
-    quoted: m
-  })
+  conn.sendFile(m.chat, stiker, 'sssss.webp', '', m)
 }
 
 handler.help = ['trigger', 'wasted'].map(v => v + ' (caption/reply)')

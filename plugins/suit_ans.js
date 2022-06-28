@@ -51,14 +51,14 @@ klik wa.me/${this.user.jid.split`@`[0]}`, m.chat, {
     let b = /batu/i
     let k = /kertas/i
     let reg = /^(gunting|batu|kertas)/i
-    if (j && reg.test(m.text) && !room.pilih && !m.isGroup) {
+    if (j && reg.test(m.text) && !reg.test(m.msg.selectedButtonId) && !room.pilih && !m.isGroup) {
       room.pilih = reg.exec(m.text.toLowerCase())[0]
       room.text = m.text
       m.reply(`Kamu telah memilih ${m.text} ${!room.pilih2 ? `\n\nMenunggu lawan memilih` : ''}`)
       if (!room.pilih2) this.reply(room.p2, '_Lawan sudah memilih_\nSekarang giliran kamu', 0)
     }
     await delay(1500)
-    if (j2 && reg.test(m.text) && !room.pilih2 && !m.isGroup) {
+    if (j2 && reg.test(m.text) && !reg.test(m.msg.selectedButtonId) && !room.pilih2 && !m.isGroup) {
       room.pilih2 = reg.exec(m.text.toLowerCase())[0]
       room.text2 = m.text
       m.reply(`Kamu telah memilih ${m.text} ${!room.pilih ? `\n\nMenunggu lawan memilih` : ''}`)
@@ -80,7 +80,7 @@ _*Hasil Suit*_${tie ? '\nSERI' : ''}
 
 @${room.p.split`@`[0]} (${room.text}) ${tie ? '' : room.p == win ? ` Menang \n+${room.poin}XP\n+${mmr}MMR` : ` Kalah \n-${room.poin_lose}XP\n-${mmr / 2}MMR`}
 @${room.p2.split`@`[0]} (${room.text2}) ${tie ? '' : room.p2 == win ? ` Menang \n+${room.poin}XP\n+${mmr}MMR` : ` Kalah \n-${room.poin_lose}XP\n-${mmr / 2}MMR`}
-`.trim(), 'Ketik .topsuit untuk leaderboard', 1, ['Leaderboard', '.topsuit'], m, { contextInfo: { mentionedJid: [room.p, room.p2] } })
+`.trim(), 'Ketik .topsuit untuk leaderboard', 1, ['Leaderboard', '.topsuit'], m)
       if (!tie) {
         db.data.users[win == room.p ? room.p : room.p2].exp += room.poin
         db.data.users[win == room.p ? room.p2 : room.p].exp -= room.poin_lose

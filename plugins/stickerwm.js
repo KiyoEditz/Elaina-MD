@@ -25,9 +25,7 @@ let handler = async (m, { conn, text }) => {
       stiker = await sticker(0, link, packname || '', author || '')
     }
   } finally {
-    if (stiker) await conn.sendMessage(m.chat, stiker, MessageType.sticker, {
-      quoted: m
-    })
+    if (stiker) conn.sendFile(m.chat, stiker, 'colongan.webp', '', m)
     else throw 'Reply stikernya!'
   }
 }
