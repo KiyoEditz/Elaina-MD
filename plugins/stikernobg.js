@@ -20,9 +20,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     }, 'apikey')
     let stiker = await sticker(null, nobg, global.packname, global.author)
     await m.reply('_Sedang proses mengirim..._')
-    conn.sendMessage(m.chat, stiker, MessageType.sticker, {
-      quoted: m
-    })
+    conn.sendFile(m.chat, stiker, 'sssss.webp', '', m)
   } catch (e) {
     throw e
     // m.reply('Conversion Failed')

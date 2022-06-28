@@ -1,5 +1,5 @@
 let handler = async (m, { conn }) => {
-    let { anticall, backup, groupOnly, restrict, autoread } = global.db.data.settings[conn.user.jid]
+    let { anticall, backup, groupOnly, restrict, autoread, autoreact } = global.db.data.settings[conn.user.jid]
     const users = Object.values(global.db.data.users)
     const users_registered = users.filter(v => v.registered)
     const chats = Object.values(conn.chats)
@@ -30,6 +30,7 @@ let handler = async (m, { conn }) => {
 ╟ GroupOnly: ${groupOnly ? '✅' : '❌'}
 ╟ Restrict(Add,kick,etc): ${restrict ? '✅' : '❌'}
 ╟ AutoRead: ${autoread ? '✅' : '❌'}
+╟ AutoReact: ${autoreact ? '✅' : '❌'}
 ╚════
     `.trim())
 }

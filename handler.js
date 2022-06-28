@@ -457,7 +457,7 @@ module.exports = {
             if (groupUpdate.restrict == false) text = (chats.sRestrictOff || this.sRestrictOff || conn.sRestrictOff || '```Group has been only admin!')
             //console.log('=============\n\ngroupsUpdate \n\n============\n\n' + await groupUpdate)
             if (!text) continue
-            await this.sendButton(id, text, wm, 1, ['Matikan Fitur', `.off detect`], null, { mentions: await this.parseMention(text) })
+            await this.sendButton(id, text, '.off detect', 1, ['Matikan Fitur', `.off detect`], null, { mentions: await this.parseMention(text) })
         }
     },
     async delete({ remoteJid, fromMe, id, participant }) {
@@ -493,7 +493,7 @@ global.dfail = (type, m, conn) => {
         restrict: 'Fitur ini di *disable*!'
     }[type]
     if (type == 'group') return conn.sendButton(m.chat, msg, 'Ketik #group atau klik tombol dibawah ini', 1, ['Group', '.group'], m)
-    if (type == 'premium') return conn.sendButton(m.chat, msg, 'Ketik #premium atau klik tombol dibawah ini', 'Premium', '.premium', m)
+    if (type == 'premium') return conn.sendButton(m.chat, msg, 'Ketik #premium atau klik tombol dibawah ini', 1['Premium', '.premium'], m)
     if (msg) return m.reply(msg)
 }
 
