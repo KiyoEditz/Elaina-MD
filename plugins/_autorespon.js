@@ -52,12 +52,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     //////////////
     */
 
-    if (m.text.length > 25) this.sendMessage(m.chat, {
-        react: {
-            text: this.pickRandom(['🌷', '🏵️', '🌠', '🐱', '🦄', '🐬', '🐥', '🐠', '⛲', '🏝️']),
-            key: m.key
-        }
-    })
+
 
     // salam
 
@@ -150,8 +145,14 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     @System 
     //////////////////
     */
-
-
+    if (setting.autoreact) {
+        if (m.text.length > 25) this.sendMessage(m.chat, {
+            react: {
+                text: this.pickRandom(['🌷', '🏵️', '🌠', '🐱', '🦄', '🐬', '🐥', '🐠', '⛲', '🏝️']),
+                key: m.key
+            }
+        })
+    }
     // backup db
     // if (new Date() * 1 - setting.status > 1000) {
     //     let _uptime = process.uptime() * 1000
