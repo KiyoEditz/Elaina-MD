@@ -91,7 +91,7 @@ Dan hanya bisa dimainkan oleh player yang terdaftar`.trim()
 	} else {
 		conn.skata[id] = {
 			id,
-			player: isDebug ? ([owner[2] + '@s.whatsapp.net', conn.user.jid]) : [],
+			player: isDebug ? ([owner[2] + '@s.whatsapp.net', conn.user.jid, owner[0] + '@s.whatsapp.net']) : [],
 			status: 'wait',
 			eliminated: [],
 			basi: [],

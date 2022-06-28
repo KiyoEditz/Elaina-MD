@@ -60,10 +60,12 @@ handler.before = async function (m) {
 			if (index == member.length) room.curr = member[0]
 			else room.curr = member[index]
 			if (member.length == 1 && room.status == 'play') {
-				await this.sendButton(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } })
-				users[member[0]].exp += room.win_point
-				delete this.skata[id]
+				this.sendButton(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } }).then(_ => {
+					users[member[0]].exp += room.win_point
+					delete this.skata[id]
+				})
 				return !0
+
 			} else {
 				room.diam = true
 				room.new = true
@@ -75,6 +77,7 @@ handler.before = async function (m) {
 
 		}, 30000)
 	}
+
 	if (room.curr == m.sender) {
 		if (/nyerah/i.test(m.text)) {
 			lose_skata = mmr('lose', room.curr)
