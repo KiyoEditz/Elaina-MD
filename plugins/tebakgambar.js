@@ -38,9 +38,10 @@ Bonus: ${poin} XP
     msg,
     json, poin,
     setTimeout(() => {
-      if (conn.tebakgambar[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, '', 1, ['Tebak Gambar', `.tebakgambar`], m)
-      conn.deleteMessage(m.chat, msg.key)
+      if (conn.tebakgambar[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, '', 1, ['Tebak Gambar', `.tebakgambar`], m).then(_ => {
+      conn.sendMessage(m.chat, { delete :msg.key}).catch(e => e)
       delete conn.tebakgambar[id]
+      })
     }, timeout)
   ]
 }
