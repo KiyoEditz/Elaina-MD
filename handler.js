@@ -156,7 +156,9 @@ module.exports = {
                 }
             }
             if (m.isBaileys) return
-            if (m.chat.endsWith('broadcast')) return // Supaya tidak merespon di status
+            if (m.chat.endsWith('broadcast'))
+                return // Supaya tidak merespon di status
+            if (global.db.data.settings[this.user.jid].autoread) await await this.readMessages([m.key])
             m.exp += Math.ceil(Math.random() * 10)
 
 
@@ -391,7 +393,7 @@ module.exports = {
             } catch (e) {
                 console.log(m, m.quoted, e)
             }
-            if (global.db.data.settings[this.user.jid].autoread) await await this.readMessages([m.key])
+
 
             let quequeIndex = this.msgqueque.indexOf(m.id || m.key.id)
             if (opts['queque'] && m.text && quequeIndex !== -1) this.msgqueque.splice(quequeIndex, 1)

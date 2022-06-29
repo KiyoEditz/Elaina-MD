@@ -22,10 +22,10 @@ handler.all = async function (m, { isOwner }) {
 
     if (/^bot$/i.test(m.text)) {
         if (m.isGroup && chats.isBanned) return
-        this.sendTemplate(m.chat, `
-Hai, ${ucap()} ${user.registered ? name : await this.getName(m.sender, true)} 
+        await this.sendTemplate(m.chat, `
+Hai, ${ucap()} ${user.registered ? name : m.name} 
 ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 3, ['Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd'], m)
-        this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, { mimetype: 'audio/mp4' })
+        this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, { mimetype: 'audio/mp4', messageId: 'VNBOT' })
     }
 
     // 2
@@ -43,7 +43,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             bot: 0,
             date: 0
         }
-        this.reply(m.chat, this.pickRandom(['Iyaa.. Apa?', 'Hai, Bot disini', 'Saya terpanggil', 'Ciee manggil"', 'Apa sob?', 'Apa panggil" -_-', 'Bot bot bot bot tross', 'Kalau mau pakai, pakai aja.. Jngn pnggil" trus..', 'Piuuuu.... Dummmm... ', 'Tetetetetetete mantapu jiwaa']), m)
+        this.reply(m.chat, this.pickRandom(['Iyaa.. Apa?', 'Hai, Bot disini', 'Saya terpanggil', 'Ciee manggil"', 'Apa sob?', 'Apa panggil" -_-', 'Bot bot bot bot tross', 'Kalau mau pakai, pakai aja.. Jngn pnggil" trus..', 'Piuuuu.... Dummmm... ', 'Tetetetetetete mantapu jiwaa']), m, adReply)
     }
 
     /*
@@ -53,11 +53,13 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     */
 
 
-
+    if (m.quoted.id == 'VNBOT') {
+        m.reply(this.pickRandom(['Kenafahh🙄', 'Bagus ya suaraku :v', 'Aku masih bocil kaka 😶']), m.chat, adReply)
+    }
     // salam
 
     if (/(ass?alam)/i.test(m.text)) {
-        m.reply(`_Wa'alaikumsalam Wr. Wb._`)
+        m.reply(`_Wa'alaikumsalam Wr. Wb._`, m.chat, adReply)
     }
 
     //hai
@@ -69,7 +71,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     //sepi
 
     if (/^sepi/i.test(m.text)) {
-        m.reply('Ramein lah ka')
+        m.reply('Ramein lah ka', m.chat, adReply)
     }
 
     // di tag

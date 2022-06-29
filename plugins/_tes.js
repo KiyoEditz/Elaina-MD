@@ -42,7 +42,16 @@ let handler = async (m, { conn, usedPrefix: _p }) => {
                 ]
             }
             return await conn.sendMessage(m.chat, message)*/
-    await conn.reply(m.chat, info, m, { contextInfo: { externalAdReply: { title: global.wm, body: 'Yaw? ada apa kak?', sourceUrl: 'https://instagram.com', thumbnail: fs.readFileSync('./src/avatar_contact.png') } } })
+    await conn.reply(m.chat, info, m, {
+        contextInfo: {
+            externalAdReply: {
+                title: conn.user.name,
+                body: 'Ini Bot',
+                thumbnail: fs.readFileSync('./src/levi.jpg'),
+                sourceUrl: 'https://instagram.com/syahrul_idh',
+            }
+        }
+    })
 }
 handler.customPrefix = /^(tes|tess|test)$/i
 handler.command = new RegExp
