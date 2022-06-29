@@ -3,11 +3,10 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   let [t1, t2] = text.split`|`
   if (!t1) throw `Ketik ${usedPrefix + command} teks`
   let url
-  url = await fetch(global.API('lolhuman', `/photooxy1/${command}`, { text: t1 }, 'apikey')).catch(e => {
-    if (!t1 && !t2) throw `Ketik ${usedPrefix + command} teks | teks2`
-    url = await fetch(global.API('lolhuman', `/photooxy1/${command}`, { text1: t1, text2: t2 }, 'apikey'))
+  url = await fetch(global.API('lolhuman', `/api/photooxy1/${command}`, { text: t1 }, 'apikey')).catch(e => {
+    if (!t1 && !t2) throw `_Masukkan teks 2_\n\nKetik ${usedPrefix + command} teks | teks2`
+    url = await fetch(global.API('lolhuman', `/api/photooxy1/${command}`, { text1: t1, text2: t2 }, 'apikey'))
   })
-
   if (!url.ok) throw 'Server Error.. Harap lapor owner'
   await conn.sendFile(m.chat, await url.buffer(), 'photooxy.jpg', `${command}`, m)
 }

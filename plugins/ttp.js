@@ -9,11 +9,9 @@ let handler = async (m, { command, conn, text, usedPrefix }) => {
   let img = await res.buffer()
   if (!img) throw img
   let stiker = await sticker(img, false, global.packname, global.author)
-  conn.sendMessage(m.chat, stiker, MessageType.sticker, {
-    quoted: m
-  })
+  conn.senFile(m.chat, stiker, 'ttp.webp', '', m)
 }
-handler.help = ['', '1', '2', '3', '4', '5', '6'].map(v => ttp + v + ' <teks>')
+handler.help = ['', '2', '3', '4', '5', '6'].map(v => 'ttp' + v + ' <teks>')
 handler.command = /^ttp[2-6]?$/i
 handler.tags = ['stickertext']
 handler.owner = false

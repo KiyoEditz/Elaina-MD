@@ -1,24 +1,17 @@
 let fetch = require('node-fetch')
 let handler = async (m, { conn, args, usedPrefix, command }) => {
 	if (!(/^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/i.test(args[0]))) throw 'Masukan username tanpa @'
-	let res = await fetch(global.API('xteam', '/dl/ighighlight', {
-		nama: args[0]
-	}, 'APIKEY'))
+	let res = await fetch(global.API('lolhuman', `/api/highlights/${args[0]}`, 'apikey'))
 	if (!res.ok) throw 'Server Error.. Harap lapor owner'
 	let json = await res.json()
-	if (json.result.error) throw json.result.message
-	let { username, items } = json.result
-	for (let { thumbnail, isVideo, url } of items) {
-		thumbnail = await (await fetch(thumbnail)).buffer()
-		conn.sendFile(m.chat, url, 'ig' + (isVideo ? '.mp4' : '.jpg'), `@${username}`, m, false, {
-			thumbnail
-		})
+	if (json.result.length == 0) throw `sorotan tidak ditemukan`
+	for (let link of json.result) {
+		conn.sendFile(m.chat, link, 'ighl' + (link.includes('mp4') ? '.mp4' : '.jpg'), ``, m)
 	}
 }
-handler.help = ['ighightlight <username>']
+handler.help = ['ighightlight', 'igsorotan'].map(v => v + ' <username>')
 handler.tags = ['downloadersosmed']
-
-handler.command = /^(ighighlight)$/i
+handler.command = /^(ig(highlights?|sorotan))$/i
 handler.limit = true
 handler.private = true
 
