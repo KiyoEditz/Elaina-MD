@@ -53,7 +53,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     */
 
 
-    if (m.quoted.id == 'VNBOT') {
+    if (/audio/i.test(m.quoted && m.quoted.mimetype) && m.quoted.id == 'VNBOT') {
         m.reply(this.pickRandom(['Kenafahh🙄', 'Bagus ya suaraku :v', 'Aku masih bocil kaka 😶']), m.chat, adReply)
     }
     // salam
