@@ -3,7 +3,6 @@
 
 const fetch = require('node-fetch')
 const FormData = require('form-data')
-const { MessageType, Mimetype } = require("@adiwajshing/baileys")
 
 let handler = async (m, { conn, usedPrefix }) => {
   let q = m.quoted ? m.quoted : m
