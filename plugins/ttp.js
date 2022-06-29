@@ -13,8 +13,8 @@ let handler = async (m, { command, conn, text, usedPrefix }) => {
     quoted: m
   })
 }
-handler.help = ['ttp', 'ttp2', 'ttp3', 'ttp4'].map(v => v + ' <teks>')
-handler.command = /^ttp[2-4]?$/i
+handler.help = ['', '1', '2', '3', '4', '5', '6'].map(v => ttp + v + ' <teks>')
+handler.command = /^ttp[2-6]?$/i
 handler.tags = ['stickertext']
 handler.owner = false
 handler.mods = false
