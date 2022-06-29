@@ -23,7 +23,7 @@ let handler = async (m, { conn, text }) => {
 👥 *Members:* ${members}
 💚️ *Synopsis:* ${synopsis}
 🌐️ *URL*: ${url}`
-    conn.sendFile(m.chat, image_url, '', animeingfo, m)
+    conn.sendFile(m.chat, image_url, 'img.jpg', animeingfo, m)
 }
 handler.help = ['animeinfo <judul>']
 handler.tags = ['search']
