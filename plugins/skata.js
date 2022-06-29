@@ -40,7 +40,6 @@ let handler = async (m, { conn, text, isPrems, isROwner, usedPrefix, command }) 
 		}
 		if (text == 'start' && room.status == 'wait') {
 			if (!member.includes(m.sender)) return conn.sendButton(m.chat, `Kamu belum ikut`, '', 1, ['Ikut', `${usedPrefix + command}`], m)
-			if (room.status == 'play') return conn.reply(m.chat, `Sambung kata sudah dimulai`, room.chat)
 			if (member.length < 2) throw `Minimal 2 orang`
 			room.curr = member[0]
 			room.status = 'play'
