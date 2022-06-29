@@ -8,9 +8,7 @@ let handler = async (m, { conn, args, usedPrefix }) => {
     throw `Fitur ini hanya untuk stiker via url/link\nGunakan *${usedPrefix}stiker*`
   }
   stiker = await sticker(false, args[0], global.packname, global.author)
-  conn.sendMessage(m.chat, stiker, MessageType.sticker, {
-    quoted: m
-  })
+  conn.senFile(m.chat, stiker, 'stiker.webp', '', m)
 }
 handler.help = ['stiker2 <link>']
 handler.tags = ['sticker']

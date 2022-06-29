@@ -40,13 +40,16 @@ handler.before = async function (m) {
         if (wsf) {
             await wsf.build()
             const sticBuffer = await wsf.get()
-            if (sticBuffer) await this.sendMessage(m.chat, sticBuffer, MessageType.sticker, {
+            if (sticBuffer) await this.sendMessage(m.chat, { sticker: sticBuffer }, {
                 quoted: m,
-                mimetype: 'image/webp'
+                mimetype: 'image/webp',
+                ephemeralExpiration: 86400
             })
         }
-        if (stiker) await this.sendMessage(m.chat, stiker, 'stickerMessage', {
-            quoted: m
+        if (stiker) await this.sendMessage(m.chat, { sticker: stiker }, {
+            quoted: m,
+            mimetype: 'image/webp',
+            ephemeralExpiration: 86400
         })
         // } finally {
         //     if (stiker) {

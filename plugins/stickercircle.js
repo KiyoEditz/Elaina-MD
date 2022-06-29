@@ -23,8 +23,8 @@ let handler = async (m, { conn, usedPrefix, command }) => {
                 blend: 'dest-in'
             }]).webp().toBuffer().then(async buffer => {
                 fs.writeFileSync('./tmp/' + ran, buffer)
-                stiker = await sticker(fs.readFileSync('./tmp/' + ran), false, global.packname, global.author)
-                conn.sendMessage(m.chat, stiker, MessageType.sticker, { quoted: m })
+                let stiker = await sticker(fs.readFileSync('./tmp/' + ran), false, global.packname, global.author)
+                conn.senFile(m.chat, stiker, 'stiker.webp', '', m)
                 fs.unlinkSync('./tmp/' + ran)
 
             })

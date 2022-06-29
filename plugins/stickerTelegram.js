@@ -15,7 +15,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     let stiker
     for (let i of json.result.sticker) {
         stiker = await sticker(false, i, global.packname, global.author)
-        await conn.sendMessage(m.chat, stiker, MessageType.sticker, { quoted: m })
+        conn.senFile(m.chat, stiker, 'stikertele', '', m)
         await delay(2000)
     }
 }

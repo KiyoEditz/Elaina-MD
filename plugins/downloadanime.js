@@ -47,5 +47,5 @@ let handler = async (m, { conn, text, usedPrefix }) => {
 handler.help = ['anime <judul>']
 handler.tags = ['downloaderanime']
 handler.command = /^(anime)$/i
-
+handler.disabled = true
 module.exports = handler

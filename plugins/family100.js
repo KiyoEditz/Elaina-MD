@@ -12,8 +12,6 @@ async function handler(m) {
     let src = JSON.parse(fs.readFileSync(`./src/scrap/family.json`))
     let json = src[Math.floor(Math.random() * src.length)]
 
-    conn.scrapGame(global.API('xteam', '/game/family100', '', 'APIKEY'), 'family').catch(_ => _)
-
     let caption = `
 *Soal:* ${json.soal}
 

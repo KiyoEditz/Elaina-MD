@@ -1,7 +1,5 @@
 const fetch = require('node-fetch')
-
 const { sticker } = require('../lib/sticker')
-const { partialRight } = require('lodash')
 let confirm = {}
 let handler = async (m, { conn, text, usedPrefix, command }) => {
     if (!text) throw `*Perintah ini untuk mengambil stiker dari Stickerly berdasarkan pencarian*\n\nContoh penggunaan:\n${usedPrefix + command} spongebob`
@@ -30,7 +28,7 @@ handler.all = async function (m) {
 
         for (let i of result.stickers) {
             let stiker = await sticker(false, i, global.packname, global.author)
-            await this.sendMessage(m.chat, stiker, MessageType.sticker, { quoted: m })
+            conn.senFile(m.chat, stiker, 'stikerly.webp', '', m)
             await delay(1500)
         }
 

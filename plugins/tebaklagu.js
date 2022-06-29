@@ -42,7 +42,7 @@ handler.tags = ['game']
 handler.command = /^tebaklagu$/i
 handler.group = true
 handler.limit = false
-
+handler.disabled = true
 module.exports = handler
 
 async function scrapGame(api, path) {

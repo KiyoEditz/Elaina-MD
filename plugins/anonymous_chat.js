@@ -1,5 +1,3 @@
-const { MessageType } = require("@adiwajshing/baileys")
-const fs = require('fs')
 async function handler(m, { command, usedPrefix }) {
     command = command.toLowerCase()
     this.anonymous = this.anonymous ? this.anonymous : db.data.sessions[conn.user.jid].anonymous
@@ -14,7 +12,7 @@ async function handler(m, { command, usedPrefix }) {
             if (!room) throw `Kamu tidak sedang berada di anonymous chat, ketik ${usedPrefix}start`
             m.reply('Ok')
             let other = room.other(m.sender)
-            if (other) this.sendMessage(other, 'Partner meninggalkan chat', MessageType.text)
+            if (other) this.reply(other, 'Partner meninggalkan chat')
             delete this.anonymous[room.id]
             if (command === 'leave') break
         }
@@ -22,7 +20,7 @@ async function handler(m, { command, usedPrefix }) {
             if (Object.values(this.anonymous).find(room => room.check(m.sender))) throw 'Kamu masih berada di dalam anonymous chat'
             let room = Object.values(this.anonymous).find(room => room.state === 'WAITING' && !room.check(m.sender))
             if (room) {
-                this.sendMessage(room.a, 'Menemukan partner!', MessageType.text)
+                this.reply(room.a, 'Menemukan partner!')
                 room.b = m.sender
                 room.state = 'CHATTING'
                 m.reply('Menemukan partner!\nSilahkan memulai chat')
