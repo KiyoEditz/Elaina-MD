@@ -413,7 +413,7 @@ module.exports = {
                         text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', groupMetadata.subject).replace('@desc', groupMetadata.desc.toString()) :
                             (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
                         try {
-                            pp = await this.profilePictureUrl(user)
+                            pp = await this.profilePictureUrl(user, 'image')
                             this.sendFile(id, pp, 'pp.jpg', text, null, false, {
                                 mentions: [user]
                             })

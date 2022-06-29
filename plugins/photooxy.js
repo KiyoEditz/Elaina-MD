@@ -23,7 +23,7 @@ handler.command = handler.help = [
   'goldenrose', 'summernature',
   'fallleaves', 'flamming',
   'harrypotter', 'carvedwood',
-  'tiktok', 'arcade8bit',
+  , 'arcade8bit',
   'battlefield4', 'pubg',
   'bannerlol'
 ].sort((a, b) => a - b)

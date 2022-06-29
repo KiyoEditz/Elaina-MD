@@ -4,7 +4,7 @@ let handler = async (m, { conn, usedPrefix }) => {
   let pp = false
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
   try {
-    pp = await conn.profilePictureUrl(who)
+    pp = await conn.profilePictureUrl(who, 'image')
   } catch (e) {
 
   } finally {

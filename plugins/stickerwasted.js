@@ -7,7 +7,7 @@ let handler = async (m, { conn, command }) => {
   let url
   let anu = command.replace('ed', '')
   if (m.mentionedJid[0]) {
-    let buffer = await (await fetch(await conn.profilePictureUrl(m.mentionedJid[0]).catch(e => { throw `Orang yang kamu tag tidak ada PP atau PP nya sedang diprivasi` }))).buffer()
+    let buffer = await (await fetch(await conn.profilePictureUrl(m.mentionedJid[0], 'image').catch(e => { throw `Orang yang kamu tag tidak ada PP atau PP nya sedang diprivasi` }))).buffer()
     url = await uploadImage(buffer)
   } else {
     let q = m.quoted ? m.quoted : m
