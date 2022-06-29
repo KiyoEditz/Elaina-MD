@@ -11,7 +11,7 @@ module.exports = Object.assign(async function handler(m, { text, isPrems, isROwn
     if (!m.quoted.fileSha256) throw 'SHA256 Hash Missing'
     if (!text) throw `Tidak ada teks`
     let sticker = global.db.data.sticker
-    let hash = m.quoted.fileSha256.toString('hex')
+    let hash = Buffer.from(m.quoted.fileSha256).toString('hex')
     if (sticker[hash] && sticker[hash].locked) throw 'You have no permission to change this sticker command'
     sticker[hash] = {
         text,

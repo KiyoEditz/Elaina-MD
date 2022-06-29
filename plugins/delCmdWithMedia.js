@@ -4,7 +4,7 @@ module.exports = Object.assign(async function handler(m, { text, isPrems }) {
         throw false
     }
     let hash = text
-    if (m.quoted && m.quoted.fileSha256) hash = m.quoted.fileSha256.toString('hex')
+    if (m.quoted && m.quoted.fileSha256) hash = Buffer.from(m.quoted.fileSha256).toString('hex')
     if (!hash) throw `Tidak ada hash`
     let sticker = global.db.data.sticker
     let creator = db.data.users[sticker[hash].creator].amount_cmd
