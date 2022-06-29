@@ -7,8 +7,8 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isOwner }) =
 			throw false
 		}
 		let isClose = { // Switch Case Like :v
-			'not_announcement': false,
-			'announcement': true,
+			'open': 'not_announcement',
+			'close': 'announcement',
 		}[(args[0] || '')]
 		if (isClose === undefined)
 			return conn.sendButton(m.chat, '_Silahkan pilih opsi_', 'Pilih aku atau dia hayoo..', 2, ['Buka', '.gc open', 'Tutup', '.gc close'], m)

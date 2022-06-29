@@ -493,7 +493,7 @@ global.dfail = (type, m, conn) => {
         restrict: 'Fitur ini di *disable*!'
     }[type]
     if (type == 'group') return conn.sendButton(m.chat, msg, 'Ketik #group atau klik tombol dibawah ini', 1, ['Group', '.group'], m)
-    if (type == 'premium') return conn.sendButton(m.chat, msg, 'Ketik #premium atau klik tombol dibawah ini', 1['Premium', '.premium'], m)
+    if (type == 'premium') return conn.sendButton(m.chat, msg, 'Ketik #premium atau klik tombol dibawah ini', 1, ['Premium', '.premium'], m)
     if (msg) return m.reply(msg)
 }
 
