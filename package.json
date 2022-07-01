@@ -1,7 +1,7 @@
 {
-    "name": "family",
+    "name": "levibotmd",
     "version": "2.3.5",
-    "description": "Simle Bot WhatsApp with Baileys Multi Device",
+    "description": "Simple Bot WhatsApp with Baileys Multi Device",
     "depecrated": false,
     "main": "index.js",
     "directories": {
@@ -29,20 +29,20 @@
         "stikerin",
         "wabot-aq"
     ],
-    "homepage": "https://github.com/fokusdotid/family-md",
+    "homepage": "https://github.com/syahrularranger/levibotmd",
     "author": {
-        "name": "Fokus ID"
+        "name": "Nurutomo"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/fokusdotid/family-md.git"
+        "url": "git+https://github.com/syahrularranger/levibotmd.git"
     },
     "bugs": {
-        "url": "https://github.com/fokusdotid/family-md/issues"
+        "url": "https://github.com/syahrularranger/levibotmd/issues"
     },
     "license": "GPL-3.0-or-later",
     "dependencies": {
-        "@adiwajshing/baileys": "^4.1.0",
+        "@adiwajshing/baileys": "^4.2.0",
         "@adiwajshing/keyed-db": "^0.2.4",
         "@bochilteam/scraper": "^2.0.0",
         "awesome-phonenumber": "^2.69.0",
