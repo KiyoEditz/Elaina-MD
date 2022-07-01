@@ -1,4 +1,4 @@
-const { joox } = require('../lib/scrape_joox')
+const { joox } = require('../lib/scrape')
 
 const isUrl = str => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi.test(str)
 let handler = async (m, { conn, text, usedPrefix, command }) => {
