@@ -8,9 +8,8 @@ handler.before = async function (m) {
         if (chat.gcdate <= new Date() * 1) {
             chat.gcdate = 0
             chat.init = false
-            await this.reply(m.chat, `Masa aktif bot habis\nWaktunya *${this.user.name}* untuk meninggalkan grup :(\n*Chat owner untuk invite bot lagi*`, 0)
+            await this.reply(m.chat, `Masa aktif bot habis\nBot tidak akan merespon\n\nSilahkan aktivasi lagi`, 0)
             await this.sendContact(m.chat, global.owner[2], 'Owner Bot', false)
-            setTimeout(await this.groupLeave(m.chat), 5000)
         }
     }
     if (json.map(v => v.replace(/[^0-9]/g, '')).includes(m.sender.split`@`[0]) && user.premdate && !user.premdate == 0) {
