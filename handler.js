@@ -171,7 +171,7 @@ module.exports = {
             let isPrems = isROwner || global.prems.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
 
 
-            let groupMetadata = (m.isGroup ? (await this.groupMetadata(m.chat)) : {}) || {}
+            let groupMetadata = (m.isGroup ? (await this.groupMetadata(m.chat).catch(_ => null)) : {}) || {}
             let participants = (m.isGroup ? groupMetadata.participants : []) || []
             let user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {} // User Data
             let bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {} // Your Data
@@ -409,7 +409,7 @@ module.exports = {
             case 'add':
             case 'remove':
                 if (chat.welcome) {
-                    let groupMetadata = await this.groupMetadata(id) || (conn.chats[id] || {}).metadata
+                    let groupMetadata = await this.groupMetadata(id).catch(_ => null) || (conn.chats[id] || {}).metadata
                     for (let user of participants) {
                         let pp = false
                         text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', groupMetadata.subject).replace('@desc', groupMetadata.desc.toString()) :

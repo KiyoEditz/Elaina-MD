@@ -23,6 +23,5 @@ ${link}`)
 handler.help = ['group [open/close]']
 handler.tags = ['group']
 handler.command = /^(group|gc)$/i
-handler.botAdmin = true
 
 module.exports = handler

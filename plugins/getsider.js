@@ -2,7 +2,7 @@ let handler = async (m, { conn }) => {
   if (!m.quoted) throw 'Reply pesan!'
   if (!m.quoted.fromMe) throw false
   if (!m.quoted.id) throw false
-  let members = m.quoted.chat.endsWith('g.us') ? (await conn.groupMetadata(m.quoted.chat)).participants.length - 1 : m.quoted.chat.endsWith('@broadcast') ? -1 : 1
+  let members = m.quoted.chat.endsWith('g.us') ? (await conn.groupMetadata(m.quoted.chat).catch(_ => null)).participants.length - 1 : m.quoted.chat.endsWith('@broadcast') ? -1 : 1
   let { reads, deliveries } = await conn.messageInfo(m.quoted.chat, m.quoted.id)
   let txt = `
 *Dibaca oleh:*
