@@ -1,7 +1,7 @@
-const { igdl, twitter, pin } = require('../lib/scrape')
-const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
-const fetch = require('node-fetch')
-const { tiktokdl } = require('@bochilteam/scraper')
+//const { igdl, twitter, pin } = require('../lib/scrape')
+//const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
+//const fetch = require('node-fetch')
+const { tiktokdl, instagramdl, instagramdlv2, instagramdlv3, instagramdlv4 } = require('@bochilteam/scraper')
 let eror = `Link salah`
 let acc = `Link accept`
 let handler = m => m
@@ -13,7 +13,7 @@ handler.before = async function (m, { isPrems, match }) {
     if (chat.isBanned || user.banned || m.isBaileys) return
 
     if (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com/i.test(m.text)) {
-        if (/(t(ik)?t(ok)?2?) /i.test(m.text)) {
+        if (/..?(t(ik)?t(ok)?2?) /i.test(m.text)) {
             return m.reply(`Kamu bisa download link ini langsung tanpa perintah\nCukup langsung kirim ke chat ini`)
         }
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
@@ -41,15 +41,21 @@ handler.before = async function (m, { isPrems, match }) {
     //     await conn.sendFile(m.chat, json.data.sd.url, '', `HD: ${json.data.hd.url}\nUkuran: ${json.data.hd.size}\n\n© stikerin`, m)
     // }
 
-    // if (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)/i.test(m.text)) {
-    //     igdl(m.text.match(/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.*/i)[0].split(/\n| /i)[0]).then(async res => {
-    //         let json = JSON.parse(JSON.stringify(res))
-    //         await m.reply(wait)
-    //         for (let { downloadUrl, type } of json) {
-    //             this.sendFile(m.chat, downloadUrl, 'ig' + (type == 'image' ? '.jpg' : '.mp4'), '© stikerin', m)
-    //         }
-    //     }).catch(_ => _)
-    // }
+    if (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)/i.test(m.text)) {
+        if (/..?(ig|instagram)2? /i.test(m.text)) {
+            return m.reply(`Kamu bisa download link ini langsung tanpa perintah\nCukup langsung kirim ke chat ini`)
+        }
+        let link = (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
+        m.reply(acc)
+        let dl = await instagramdl(link)
+            .catch(async _ => await instagramdlv2(link))
+            .catch(async _ => await instagramdlv3(link))
+            .catch(async _ => await instagramdlv4(link))
+        for (let { url: link } of dl) {
+            this.sendFile(m.chat, link, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
+                , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        }
+    }
 
     // if (/https?:\/\/(www\.)?(pinterest\.com\/pin|pin\.it)/i.test(m.text)) {
     //     pin(m.text.match(/https?:\/\/(www\.)?(pinterest\.com\/pin|pin\.it).*/i)[0].split(/\n| /i)[0]).then(async res => {
