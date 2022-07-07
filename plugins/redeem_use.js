@@ -18,7 +18,7 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, groupMe
     let dataJson = {}
     let masa
     if (chat.init) throw `Bot di Group ini sudah status *Aktif*`
-    if (chat.trial) throw `_Group ini sudah bernah trial_\n\nSilahkan hubungi owner untuk mendapatkan kode redeem\natau ketik .sewa`
+    if (chat.trial) return conn.sendButton(m.chat, `_Group ini sudah bernah trial/aktivasi selama 1 hari_\n\nGunakan kode premium\nSilahkan hubungi owner untuk mendapatkan/membeli kode redeem`, `atau ketik .premium`, 1, ['Premium', '.premium'], m)
     if (data.used.includes(args[0])) throw `Kode sudah digunakan, silahkan beli kode baru di Owner`
     if (!all.includes(args[0])) throw 'Kode tidak valid'
     else {
@@ -29,7 +29,7 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, groupMe
         if (objhalf.includes(args[0])) masa = 15
         if (obj.includes(args[0])) masa = 30
         if (obj2.includes(args[0])) masa = 60
-        await conn.sendButton(m.chat, `Berhasil inisialisasi\nBot akan keluar dari *${groupMetadata.subject}* dalam ${masa} Hari`, `Ketik ${usedPrefix}statusgc`, 1, ['Status Group', `.statusgc`], m)
+        await conn.sendButton(m.chat, `Berhasil aktivasi\nBot akan aktif di *${groupMetadata.subject}* dalam ${masa} Hari`, ``, 1, ['Sisa waktu bot', `.statusgc`], m)
         chat.gcdate = new Date() * 1 + 86400000 * masa
         dataJson.expired = new Date() * 1 + 86400000 * masa
     }
