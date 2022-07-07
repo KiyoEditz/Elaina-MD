@@ -34,16 +34,8 @@ ${arr.slice(6).join('')}
 Menunggu @${room.game.currentTurn.split('@')[0]}
 Ketik *nyerah* untuk nyerah
 `.trim()
-        if (room.x !== room.o) m.reply(str, room.x, {
-            contextInfo: {
-                mentionedJid: conn.parseMention(str)
-            }
-        })
-        m.reply(str, room.o, {
-            contextInfo: {
-                mentionedJid: conn.parseMention(str)
-            }
-        })
+        if (room.x !== room.o) m.reply(str, room.x)
+        m.reply(str, room.o)
     } else {
         room = {
             id: 'tictactoe-' + (+new Date),
