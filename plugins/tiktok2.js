@@ -20,7 +20,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isPrems }) => {
   }
   await conn.sendFile(m.chat, (mp3 ? audio : url), (new Date * 1) + (mp3 ? '.mp3' : '.mp4'), `@${nickname}\n${description}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
   if (!mp3) {
-    conn.sendButton(m.chat, 'Mau ambil lagu nya?', 'No limit', 1, ['Get', '.ttmusic ' + args[0]], m)
+    conn.reply(m.chat, 'Mau ambil lagu nya?\nKetik .tomp3 ', m)
   }
 }
 handler.help = ['tiktok', 'tiktokmusic'].map(v => v + ' <link>')
