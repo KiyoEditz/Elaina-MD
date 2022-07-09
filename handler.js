@@ -462,7 +462,7 @@ module.exports = {
             await this.sendButton(id, text, '.off detect', 1, ['Matikan Fitur', `.off detect`], null, { mentions: await this.parseMention(text) })
         }
     },
-    async delete({ remoteJid, fromMe, id, participant }) {
+    async delete({ fromMe, id, participant }) {
         if (fromMe) return
         let chats = Object.entries(await this.chats).find(([user, data]) => data.messages && data.messages[id])
         if (!chats) return
