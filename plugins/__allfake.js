@@ -25,7 +25,7 @@ handler.all = async function (m) {
 
 		// externalAdReply atau text with thumbnail. gatau bahasa Inggris? coba translate!
 		let ad = this.pickRandom([{ body: 'Follow IG Owner', sourceUrl: 'https://instagram.com/syahrul_idh' },
-		{ body: 'Klik untuk join GC Bot', sourceUrl: this.pickRandom(global.link) }
+		{ body: 'IG BOT', sourceUrl: this.pickRandom(global.link) }
 		])
 		global.adReply = {
 			contextInfo: {
