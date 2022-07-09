@@ -158,7 +158,7 @@ module.exports = {
             if (m.isBaileys) return
             if (m.chat.endsWith('broadcast'))
                 return // Supaya tidak merespon di status
-            if (global.db.data.settings[this.user.jid].autoread) await await this.readMessages([m.key])
+            if (global.db.data.settings[this.user.jid].autoread) await await this.readMessages([m.key]).catch(e => null)
             m.exp += Math.ceil(Math.random() * 10)
 
 
