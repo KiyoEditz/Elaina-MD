@@ -11,7 +11,7 @@ let fakeOption = {
     "imageMessage": {
       "mimetype": "image/jpeg",
       "caption": `*Bot WhatsApp*`,
-      "jpegThumbnail": fs.readFileSync(`./src/levi.jpg`)
+      "jpegThumbnail": fs.readFileSync(`./src/logo.jpg`)
     }
   }
 }

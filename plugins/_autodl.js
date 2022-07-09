@@ -18,7 +18,7 @@ handler.before = async function (m, { isPrems, match }) {
         }
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
-        const { author: { nickname }, video, description } = await tiktokdl(link)
+        const { author: { nickname }, video, description } = await tiktokdl(link).catch(e => m.reply(eror))
         const url = video.no_watermark || video.no_watermark2 || video.no_watermark_raw || false
         if (!url) throw eror
         await this.sendFile(m.chat, (url), (new Date * 1) + '.mp4', `@${nickname}\n${description}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })

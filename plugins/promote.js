@@ -1,4 +1,4 @@
-let handler = async (m, { conn, args, isOwner, isAdmin }) => {
+let handler = async (m, { conn, isOwner, isAdmin }) => {
   if (!(isAdmin || isOwner)) {
     global.dfail('admin', m, conn)
     throw false

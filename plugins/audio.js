@@ -1,11 +1,14 @@
 
 const fs = require('fs')
 const { exec } = require('child_process')
+let path = require ('path')
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
     try {
-        let q = m.quoted ? { message: { [m.quoted.mtype]: m.quoted } } : m
-        let mime = ((m.quoted ? m.quoted : m.msg).mimetype || '')
+        let q = m.quoted ? m.quoted : m
+        let mime = (q.msg || q).mimetype || ''
+        if (!/audio/i.test(mime)) throw  `Reply vn/audio yang ingin diubah dengan caption *${usedPrefix + command}*`
+        let audio = await q.download()
         let set
         if (/bass/.test(command)) set = '-af equalizer=f=94:width_type=o:width=2:g=30'
         if (/blown/.test(command)) set = '-af acrusher=.1:1:64:0:log'
@@ -19,17 +22,17 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
         if (/slow/.test(command)) set = '-filter:a "atempo=0.7,asetrate=44100"'
         if (/smooth/.test(command)) set = '-filter:v "minterpolate=\'mi_mode=mci:mc_mode=aobmc:vsbmc=1:fps=120\'"'
         if (/tupai|squirrel|chipmunk/.test(command)) set = '-filter:a "atempo=0.5,asetrate=65100"'
-        if (/audio/.test(mime)) {
-            let media = await conn.downloadAndSaveMediaMessage(q)
-            let ran = getRandom('.mp3')
-            exec(`ffmpeg -i ${media} ${set} ${ran}`, (err, stderr, stdout) => {
-                fs.unlinkSync(media)
-                if (err) throw `_*Error!*_`
-                let buff = fs.readFileSync(ran)
-                conn.sendFile(m.chat, buff, ran, null, m, /vn/.test(args[0]), { quoted: m, mimetype: 'audio/mp4' })
-                fs.unlinkSync(ran)
-            })
-        } else throw `Reply vn/audio yang ingin diubah dengan caption *${usedPrefix + command}*`
+        let ran = (new Date * 1) + '.mp3'
+        let media = path.join(__dirname, '../tmp/' + ran)
+        let filename = media + '.mp3'
+        await fs.promises.writeFile(media, audio)
+        exec(`ffmpeg -i ${media} ${set} ${filename}`, async (err) => {
+            await fs.promises.unlink(media)
+            if (err) return Promise.reject( `_*Error!*_`)
+            let buff = await fs.promises.readFile(filename)
+            conn.sendFile(m.chat, buff, ran, null, m, /vn/.test(args[0]), { quoted: m, mimetype: 'audio/mp4' })
+            await fs.promises.unlink(filename)
+        })
     } catch (e) {
         throw e
     }

@@ -24,13 +24,15 @@ handler.all = async function (m) {
 		global.ephemeral = '86400' // 86400 = 24jam, kalo ingin di hilangkan ganti '86400' jadi 'null' atau ''
 
 		// externalAdReply atau text with thumbnail. gatau bahasa Inggris? coba translate!
+		let ad = this.pickRandom([{ body: 'Follow IG Owner', sourceUrl: 'https://instagram.com/syahrul_idh' },
+		{ body: 'Klik untuk join GC Bot', sourceUrl: this.pickRandom(global.link) }
+		])
 		global.adReply = {
 			contextInfo: {
 				externalAdReply: {
 					title: conn.user.name,
-					body: 'Ini Bot',
-					thumbnail: fs.readFileSync('./src/levi.jpg'),
-					sourceUrl: 'https://instagram.com/syahrul_idh',
+					thumbnail: fs.readFileSync('./src/logo.jpg'),
+					...ad
 				}
 			}
 		}

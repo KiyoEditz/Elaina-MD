@@ -3,7 +3,7 @@ let handler = async (m, { conn, isAdmin }) => {
   if (isAdmin) throw 'Padahal udah jadi admin'
   await conn.groupParticipantsUpdate(
     m.chat,
-    m.sender,
+    [m.sender],
     "promote" // replace this parameter with "remove", "demote" or "promote"
   )
 }

@@ -18,7 +18,7 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, groupMe
     let dataJson = {}
     let masa
     if (chat.init) throw `Bot di Group ini sudah status *Aktif*`
-    if (chat.trial) return conn.sendButton(m.chat, `_Group ini sudah bernah trial/aktivasi selama 1 hari_\n\nGunakan kode premium\nSilahkan hubungi owner untuk mendapatkan/membeli kode redeem`, `atau ketik .premium`, 1, ['Premium', '.premium'], m)
+    if (chat.trial && obj_.includes(args[0])) return conn.sendButton(m.chat, `_Group ini sudah bernah trial/aktivasi selama 1 hari_\n\nGunakan kode premium\nSilahkan hubungi owner untuk mendapatkan/membeli kode redeem`, `atau ketik .premium`, 1, ['Premium', '.premium'], m)
     if (data.used.includes(args[0])) throw `Kode sudah digunakan, silahkan beli kode baru di Owner`
     if (!all.includes(args[0])) throw 'Kode tidak valid'
     else {
