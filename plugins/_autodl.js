@@ -16,6 +16,7 @@ handler.before = async function (m, { isPrems, match }) {
         if (/..?(t(ik)?t(ok)?2?) /i.test(m.text)) {
             return m.reply(`Kamu bisa download link ini langsung tanpa perintah\nCukup langsung kirim ke chat ini`)
         }
+
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
         const { author: { nickname }, video, description } = await tiktokdl(link).catch(e => m.reply(eror))
