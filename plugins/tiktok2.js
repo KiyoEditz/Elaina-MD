@@ -12,7 +12,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isPrems }) => {
     if (!isPrems) m.limit = true
     await m.reply('_Sedang proses mengirim..._')
   }
-  await conn.sendFile(m.chat, url, (new Date * 1) + (mp3 ? '.mp3' : '.mp4'), `@${nickname}\n${description}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument, mimetype: (mp3 ? 'audio/mpeg' : null) })
+  await conn.sendFile(m.chat, url, (new Date * 1) + (mp3 ? '.mp3' : '.mp4'), (mp3 ? '' : `@${nickname}\n${description}`), m, null, { asDocument: global.db.data.users[m.sender].useDocument, mimetype: (mp3 ? 'audio/mpeg' : null) })
   if (!mp3) {
     conn.reply(m.chat, 'Mau ambil lagu nya?\nKetik .tomp3 ', m)
   }
