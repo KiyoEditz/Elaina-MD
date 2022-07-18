@@ -32,7 +32,8 @@ handler.all = async function (m) {
 				externalAdReply: {
 					title: conn.user.name,
 					thumbnail: fs.readFileSync('./src/logo.jpg'),
-					...ad
+					...ad,
+					previewType: 'PHOTO'
 				}
 			}
 		}
