@@ -12,10 +12,10 @@ let handler = async (m, { command }) => {
     let now = new Date() * 1
     let distance = date - now
     let time
-    if (distance <= 0) time = `Masa aktif habis`
-    else time = clockString(distance)
+    if (distance <= 0) time = `_*Masa aktif bot di Group ini habis*_`
+    else time = conn.msToDate(distance)
     let str = `
-Status : *${(gc && permanent) ? 'Group Permanent' : gc ? 'Sewa' : prem ? 'User Premium' : 'User'}*${(prem || gc) ? '\nTersisa: ' + (permanent ? ' Infinity' : time) : ''}
+Status : *${(gc && permanent) ? 'Group Permanent' : gc ? 'Aktif' : prem ? 'User Premium' : 'User'}*${(prem || gc) ? '\nTersisa: ' + (permanent ? ' Infinity' : time) : ''}
 `.trim()
     m.reply(str)
 }
@@ -23,11 +23,3 @@ handler.help = ['statusgroup']
 handler.tags = ['group']
 handler.command = /^(status(g(roup|c))?)$/i
 module.exports = handler
-
-function clockString(ms) {
-    let d = isNaN(ms) ? '--' : Math.floor(ms / (3600000 * 24))
-    let h = isNaN(ms) ? '--' : Math.floor((ms % 86400000) / 3600000)
-    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-    return `${d} Hari, ${h} Jam ${m} menit ${s} detik`
-}

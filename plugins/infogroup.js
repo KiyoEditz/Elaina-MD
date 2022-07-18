@@ -36,7 +36,7 @@ Promote: ${sPromote}
 Demote: ${sDemote}
 
 *Sisa Masa Aktif Group:*
-${clockString(global.db.data.chats[m.chat].gcdate ? (global.db.data.chats[m.chat].gcdate - new Date() * 1) : '')}
+${conn.msToDate(global.db.data.chats[m.chat].gcdate ? (global.db.data.chats[m.chat].gcdate - new Date() * 1) : '')}
 `.trim()
         ownernya = [`${m.chat.split`-`[0]}@s.whatsapp.net`]
         let mentionedJid = groupAdmins.concat(ownernya)
@@ -49,11 +49,3 @@ handler.command = /^(gro?upinfo|info(gro?up|gc))$/i
 handler.group = true
 
 module.exports = handler
-
-function clockString(ms) {
-    let d = isNaN(ms) ? '--' : Math.floor(ms / (3600000 * 24))
-    let h = isNaN(ms) ? '--' : Math.floor((ms % 86400000) / 3600000)
-    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-    return `${d} Hari, ${h} Jam ${m} menit ${s} detik`
-}

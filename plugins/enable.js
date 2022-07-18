@@ -181,6 +181,14 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
       }
       setting.autoreact = isEnable
       break
+    case 'respon':
+      isAll = true
+      if (!isOwner) {
+        global.dfail('owner', m, conn)
+        throw false
+      }
+      setting.autoresp = isEnable
+      break
     default:
       if (!/[01]/.test(command)) throw `
 ╔═〘 Daftar Opsi 〙

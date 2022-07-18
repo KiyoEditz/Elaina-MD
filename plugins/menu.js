@@ -10,7 +10,7 @@ let fakeOption = {
   message: {
     "imageMessage": {
       "mimetype": "image/jpeg",
-      "caption": `*Bot WhatsApp*`,
+      "caption": `LevBot WhatsApp`,
       "jpegThumbnail": fs.readFileSync(`./src/logo.jpg`)
     }
   }
@@ -436,10 +436,3 @@ handler.tags = ['menuringkas']
 handler.command = /^(menu)$/i
 handler.exp = 3
 module.exports = handler
-
-function clockString(ms) {
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}

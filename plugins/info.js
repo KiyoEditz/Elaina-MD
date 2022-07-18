@@ -1,5 +1,5 @@
 let handler = async (m, { conn }) => {
-    let { anticall, backup, groupOnly, restrict, autoread, autoreact } = global.db.data.settings[conn.user.jid]
+    let { anticall, backup, groupOnly, restrict, autoread, autoreact, autoresp } = global.db.data.settings[conn.user.jid]
     const users = Object.values(global.db.data.users)
     const users_registered = users.filter(v => v.registered)
     const chats = Object.values(conn.chats)
@@ -8,7 +8,7 @@ let handler = async (m, { conn }) => {
     let allHits = Object.entries(global.db.data.stats).map(v => v[1].total).reduce((a, b) => a + b)
     let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
     let _uptime = process.uptime() * 1000
-    let uptime = clockString(_uptime)
+    let uptime = conn.clockString(_uptime)
     m.reply(`
 ╔═〘 Info Bot 〙
 ╟ Aktif selama ${uptime}
@@ -31,6 +31,7 @@ let handler = async (m, { conn }) => {
 ╟ Restrict(Add,kick,etc): ${restrict ? '✅' : '❌'}
 ╟ AutoRead: ${autoread ? '✅' : '❌'}
 ╟ AutoReact: ${autoreact ? '✅' : '❌'}
+╟ AutoRespon: ${autoresp ? '✅' : '❌'}
 ╚════
     `.trim())
 }
@@ -39,10 +40,3 @@ handler.tags = ['info']
 handler.command = /^info$/i
 
 module.exports = handler
-
-function clockString(ms) {
-    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
-    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-    return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}

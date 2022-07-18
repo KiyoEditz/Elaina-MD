@@ -23,7 +23,7 @@ let handler = (m, { conn, text, args, isROwner, usedPrefix }) => {
     users[who].banned = true
     users[who].bannedreason = reason
     users[who].bannedtime = (new Date * 1) + 86400000 * (time || 1)
-    m.reply(`_*Kontak tersebut telah berhasil dibanned*_\nBot tidak akan merespon nomor tersebut selama ${clockString(users[who].bannedtime - new Date * 1)}.. \n\nHubungi Owner untuk membuka banned`)
+    m.reply(`_*Kontak tersebut telah berhasil dibanned*_\nBot tidak akan merespon nomor tersebut selama ${conn.msToDate(users[who].bannedtime - new Date * 1)}.. \n\nHubungi Owner untuk membuka banned`)
 }
 handler.help = ['ban @user']
 handler.tags = ['owner']
@@ -37,11 +37,3 @@ handler.owner = true
 //     }
 // }
 module.exports = handler
-
-function clockString(ms) {
-    let d = isNaN(ms) ? '--' : Math.floor(ms / (3600000 * 24))
-    let h = isNaN(ms) ? '--' : Math.floor((ms % 86400000) / 3600000)
-    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-    return `${d} Hari, ${h} Jam ${m} menit ${s} detik`
-}

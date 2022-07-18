@@ -1,22 +1,40 @@
 let free = 500
 const prem = 20000
 let levelling = require('../lib/levelling')
+let fs = require('fs')
+let data = JSON.parse(fs.readFileSync('src/code_redeem.json'))
+let obj_ = data.group.trial
+let objhalf = data.group.half
+let obj = data.group.one
+let obj2 = data.group.two
 
-let handler = async (m, { conn, isPrems, isMods, command }) => {
+let handler = async (m, { conn, isPrems, isMods, text, command }) => {
   let users = global.db.data.users[m.sender]
   let { level, exp } = users
   let levelpast = levelling.findLevel(exp)
   let xp = (isPrems ? prem : free) * level / 100 + free
   let xpAfter = (isPrems ? prem : free) * levelpast / 100 + free
   let time = users.lastclaim + ((isPrems || isMods) ? 86400000 : 43200000)
-  if (new Date - users.lastclaim < ((isPrems || isMods) ? 86400000 : 43200000)) throw `Kamu sudah mengklaim klaim harian hari ini\ntunggu selama ${msToTime(time - new Date())} lagi`
-  if (!users.autolevelup && !/force/i.test(command) && levelling.canLevelUp(users.level, users.exp, global.multiplier)) return conn.sendButton(m.chat, `_Kamu memiliki XP yang cukup untuk menaikan level_ *${level + ' - ' + levelpast}*`, `Naikann level! kamu akan dapat lebih banyak XP setiap claim harian\n\nClaim sekarang : ${xp}\nClaim setelah naik level : ${xpAfter}`, 2, ['Ya, naikan level', '.levelup', 'Tidak, claim biasa', '.claimforce'], m)
+  let timecode = (users.lastclaim_code) + 86400000
+  let code = newCode('trial')
+  while (data.used.includes(code)) {
+    code = newCode()
+  }
+  let kode = /kode/i.test(text)
+  if (new Date - users.lastclaim < ((isPrems || isMods) ? 86400000 : 43200000) && !kode) throw `Kamu sudah mengklaim klaim harian hari ini\ntunggu selama ${conn.msToDate(time - new Date())} lagi`
+  if (!users.autolevelup && !/force/i.test(command) && !kode && levelling.canLevelUp(users.level, users.exp, global.multiplier)) return conn.sendButton(m.chat, `_Kamu memiliki XP yang cukup untuk menaikan level_ *${level + ' - ' + levelpast}*`, `Naikann level! kamu akan dapat lebih banyak XP setiap claim harian\n\nClaim sekarang : ${xp}\nClaim setelah naik level : ${xpAfter}`, 2, ['Ya, naikan level', '.levelup', 'Tidak, claim biasa', '.claimforce'], m)
   if (isPrems) users.limit += 10
+  if (text && kode) {
+    if (m.isGroup) throw `_Hanya bisa klaim kode di chat Pribadi_`
+    if (new Date - users.lastclaim_code < (86400000 * 2)) throw `_Kamu sudah mengklaim klaim kode reedem group gratis_\ntunggu selama ${conn.msToDate(timecode - new Date())} lagi\n\nKamu dapat klaim kode group gratis dalam 2 hari sekali`
+    conn.sendButton(m.chat, `*Jenis:* Trial (1 Hari)\n*Kode:* ${code}\n\n_Cara menggunakan:_\nKetik .use kode\nKetik di group yang ingin kamu aktifkan bot nya dan pastikan Bot sudah ditambahkan oleh admin\n\n Contoh: .use ABCDEFGHIJKLAM`, `Jika kamu ingin mendapatkan kode Premium dengan masa aktif lebih banyak, silahkan ketik _*.premium*_ atau bisa klik tombol dibawah ini`, 1, ['Kode Premium', '.premium'])
+    users.lastclaim_code = new Date * 1 + 86400000
+  } else {
+    users.exp += xp
+    m.reply(`+${xp} XP ${isPrems ? '\n+10 Limit' : ''}`)
+    users.lastclaim = new Date * 1
 
-
-  users.exp += xp
-  m.reply(`+${xp} XP ${isPrems ? '\n+10 Limit' : ''}`)
-  users.lastclaim = new Date * 1
+  }
 }
 handler.help = ['claim', 'daily']
 handler.tags = ['xp']
@@ -24,14 +42,23 @@ handler.command = /^(daily|claim)(force)?$/i
 
 module.exports = handler
 
-function msToTime(duration) {
-  let seconds = Math.floor((duration / 1000) % 60)
-  let minutes = Math.floor((duration / (1000 * 60)) % 60)
-  let hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
-
-  hours = (hours < 10) ? "0" + hours : hours
-  minutes = (minutes < 10) ? "0" + minutes : minutes
-  seconds = (seconds < 10) ? "0" + seconds : seconds
-
-  return hours + " jam " + minutes + " menit"
+function newCode(text) {
+  let code
+  switch (text) {
+    case 'trial':
+      code = obj_[Math.floor(Math.random() * 1000)]
+      break;
+    case 'half':
+      code = objhalf[Math.floor(Math.random() * 1000)]
+      break;
+    case 'one':
+      code = obj[Math.floor(Math.random() * 1000)]
+      break;
+    case 'two':
+      code = obj2[Math.floor(Math.random() * 1000)]
+      break;
+    default:
+      code = false
+  }
+  return code
 }

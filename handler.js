@@ -28,6 +28,7 @@ module.exports = {
                     if (!isNumber(user.exp)) user.exp = 0
                     if (!isNumber(user.limit)) user.limit = 10
                     if (!isNumber(user.lastclaim)) user.lastclaim = 0
+                    if (!isNumber(user.lastclaim_code)) user.lastclaim_code = 0
                     if (!isNumber(user.unreg)) user.unreg = 0
                     if (!('registered' in user)) user.registered = false
                     if (!user.registered) {
@@ -47,6 +48,7 @@ module.exports = {
                     exp: 0,
                     limit: 10,
                     lastclaim: 0,
+                    lastclaim_code: 0,
                     unreg: 0,
                     registered: false,
                     name: m.name,
@@ -108,7 +110,8 @@ module.exports = {
                     if ((!'restrict' in settings)) settings.restrict = false
                     if (!('owner' in settings)) settings.owner = false
                     if (!('autoread' in settings)) settings.autoread = false
-                    if (!('autoreact' in settings)) settings.autoread = true
+                    if (!('autoresp' in settings)) settings.autoresp = false
+                    if (!('autoreact' in settings)) settings.autoreact = true
                 } else global.db.data.settings[this.user.jid] = {
                     anticall: true,
                     backup: false,
@@ -119,7 +122,8 @@ module.exports = {
                     restrict: false,
                     owner: false,
                     autoread: false,
-                    autoreact: true
+                    autoreact: true,
+                    autoresp: false
                 }
 
                 let sessions = global.db.data.sessions[this.user.jid]
@@ -243,8 +247,8 @@ module.exports = {
 
                         if (!['groupInfo.js', 'unbanchat.js', 'bot-on-off.js', 'sapa.js', 'setting.js'].includes(name) && chat && chat.isBanned && !isOwner) return m.reply(`_Bot telah dinonaktifkan untuk chat ${await this.getName(m.chat)}_ ${this.readmore}\n\n${m.isGroup && isAdmin ? `Silahkan aktifkan ketik ${usedPrefix}bot pada group` : m.isGroup ? `Tunggu hingga admin mengaktikan kembali` : `Silahkan aktifkan ketik ${usedPrefix}bot`}`, m.sender)
                         if (m.chat.endsWith('g.us') && chat.gcdate > (new Date * 1)) chat.init = true
-                        if (!['expired.js', 'bot-on-off.js', 'setting.js', 'redeem_use.js', 'sewa.js'].includes(name) && m.chat.endsWith('g.us') && !chat.init && !chat.isBanned) return conn.sendButton(m.chat, `Group ini belum diaktivasi\n*Silahkan dapatkan kode aktivasi* kemudian ketik ${usedPrefix}use _KODEREDEEMNYA_\n\n*Jika kamu belum punya kode, silahkan minta ke Owner atau membeli dengan mengetik ${usedPrefix}premium*`, ``, 2, ['Premium', '.premium', 'Owner', '.owner'], m)
-                        if (!['unbanuser.js', '_banned.js', 'profile.js', 'creator.js'].includes(name) && user && user.banned) return m.reply(`*Kamu telah dibanned..*\n_Dikarena kamu telah melakukan pelanggaran Bot_\nHitung mundur:${clockString(user.bannedtime - new Date * 1)}\n\natau Silahkan hubungi owner untuk membuka ban`, m.sender)
+                        if (!['expired.js', 'bot-on-off.js', 'setting.js', 'redeem_use.js', 'sewa.js'].includes(name) && m.chat.endsWith('g.us') && !chat.init && !chat.isBanned) return conn.sendButton(m.chat, `Group ini belum diaktivasi\n*Dapatkan kode aktivasi* kemudian ketik ${usedPrefix}use _KODEREDEEMNYA_\n\n*Jika kamu belum punya kode, silahkan ketik _.claim kode_ untuk mendapatkan kode free atau juga bisa beli dengan mengetik ${usedPrefix}premium*`, ``, 2, ['Premium', '.premium', 'Owner', '.owner'], m)
+                        if (!['unbanuser.js', '_banned.js', 'profile.js', 'creator.js'].includes(name) && user && user.banned) return m.reply(`*Kamu telah dibanned..*\n_Dikarena kamu telah melakukan pelanggaran Bot_\nHitung mundur:${this.msToDate(user.bannedtime - new Date * 1)}\n\natau Silahkan hubungi owner untuk membuka ban`, m.sender)
                         if (!global.db.data.chats[m.chat].game) {
                             if (plugin.tags && plugin.tags.includes('game')) return m.reply(`Game sedang dimatikan untuk chat ini${this.readmore}\nSilahkan ketik ${usedPrefix}setting`)
                         }
@@ -508,11 +512,3 @@ fs.watchFile(file, () => {
     delete require.cache[file]
     if (global.reloadHandler) console.log(global.reloadHandler())
 })
-
-function clockString(ms) {
-    let d = isNaN(ms) ? '--' : Math.floor(ms / (3600000 * 24))
-    let h = isNaN(ms) ? '--' : Math.floor((ms % 86400000) / 3600000)
-    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-    return `${d} Hari, ${h} Jam ${m} menit ${s} detik`
-}
