@@ -52,6 +52,7 @@ handler.before = async function (m, { isPrems, match }) {
             .catch(async _ => await instagramdlv2(link))
             .catch(async _ => await instagramdlv3(link))
             .catch(async _ => await instagramdlv4(link))
+            .catch(e => m.reply(eror))
         for (let { url: link } of dl) {
             this.sendFile(m.chat, link, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
                 , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument })

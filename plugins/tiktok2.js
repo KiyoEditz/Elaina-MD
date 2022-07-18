@@ -5,7 +5,7 @@ let fetch = require('node-fetch')
 let handler = async (m, { conn, args, usedPrefix, command, isPrems }) => {
   let link = /https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i
   if (!(link.test(args[0]) && args[0])) throw `Contoh\n\nKetik ${usedPrefix}tiktok https://vm.tiktok/blbala`
-  const { author: { nickname }, video, description } = await tiktokdl(args[0])
+  const { author: { nickname }, video, description } = await tiktokdl(args[0]).catch(e => m.reply(`Link salah`))
   const url = video.no_watermark || video.no_watermark2 || video.no_watermark_raw
   let mp3 = /musi[ck]/i.test(command)
   if (!mp3) {

@@ -8,6 +8,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     .catch(async _ => await instagramdlv2(args[0]))
     .catch(async _ => await instagramdlv3(args[0]))
     .catch(async _ => await instagramdlv4(args[0]))
+    .catch(e => m.reply('Link salah'))
   await m.reply('_Sedang proses mengirim..._')
   for (let { url: link } of dl) {
     conn.sendFile(m.chat, link, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
