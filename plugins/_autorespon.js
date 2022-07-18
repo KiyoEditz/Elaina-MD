@@ -26,15 +26,15 @@ handler.all = async function (m, { isOwner }) {
 Hai, ${ucap()} ${user.registered ? name : m.name} 
 ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 3, ['Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd'], m)
         this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, {
-
             mimetype: 'audio/mp4',
-            // messageId: 'VNBOT'
+            messageId: 'VNBOT678901'
         })
     }
 
     // 2
 
     if (/ bot |^bot | bot$/i.test(m.text) && !chats.isBanned) {
+        if (!setting.autoresp) return
         this.respon = this.respon ? this.respon : {}
         if (m.chat in this.respon) {
             if (this.respon[m.chat].date > new Date() * 1 && this.respon[m.chat].date !== 0) return
@@ -47,7 +47,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             bot: 0,
             date: 0
         }
-        this.reply(m.chat, this.pickRandom(['Iyaa.. Apa?', 'Hai, Bot disini', 'Saya terpanggil', 'Ciee manggil"', 'Apa sob?', 'Apa panggil" -_-', 'Bot bot bot bot tross', 'Kalau mau pakai, pakai aja.. Jngn pnggil" trus..', 'Piuuuu.... Dummmm... ', 'Tetetetetetete mantapu jiwaa']), m, adReply)
+        m.reply(this.pickRandom(['Iyaa.. Apa?', 'Hai, Bot disini', 'Saya terpanggil', 'Ciee manggil"', 'Apa sob?', 'Apa panggil" -_-', 'Bot bot bot bot tross', 'Kalau mau pakai, pakai aja.. Jngn pnggil" trus..', 'Piuuuu.... Dummmm... ', 'Tetetetetetete mantapu jiwaa']), m.chat, fakeImgReply)
     }
 
     /*
@@ -57,13 +57,13 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     */
 
 
-    if (/audio/i.test(m.quoted && m.quoted.mimetype) && m.quoted.id == 'VNBOT') {
-        m.reply(this.pickRandom(['Kenafahh🙄', 'Bagus ya suaraku :v', 'Aku masih bocil kaka 😶']), m.chat, adReply)
+    if (/audio/i.test(m.quoted && m.quoted.mimetype) && /vnbot/i.test(m.quoted.id)) {
+        m.reply(this.pickRandom(['Kenafahh🙄', 'Bagus ya suaraku :v', 'Aku masih bocil kaka 😶']), m.chat, fakeImgReply)
     }
     // salam
 
     if (/(ass?alam)/i.test(m.text)) {
-        m.reply(`_Wa'alaikumsalam Wr. Wb._`, m.chat, adReply)
+        m.reply(`_Wa'alaikumsalam Wr. Wb._`, m.chat, fakeImgReply)
     }
 
     //hai
@@ -75,7 +75,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     //sepi
 
     if (/^sepi/i.test(m.text)) {
-        m.reply('Ramein lah ka', m.chat, adReply)
+        m.reply('Ramein lah ka', m.chat, fakeImgReply)
     }
 
     // di tag
@@ -184,9 +184,3 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
 }
 
 module.exports = handler
-function clockString(ms) {
-    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
-    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-    return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
-}
