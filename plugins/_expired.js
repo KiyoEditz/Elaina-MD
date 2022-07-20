@@ -8,9 +8,17 @@ handler.before = async function (m) {
         if (chat.gcdate <= new Date() * 1) {
             chat.gcdate = 0
             chat.init = false
-            await this.reply(m.chat, `Masa aktif bot habis\nBot tidak akan merespon\n\nSilahkan aktivasi lagi`, 0)
+            chat.lastUse = new Date() * 1
+            chat.trialnotif = false
+            await this.reply(m.chat, `Masa aktif bot habis\nBot tidak akan merespon\n\nSilahkan aktivasi lagi setelah 2 hari`, 0)
             await this.sendContact(m.chat, global.owner[2], 'Owner Bot', false)
         }
+    }
+    if (new Date - chat.lastUse > 86400000) {
+        if (!chat.trialnotif) return this.reply(m.chat, `Bot sudah dapat diaktivasi lagi, silahkan masukkan kode redeem`)
+        chat.trial = 0
+        chat.lastUse = -1
+        chat.trialnotif = true
     }
     if (json.map(v => v.replace(/[^0-9]/g, '')).includes(m.sender.split`@`[0]) && user.premdate && !user.premdate == 0) {
         if (user.premdate < new Date() * 1) {

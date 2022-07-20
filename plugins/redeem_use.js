@@ -13,13 +13,13 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, groupMe
     if (conn.user.jid !== global.conn.user.jid) {
         if (participants.map(v => v.id).includes(global.conn.user.jid)) throw `Tidak bisa, ada bot master`
     }
-    if (!args[0]) throw `Masukkan kode redeem`
     let chat = global.db.data.chats[m.chat]
     let dataJson = {}
     let masa
     if (chat.init) throw `Bot di Group ini sudah status *Aktif*`
-    if (chat.trial && obj_.includes(args[0])) return conn.sendButton(m.chat, `_Group ini sudah bernah trial/aktivasi selama 1 hari_\n\nGunakan kode premium\nSilahkan hubungi owner untuk mendapatkan/membeli kode redeem`, `atau ketik .premium`, 1, ['Premium', '.premium'], m)
-    if (data.used.includes(args[0])) throw `Kode sudah digunakan, silahkan beli kode baru di Owner`
+    if (chat.trial && obj_.includes(args[0])) return conn.sendButton(m.chat, `_Group ini sudah bernah trial/aktivasi selama 1 hari_\n\nGunakan lagi setelah ${conn.msToDate(chat.lastUse + 86400000 - new Date * 1)}\n\n Atau bisa juga aktivasi dengan kode premium\nSilahkan hubungi owner untuk mendapatkan/membeli kode redeem`, `atau ketik .premium`, 1, ['Premium', '.premium'], m)
+    if (!args[0]) throw `Masukkan kode redeem`
+    if (data.used.includes(args[0])) throw `Kode sudah digunakan, silahkan da[atkan kode baru di Owner`
     if (!all.includes(args[0])) throw 'Kode tidak valid'
     else {
         if (obj_.includes(args[0])) {
