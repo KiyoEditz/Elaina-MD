@@ -125,6 +125,9 @@ async function genKata() {
 	}
 	return result
 }
+/*@@@@
+Nge filter biar yang keambil akhir dari suku jkata nya 
+@@@@*/
 function filter(text) {
 	let mati = ["q", "w", "r", "t", "y", "p", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"]
 	let misah
@@ -134,9 +137,7 @@ function filter(text) {
 		let mid = /([qwrtypsdfhjklzxcvbnm])$/.exec(text)[0]
 		return mid
 	}
-
 	// mati + voc + ng {kijang, pisang, dalang, dll}
-
 	if (/([qwrtypsdfghjklzxcvbnm][aiueo]ng)$/.test(text)) {
 		let mid = /([qwrtypsdfghjklzxcvbnm][aiueo]ng)$/.exec(text)[0]
 		return mid
@@ -156,16 +157,16 @@ function filter(text) {
 	// mati { kuku, batu, kamu, aku, saya, dll}
 	else {
 		let res = Array.from(text).filter(v => mati.includes(v))
-		let resu = res[res.length - 1]
+		let result = res[res.length - 1]
 		for (let huruf of mati) {
 			if (text.endsWith(huruf)) {
-				resu = res[res.length - 2]
+				result = res[res.length - 2]
 			}
 		}
-		misah = text.split(resu)
-		if (text.endsWith(resu)) {
-			return resu + misah[misah.length - 2] + resu
+		misah = text.split(result)
+		if (text.endsWith(result)) {
+			return result + misah[misah.length - 2] + result
 		}
-		return resu + misah[misah.length - 1]
+		return result + misah[misah.length - 1]
 	}
 }
