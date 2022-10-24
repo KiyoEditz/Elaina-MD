@@ -5,12 +5,12 @@ let handler = async (m, { conn, usedPrefix }) => {
   let { min, xp, max } = levelling.xpRange(level, global.multiplier)
   let math = max - exp
   conn.sendButton(m.chat, `
-*Nama :* ${name}
-*XP   :* ${exp} (${exp - min}/ ${xp})
+*Nama     :* ${name}
+*XP       :* ${exp} (${exp - min}/ ${xp})
 [${math <= 0 ? `Siap untuk ${usedPrefix}levelup` : `Butuh ${math} XP lagi untuk levelup`}]
-*Level:* ${level}
-*Role :* ${role}
-*Limit :* ${limit} 
+*Level    :* ${level}
+*Role     :* ${role}
+*Limit    :* ${limit} 
 *MMR Total:* ${suit + (skata ? skata : 1)} `.trim(), `${conn.readmore}
 Harga penukaran 1 limit = -350 XP
 
