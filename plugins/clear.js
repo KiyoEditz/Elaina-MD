@@ -9,11 +9,11 @@ let handler = async (m, { conn, command, args }) => {
   let isDelete = /^(delete)/i.test(command)
   let isClear = /^(clear)/i.test(command)
   for (let id of chats) {
-    if (isDelete || isClear) await conn.modifyChat(id, (isDelete ? 'delete' : 'clear'), {
+    if (isDelete || isClear) await conn.chatModify(id, (isDelete ? 'delete' : 'clear'), {
       includeStarred: false
     }).catch(console.log)
-    else if (/unmute/i.test(command)) await conn.modifyChat(id, 'unmute').catch(console.log)
-    else await conn.modifyChat(id, 'mute', -Math.floor(new Date / 1e3) * 1e3 - 1e3).catch(console.log)
+    else if (/unmute/i.test(command)) await conn.chatModify({ mute: null }, id, []).catch(console.log)
+    else await conn.chatModify({ mute: 8 * 60 * 60 * 1000 }, id, []).catch(console.log)
     delay(1500)
   }
   conn.reply(m.chat, chats.length + ` chat ${args[0] ? args[0] : ''} telah dib` + ((isDelete || isClear) ? 'ersihkan' : 'isukan selamanya'), m)
