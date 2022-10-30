@@ -1,7 +1,7 @@
 let handler = async (m, { conn, text }) => {
     if (!text) throw `Masukan Nama Baru Untuk Group`
     try {
-        await conn.groupUpdateSubject(text)
+        await conn.groupUpdateSubject(m.chat, text)
         conn.reply(m.chat, 'Sukses Mengganti Nama Group', m)
     } catch (e) {
         console.log(e)
