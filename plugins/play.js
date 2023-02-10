@@ -1,7 +1,8 @@
 const limit = 30
 const yts = require('yt-search')
 const fetch = require('node-fetch')
-const { servers, yta, ytv } = require('../lib/y2mate')
+const { yta, ytv } = require('../lib/y2mate')
+const { youtubedlv2 } = require('@bochilteam/scraper')
 let confirmation = {}
 let confirmation2 = {} //rencana mau bikin audio/video
 
@@ -46,31 +47,28 @@ handler.all = async function (m) {
     await m.reply(`_Nomor ${t} telah dipilih_`)
     let yt = false
     let temu = pilih.find((v, i) => i == (t - 1))
-    let usedServer = servers[0]
-    for (let i in servers) {
-      let server = servers[i]
-      try {
-        yt = await (isVideo ? ytv : yta)(temu.url, server)
-        usedServer = server
-        break
-      } catch (e) {
-        m.reply(`Server ${server} error!${servers.length >= i + 1 ? '' : '\nmencoba server lain...'}`)
-      }
-    }
-    if (yt === false) throw 'Semua server tidak bisa :/'
-    let { dl_link, thumb, title, filesize, filesizeF } = yt
-    let isLimit = (isPrems ? 99 : limit) * 1024 < filesize
+
+    yt = await youtubedlv2(temu.url)
+    let type
+    if (!isVideo) {
+      type = yt.audio['128kbps']
+    } else type = yt.video['360p']
+    let { fileSize, fileSizeH, download } = type
+    let { title, thumbnail } = yt
+
+
+
+    let isLimit = (isPrems ? 99 : limit) * 1024 < fileSize
     this.reply(m.chat, `
 *Source:* ${temu.url}
-*Server :* ${usedServer}
-${isLimit ? `_File terlalu besar, Download langsung dengan browser sekali klik menggunakan link:_ ${dl_link}` : '_Sedang proses mengirim..._\n_Mohon tunggu sebentar jangan spam desu_ ^_^'}
+${isLimit ? `_File terlalu besar, Download langsung dengan browser sekali klik menggunakan link:_ ${await download()}` : '_Sedang proses mengirim..._\n_Mohon tunggu sebentar jangan spam desu_ ^_^'}
 `.trim(), {
       key: { remoteJid: 'status@broadcast', participant: '0@s.whatsapp.net', fromMe: false }, message: {
         "imageMessage": {
           "mimetype": "image/jpeg", "caption": `
 *Judul:* ${title}
-*Ukuran File:* ${filesizeF}`.trim(),
-          "jpegThumbnail": await (await fetch(thumb)).buffer()
+*Ukuran File:* ${fileSizeH}`.trim(),
+          "jpegThumbnail": await (await fetch(thumbnail)).buffer()
         }
       }
     })
@@ -80,9 +78,9 @@ ${isLimit ? `_File terlalu besar, Download langsung dengan browser sekali klik m
 
     if (!isLimit) {
       // no document
-      this.sendFile(m.chat, dl_link, title + '.mp' + (3 + /2$/.test(command)), `
+      this.sendFile(m.chat, await download(), title + '.mp' + (3 + /2$/.test(command)), `
 *Judul:* ${title}
-*Ukuran:* ${filesizeF}
+*Ukuran:* ${fileSizeH}
 *Source:* ${temu.url}
 `.trim(), m, false, {
         ..._thumb,
@@ -90,9 +88,9 @@ ${isLimit ? `_File terlalu besar, Download langsung dengan browser sekali klik m
       })
       if (!isVideo) {
         // document
-        this.sendFile(m.chat, dl_link, title + '.mp' + (3 + /2$/.test(command)), `
+        this.sendFile(m.chat, await download(), title + '.mp' + (3 + /2$/.test(command)), `
 *Judul:* ${title}
-*Ukuran:* ${filesizeF}
+*Ukuran:* ${fileSizeH}
 *Source:* ${temu.url}
 `.trim(), m, false, {
           asDocument: true
