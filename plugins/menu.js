@@ -1,5 +1,3 @@
-
-const { waMessageID } = require('@adiwajshing/baileys/lib/Store/make-in-memory-store')
 let fs = require('fs')
 let levelling = require('../lib/levelling')
 let fakeOption = {
