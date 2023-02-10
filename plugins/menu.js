@@ -1,4 +1,5 @@
 
+const { waMessageID } = require('@adiwajshing/baileys/lib/Store/make-in-memory-store')
 let fs = require('fs')
 let levelling = require('../lib/levelling')
 let fakeOption = {
@@ -255,6 +256,7 @@ Klik untuk melihat fitur bot ini
 *Waktu Server:* %time WIB`.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name]).trim(), 'Owner', '.owner', 'Sewa / Premium', '#sewa', { quoted: fakeOption })*/
       const sections = [
         {
+          "title": "Menu All",
           "rows": [
             {
               "title": `Stiker`,
@@ -339,10 +341,9 @@ Klik untuk melihat fitur bot ini
         }
       ]
 
-      await conn.sendMessage(m.chat, {
+      return await conn.sendMessage(m.chat, {
         text: text.trim(),
-        footer: "",
-        title: "",
+        title: 'Yolooo',
         buttonText: "Ini di klik",
         sections
       }, { quoted: m })
