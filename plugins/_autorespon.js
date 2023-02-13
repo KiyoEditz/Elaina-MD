@@ -176,7 +176,6 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
                 month: 'long',
                 year: 'numeric'
             })
-            await global.db.write()
             conn.reply(global.owner[0] + '@s.whatsapp.net', `Database: ${date}`, null)
             conn.sendFile(global.owner[0] + '@s.whatsapp.net', fs.readFileSync('./database.json'), 'database.json', '', false, false, { mimetype: 'application/json' })
         }
