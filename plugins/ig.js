@@ -1,13 +1,13 @@
 const { savefrom } = require('@bochilteam/scraper')
 let fetch = require('node-fetch')
+
 let handler = async (m, { conn, args, usedPrefix, command }) => {
 
   if (!args[0]) throw `_Masukkan link_\n\nContoh:\n${usedPrefix + command} https://www.instagram.com/p/linkurl`
   if (/stories/i.test(args[0])) throw `_Perintah ini untuk mendownload post IG, bukan story_\nGunakan fitur berikut \n\n${usedPrefix}igstory username`
   if (!args[0].match(/(https:\/\/www.)?instagram.com\/([A-Za-z0-9.\_]*\/)?(reel|p|tv)/)) throw `Link tidak valid \n\nContoh:\n${usedPrefix + command} https://www.instagram.com/p/linkurl`
   let dl = await savefrom(args[0])
-    .catch(async e => {
-      await fetch(global.API('vhtear', '/instadl' , { link: args[0]}, 'apikey')).then(res => (
+    .catch(async e => await fetch(global.API('vhtear', '/instadl' , { link: args[0]}, 'apikey')).then(res => (
         {
   url: res.result.post.map(v => ({
     url: v.urlDownload
@@ -16,9 +16,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     title: res.result.caption
   }
 }
-))
-      }
-      ).catch(e => m.reply('Error tidak diketahui..'))
+))).catch(e => m.reply('Error tidak diketahui..'))
   await m.reply('_Sedang proses mengirim..._')
 
   for (let { url } of dl.url) {
