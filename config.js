@@ -21,6 +21,7 @@ global.APIKeys = { // APIKey Here
   'https://api.zeks.xyz': 'qyVJpszt0uSAL0lGCfOQIV3BVfp',
   'https://api.xteam.xyz': 'Syahrulidhamz30',
   'http://api.lolhuman.xyz': 'Syahrulidhamz30',
+    'https://api.vhtear.com':'Syahrulidhamz30',
 }
 global.packname = 'Hi'
 global.author = 'LevBot'
