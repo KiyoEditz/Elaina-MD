@@ -22,7 +22,7 @@ handler.all = async function (m, { isOwner }) {
 
     if (/^bot$/i.test(m.text)) {
         if (m.isGroup && chats.isBanned) return
-        await this.sendTemplate(m.chat, `
+        await this.sendButton(m.chat, `
 Hai, ${ucap()} ${user.registered ? name : m.name} 
 ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 3, ['Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd'], m)
         this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, {
