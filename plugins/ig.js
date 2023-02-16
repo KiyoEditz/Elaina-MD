@@ -10,12 +10,13 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     .catch(async e => {
       let res = await fetch(global.API('vhtear', '/instadl', { link: args[0] }, 'apikey'))
       let json = await res.json()
+      let finalUrl = json.result.post.map(v => {
+        return ({
+          url: v.urlDownload
+        })
+      })
       let obj = {
-        url: json.result.post.map(v => {
-          return ({
-            url: v.urlDownload
-          })
-        }),
+        url: finalUrl,
         meta: {
           title: json.result.caption
         }
