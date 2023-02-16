@@ -48,14 +48,27 @@ handler.before = async function (m, { isPrems, match }) {
         }
         let link = (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
-        let dl = await instagramdl(link)
-            .catch(async _ => await instagramdlv2(link))
-            .catch(async _ => await instagramdlv3(link))
-            .catch(async _ => await instagramdlv4(link))
-            .catch(e => m.reply(eror))
-        for (let { url: link } of dl) {
-            this.sendFile(m.chat, link, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
-                , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        let dl = await savefrom(args[0])
+            .catch(async e => {
+                let res = await fetch(global.API('vhtear', '/instadl', { link: args[0] }, 'apikey'))
+                let json = await res.json()
+                let obj = {
+                    url: json.result.post.map(v => ({
+                        url: v.urlDownload
+                    })
+                    ),
+                    meta: {
+                        title: json.result.caption
+                    }
+                }
+                return obj
+            }
+            ).catch(e => m.reply('Error tidak diketahui..'))
+        await m.reply('_Sedang proses mengirim..._')
+
+        for (let { url } of dl.url) {
+            conn.sendFile(m.chat, url, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
+                , dl.meta.title, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
         }
     }
 

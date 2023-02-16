@@ -10,13 +10,11 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     .catch(async e => {
       let res = await fetch(global.API('vhtear', '/instadl', { link: args[0] }, 'apikey'))
       let json = await res.json()
-      let finalUrl = json.result.post.map(v => {
-        return ({
+      let obj = {
+        url: json.result.post.map(v => ({
           url: v.urlDownload
         })
-      })
-      let obj = {
-        url: finalUrl,
+        ),
         meta: {
           title: json.result.caption
         }
@@ -35,3 +33,5 @@ handler.help = ['ig', 'instagram'].map(v => v + ' <link>')
 handler.tags = ['downloadersosmed']
 handler.command = /^(ig|instagram)2?$/i
 handler.limit = true
+
+module.exports = handler
