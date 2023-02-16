@@ -9,14 +9,15 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   let dl = await savefrom(args[0])
     .catch(async e => {
       let res = await fetch(global.API('vhtear', '/instadl', { link: args[0] }, 'apikey'))
+      let json = await res.json()
       let obj = {
-        url: res.result.post.map(v => {
+        url: json.result.post.map(v => {
           return ({
             url: v.urlDownload
           })
         }),
         meta: {
-          title: res.result.caption
+          title: json.result.caption
         }
       }
       return obj
