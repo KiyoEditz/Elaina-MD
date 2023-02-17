@@ -24,7 +24,7 @@ let handler = async (m, { conn, args, usedPrefix, isOwner, participants, groupMe
     else {
         if (obj_.includes(args[0])) {
             chat.trial = 1
-            masa = 1
+            masa = 3
         }
         if (objhalf.includes(args[0])) masa = 15
         if (obj.includes(args[0])) masa = 30
