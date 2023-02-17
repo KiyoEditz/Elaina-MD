@@ -1,7 +1,7 @@
 //const { igdl, twitter, pin } = require('../lib/scrape')
 //const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
-//const fetch = require('node-fetch')
-const { tiktokdl, instagramdl, instagramdlv2, instagramdlv3, instagramdlv4 } = require('@bochilteam/scraper')
+const fetch = require('node-fetch')
+const { tiktokdl } = require('@bochilteam/scraper')
 let eror = `Link salah`
 let acc = `Link accept`
 let handler = m => m
