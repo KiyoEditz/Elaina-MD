@@ -67,7 +67,7 @@ handler.before = async function (m, { isPrems, match }) {
         await m.reply('_Sedang proses mengirim..._')
 
         for (let { url } of dl.url) {
-            conn.sendFile(m.chat, url, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
+            await this.sendFile(m.chat, url, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
                 , dl.meta.title, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
         }
     }
