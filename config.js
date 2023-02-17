@@ -1,5 +1,5 @@
 let fs = require('fs')
-global.owner = ['6281999284127', '6283196564521', '6283196162908', '628857180075', '6283198071289', '687852464'] // Put your number here
+global.owner = ['6281999284127', '6285173121589', '6283196162908', '628857180075', '6283198071289', '687852464'] // Put your number here
 global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
@@ -21,7 +21,7 @@ global.APIKeys = { // APIKey Here
   'https://api.zeks.xyz': 'qyVJpszt0uSAL0lGCfOQIV3BVfp',
   'https://api.xteam.xyz': 'Syahrulidhamz30',
   'http://api.lolhuman.xyz': 'Syahrulidhamz30',
-    'https://api.vhtear.com':'Syahrulidhamz30',
+  'https://api.vhtear.com': 'Syahrulidhamz30',
 }
 global.packname = 'Hi'
 global.author = 'LevBot'

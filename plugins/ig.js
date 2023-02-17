@@ -21,7 +21,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       }
       return obj
     }
-    ).catch(e => m.reply('Error tidak diketahui..'))
+    ).catch(e => { throw 'Error tidak diketahui..' })
   await m.reply('_Sedang proses mengirim..._')
 
   for (let { url } of dl.url) {

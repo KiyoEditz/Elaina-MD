@@ -113,5 +113,3 @@ handler.help = ['join <chat.whatsapp.com/linkUrl>']
 handler.tags = ['premium']
 handler.command = /^(join|trial)$/i
 handler.private = true
-
-module.exports = handler
