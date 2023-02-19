@@ -15,10 +15,11 @@ handler.before = async function (m) {
         }
     }
     if (new Date - chat.lastUse > 86400000) {
-        if (!chat.trialnotif) return this.reply(m.chat, `Bot sudah dapat diaktivasi lagi, silahkan masukkan kode redeem`)
+        if (!chat.trialnotif) this.reply(m.chat, `Bot sudah dapat diaktivasi lagi, silahkan masukkan kode redeem`)
         chat.trial = 0
         chat.lastUse = -1
         chat.trialnotif = true
+return
     }
     if (json.map(v => v.replace(/[^0-9]/g, '')).includes(m.sender.split`@`[0]) && user.premdate && !user.premdate == 0) {
         if (user.premdate < new Date() * 1) {
