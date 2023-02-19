@@ -9,5 +9,5 @@ handler.tags = ['maker']
 handler.command = /^quotemaker2$/i
 handler.limit = true
 handler.register = true
-
+handler.disabled = 1
 module.exports = handler

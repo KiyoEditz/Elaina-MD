@@ -12,7 +12,7 @@ handler.help = ['twitter <link>']
 handler.tags = ['downloadersosmed']
 
 handler.command = /^twitter$/i
-
+handler.disabled = 1
 module.exports = handler
 
 let axios = require('axios')

@@ -28,5 +28,5 @@ handler.help = ['imagetopdf', 'topdf'].map(v => v + ' (caption|reply gambar)')
 handler.tags = ['maker']
 handler.command = /^(ima?ge?)?topdf$/i
 handler.limit = true
-
+handler.disabled = 1
 module.exports = handler

@@ -29,5 +29,5 @@ handler.command = handler.help = [
 ].sort((a, b) => a - b)
 handler.tags = ['photooxy']
 handler.limit = true
-
+handler.disabled = 1
 module.exports = handler

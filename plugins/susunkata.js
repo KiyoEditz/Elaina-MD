@@ -13,7 +13,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     let src = JSON.parse(fs.readFileSync(`./src/scrap/susunkata.json`))
     let json = src[Math.floor(Math.random() * src.length)]
 
-    conn.scrapGame(global.API('lolhuman', '/api/tebak/susunkata', '', 'apikey'), 'susunkata').catch(e => e)
+    //conn.scrapGame(global.API('lolhuman', '/api/tebak/susunkata', '', 'apikey'), 'susunkata').catch(e => e)
 
     let question = json.result.pertanyaan
     let caption = `

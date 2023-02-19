@@ -12,7 +12,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     conn.tebakjenaka[id] = []
     let src = JSON.parse(fs.readFileSync(`./src/scrap/tebakjenaka.json`))
     let json = src[Math.floor(Math.random() * src.length)]
-    conn.scrapGame(global.API('lolhuman', '/api/tebak/jenaka', '', 'apikey'), 'tebakjenaka').catch(e => e)
+    //  conn.scrapGame(global.API('lolhuman', '/api/tebak/jenaka', '', 'apikey'), 'tebakjenaka').catch(e => e)
 
     let question = json.result.question
     let answer = json.result.answer

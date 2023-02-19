@@ -32,6 +32,6 @@ ${bio}
 }
 handler.help = ['tiktokstalk <username>']
 handler.tags = ['search']
-
+handler.disabled = 1
 handler.command = /^(tiktokstalk)$/i
 module.exports = handler

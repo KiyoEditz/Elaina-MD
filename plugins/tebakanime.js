@@ -15,7 +15,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     let src = JSON.parse(fs.readFileSync(`./src/scrap/tebakanime.json`))
     let json = src[Math.floor(Math.random() * src.length)]
 
-    conn.scrapGame(global.API('lolhuman', '/api/tebakchara', '', 'apikey'), 'tebakanime').catch(e => e)
+    // conn.scrapGame(global.API('lolhuman', '/api/tebakchara', '', 'apikey'), 'tebakanime').catch(e => e)
 
     let caption = `
 Siapa nama Character ini?

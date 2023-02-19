@@ -41,7 +41,7 @@ handler.tags = ['stickerother']
 handler.command = /^s(tic?ker)?(ly|wa)$/i
 handler.private = true
 handler.limit = 2
-
+handler.disabled = 1
 module.exports = handler
 
 const delay = time => new Promise(res => setTimeout(res, time))

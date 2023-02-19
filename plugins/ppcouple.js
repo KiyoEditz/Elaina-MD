@@ -10,5 +10,5 @@ handler.help = ['ppcouple']
 handler.tags = ['imagerandom']
 
 handler.command = /^(pp)?couple$/i
-
+handler.disabled = 1
 module.exports = handler

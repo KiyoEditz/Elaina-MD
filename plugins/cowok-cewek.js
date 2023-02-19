@@ -1,6 +1,6 @@
 let fetch = require('node-fetch')
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  let res = await fetch(global.API('lolhuman', '/api/pinterest2', {
+  let res = await fetch(global.API('vhtear', 'pinterest', {
     query: command + (text ? text : '')
   }, 'apikey'))
   m.reply('_Sedang mencari..._')

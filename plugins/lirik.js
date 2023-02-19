@@ -14,5 +14,5 @@ handler.help = ['lirik <judul lagu>']
 handler.tags = ['media', 'search']
 
 handler.command = /^(lirik|lyrics?)$/i
-
+handler.disabled = 1
 module.exports = handler

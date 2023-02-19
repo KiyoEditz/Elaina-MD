@@ -6,5 +6,5 @@ handler.help = ['tahta2 <nama>']
 handler.tags = ['maker']
 handler.command = /^tahta2$/i
 handler.limit = true
-
+handler.disabled = 1
 module.exports = handler

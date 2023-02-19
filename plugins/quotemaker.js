@@ -7,5 +7,5 @@ handler.help = ['quotemaker <teks>']
 handler.tags = ['maker']
 handler.command = /^(quotemaker)$/i
 handler.limit = true
-
+handler.disabled = 1
 module.exports = handler

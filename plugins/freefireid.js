@@ -8,5 +8,5 @@ let handler = async (m, { args }) => {
 handler.help = ['epep'].map(v => v + ' <id>')
 handler.tags = ['search']
 handler.command = /^(freefire|epep)$/i
-
+handler.disabled = 1
 module.exports = handler

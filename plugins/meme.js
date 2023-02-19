@@ -8,5 +8,5 @@ handler.help = ['meme'].map(v => v + '')
 handler.tags = ['imagerandom']
 
 handler.command = /^meme$/i
-
+handler.disabled = 1
 module.exports = handler

@@ -13,7 +13,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     let src = JSON.parse(fs.readFileSync(`./src/scrap/asahotak.json`))
     let json = src[Math.floor(Math.random() * src.length)]
     let question = json.result.pertanyaan
-    conn.scrapGame(global.API('lolhuman', '/api/tebak/asahotak', '', 'apikey'), 'asahotak').catch(_ => _)
+    // conn.scrapGame(global.API('lolhuman', '/api/tebak/asahotak', '', 'apikey'), 'asahotak').catch(_ => _)
     // if (!json.status) throw json
     let caption = `
 *Soal:* ${question}

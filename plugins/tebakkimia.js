@@ -13,7 +13,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     let src = JSON.parse(fs.readFileSync(`./src/scrap/tebakkimia.json`))
     let json = src[Math.floor(Math.random() * src.length)]
 
-    conn.scrapGame(global.API('lolhuman', '/api/tebak/unsurkimia', '', 'apikey'), 'tebakkimia').catch(e => e)
+    //  conn.scrapGame(global.API('lolhuman', '/api/tebak/unsurkimia', '', 'apikey'), 'tebakkimia').catch(e => e)
 
     let caption = `
 *TEBAK UNSUR KIMIA*

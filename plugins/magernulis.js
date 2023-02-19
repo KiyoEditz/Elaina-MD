@@ -4,5 +4,5 @@ let handler = async (m, { conn, text }) => {
 handler.help = ['nulis <teks>']
 handler.tags = ['maker']
 handler.command = /^((mager)?nulis)$/i
-
+handler.disabled = 1
 module.exports = handler

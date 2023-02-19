@@ -16,5 +16,3 @@ ${chord}
 handler.help = ['chord <judul lagu>']
 handler.tags = ['media', 'search']
 handler.command = /^(chord)$/i
-
-module.exports = handler

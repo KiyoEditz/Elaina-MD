@@ -10,5 +10,5 @@ handler.help = ['wallpaperanime']
 handler.tags = ['imagerandom']
 handler.command = /^(wallpaper|wp)anime$/i
 handler.limit = false
-
+handler.disabled = 1
 module.exports = handler
