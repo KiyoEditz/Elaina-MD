@@ -1,8 +1,9 @@
 let handler = m => m
 
-handler.before = async function (m, { match }) {
+handler.before = async function (m, { conn, match }) {
     // if (match) return !1
     if (!m.chat.endsWith('@s.whatsapp.net')) return !0
+    if (!global.db.data.settings[conn.user.jid].anonymous) return m.reply('Fitur ini dinonaktifkan karena spam')
     this.anonymous = this.anonymous ? this.anonymous : db.data.sessions[this.user.jid].anonymous
     let room = Object.values(this.anonymous).find(room => [room.a, room.b].includes(m.sender) && room.state === 'CHATTING')
     if (room) {
