@@ -189,6 +189,15 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
       }
       setting.autoresp = isEnable
       break
+    case 'anon':
+    case "anonymous":
+      isAll = true
+      if (!isOwner) {
+        global.dfail('owner', m, conn)
+        throw false
+      }
+      setting.anonymous = isEnable
+      break
     default:
       if (!/[01]/.test(command)) throw `
 ╔═〘 Daftar Opsi 〙
@@ -215,7 +224,8 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
 ╟ autodelvn
 ╟ restrict (add,kick,etc)
 ╟ autoread
-╟ autoreact` : ''}
+╟ autoreact
+╟ anon` : ''}
 ╚════
 Contoh:
 ${usedPrefix}on welcome
