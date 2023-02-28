@@ -7,8 +7,6 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   if (teks) throw `Reply pesan atau ketik pesan\n\nContoh:\n${usedPrefix}attp pipupipap`
   let res = await fetch(global.API('lolhuman', `/api/${command}`, { text: teks }, 'apikey'))
   if (!res.ok) throw 'Server Error.. Harap lapor owner'
-  let json = await res.json()
-  conn.sendFile(m.chat, json.result, 'attp.webp', '', m)
   let json = await res.buffer()
   let stiker = await sticker(json, false, global.packname, global.author)
   conn.sendFile(m.chat, stiker, 'attp.webp', '', m)
