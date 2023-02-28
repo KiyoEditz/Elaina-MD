@@ -4,7 +4,7 @@ const { sticker } = require('../lib/sticker')
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   let teks = text ? text : m.quoted ? m.quoted.text : m.text
-  if (teks) throw `Reply pesan atau ketik pesan\n\nContoh:\n${usedPrefix}attp pipupipap`
+  if (!teks) throw `Reply pesan atau ketik pesan\n\nContoh:\n${usedPrefix}attp pipupipap`
   let res = await fetch(global.API('lolhuman', `/api/${command}`, { text: teks }, 'apikey'))
   if (!res.ok) throw 'Server Error.. Harap lapor owner'
   let json = await res.buffer()
