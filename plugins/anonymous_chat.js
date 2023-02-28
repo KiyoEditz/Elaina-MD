@@ -1,5 +1,6 @@
 async function handler(m, { command, usedPrefix }) {
     command = command.toLowerCase()
+    if (!global.db.data.settings[conn.user.jid].anonymous) return m.reply('Fitur ini dinonaktifkan karena spam')
     this.anonymous = this.anonymous ? this.anonymous : db.data.sessions[conn.user.jid].anonymous
     for (let id in this.anonymous) {
         this.anonymous[id].check = check
