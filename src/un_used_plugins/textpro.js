@@ -32,5 +32,5 @@ handler.command = handler.help = [
   'marvelstudio', 'lionlogo', 'wolflogo',
   'steel3d', 'wallgravity', 'coolgravity'
 ].sort((a, b) => a - b)
-handler.disabled = 1
+
 module.exports = handler

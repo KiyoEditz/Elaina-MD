@@ -7,5 +7,5 @@ let handler = async (m, { conn, usedPrefix, command }) => {
 handler.help = ['darkjoke'].map(v => v + '')
 handler.tags = ['imagerandom']
 handler.command = /^darkjoke(s)?$/i
-handler.disabled = 1
+
 module.exports = handler

@@ -11,5 +11,5 @@ let handler = async (m, { text }) => {
 handler.help = ['simi <chat>']
 handler.tags = ['fun']
 handler.command = /^((sim)?simi|simih)$/i
-handler.disabled = 1
+
 module.exports = handler

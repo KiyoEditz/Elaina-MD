@@ -30,5 +30,5 @@ handler.help = ['stikernobg', 'snobg', 'nobg'].map(v => v + ' (caption|reply gam
 handler.tags = ['sticker']
 handler.command = /^(s(tic?ker)?)?nobg$/i
 handler.limit = true
-handler.disabled = 1
+
 module.exports = handler

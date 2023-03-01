@@ -10,7 +10,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ['kodepos <zona>']
 handler.tags = ['tools']
 handler.command = /^kodepos$/i
-handler.disabled = 1
+
 handler.limit = true
 
 module.exports = handler

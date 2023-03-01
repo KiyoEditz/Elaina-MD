@@ -19,7 +19,7 @@ handler.mods = false
 handler.premium = false
 handler.group = false
 handler.private = false
-handler.disabled = 1
+
 handler.admin = false
 handler.botAdmin = false
 

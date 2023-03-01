@@ -10,5 +10,5 @@ let handler = async (m, { conn }) => {
 handler.help = ['quote']
 handler.tags = ['quotes']
 handler.command = /^quote(s)?$/i
-handler.disabled = 1
+
 module.exports = handler

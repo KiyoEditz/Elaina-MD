@@ -17,5 +17,5 @@ n = Nomina: kata benda
 handler.help = ['kbbi <teks>']
 handler.tags = ['belajar']
 handler.command = /^kbbi$/i
-handler.disabled = true
+
 module.exports = handler

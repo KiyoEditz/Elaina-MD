@@ -13,5 +13,5 @@ ${Object.entries(json.result).map(v => `*${v[0][0].toUpperCase() + v[0].substrin
 handler.help = ['cuaca <daerah>']
 handler.tags = ['tools']
 handler.command = /^cuaca$/i
-handler.disabled = 1
+
 module.exports = handler

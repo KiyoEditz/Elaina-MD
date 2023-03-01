@@ -23,7 +23,7 @@ handler.help = ['stikertelegram <link>']
 handler.tags = ['sticker']
 handler.command = /^(stic?kertele(gram)?)$/i
 handler.limit = true
-handler.disabled = 1
+
 module.exports = handler
 
 const delay = time => new Promise(res => setTimeout(res, time))
