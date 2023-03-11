@@ -2,10 +2,8 @@ let handler = async (m, { conn }) => {
     conn.sendButtonImg(m.chat, 'https://telegra.ph/file/055edd68d70d701168122.jpg', `
 ╔══「 *Pembayaran* 」
 ╟
-╟ Go-Pay/Dana:
+╟ Go-Pay/Dana/Shoope-pay:
 ╟ 0819-9928-4127
-╟ Shoopepay:
-╟ 0878-5718-0075
 ╟ Pulsa AXIS: 
 ╟ 0831-9656-4521 (+5000)
 ╟ 
