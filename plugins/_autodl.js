@@ -19,8 +19,9 @@ handler.before = async function (m, { isPrems, match }) {
 
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
-        const { result } = await fetch(global.API('lolhuman', '/api/tiktok', { url: link }, 'apikey'))
+        const tt = await fetch(global.API('lolhuman', '/api/tiktok', { url: link }, 'apikey'))
             .catch(e => { throw `Error tidak diketahui` })
+        let result = await tt.json()
         const url = result.link
         let mp3 = /musi[ck]/i.test(command)
         if (!mp3) {

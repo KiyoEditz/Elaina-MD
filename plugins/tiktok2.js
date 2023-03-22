@@ -4,8 +4,9 @@ let fetch = require('node-fetch')
 let handler = async (m, { conn, args, usedPrefix, command, isPrems }) => {
   let link = /https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i
   if (!(link.test(args[0]) && args[0])) throw `Contoh\n\nKetik ${usedPrefix}tiktok https://vm.tiktok/blbala`
-  const { result } = await fetch(global.API('lolhuman', '/api/tiktok', { url: args[0] }, 'apikey'))
+  const tt = await fetch(global.API('lolhuman', '/api/tiktok', { url: link }, 'apikey'))
     .catch(e => { throw `Error tidak diketahui` })
+  let result = await tt.json()
   const url = result.link
   let mp3 = /musi[ck]/i.test(command)
   if (!mp3) {
