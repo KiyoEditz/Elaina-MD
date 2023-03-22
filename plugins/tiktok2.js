@@ -4,16 +4,16 @@ let fetch = require('node-fetch')
 let handler = async (m, { conn, args, usedPrefix, command, isPrems }) => {
   let link = /https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i
   if (!(link.test(args[0]) && args[0])) throw `Contoh\n\nKetik ${usedPrefix}tiktok https://vm.tiktok/blbala`
-  const tt = await fetch(global.API('lolhuman', '/api/tiktok', { url: link }, 'apikey'))
+  const tt = await fetch(global.API('lolhuman', '/api/tiktok', { url: args[0] }, 'apikey'))
     .catch(e => { throw `Error tidak diketahui` })
-  let result = await tt.json()
-  const url = result.link
+  let res = await tt.json()
+  const url = res.result.link
   let mp3 = /musi[ck]/i.test(command)
   if (!mp3) {
     if (!isPrems) m.limit = true
     await m.reply('_Sedang proses mengirim..._')
   }
-  await conn.sendFile(m.chat, url, (new Date * 1) + (mp3 ? '.mp3' : '.mp4'), (mp3 ? '' : `@${result.author.username}\n${result.title}`), m, null, { asDocument: global.db.data.users[m.sender].useDocument, mimetype: (mp3 ? 'audio/mpeg' : null) })
+  await conn.sendFile(m.chat, url, (new Date * 1) + (mp3 ? '.mp3' : '.mp4'), (mp3 ? '' : `@${res.result.author.username}\n${res.result.title}`), m, null, { asDocument: global.db.data.users[m.sender].useDocument, mimetype: (mp3 ? 'audio/mpeg' : null) })
   if (!mp3) {
     conn.reply(m.chat, 'Mau ambil lagu nya?\nKetik .tomp3 ', m)
   }
