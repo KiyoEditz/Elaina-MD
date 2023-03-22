@@ -23,12 +23,8 @@ handler.before = async function (m, { isPrems, match }) {
             .catch(e => { throw `Error tidak diketahui` })
         let result = await tt.json()
         const url = result.link
-        let mp3 = /musi[ck]/i.test(command)
-        if (!mp3) {
-            if (!isPrems) m.limit = true
-            await m.reply('_Sedang proses mengirim..._')
-        }
-        await conn.sendFile(m.chat, url, (new Date * 1) + (mp3 ? '.mp3' : '.mp4'), (mp3 ? '' : `@${result.author.username}\n${result.title}`), m, null, { asDocument: global.db.data.users[m.sender].useDocument, mimetype: (mp3 ? 'audio/mpeg' : null) })
+
+        await conn.sendFile(m.chat, url, (new Date * 1) + '.mp4', `@${result.author.username}\n${result.title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
     }
 
     // if (/https?:\/\/i\.coco\.fun\//i.test(m.text)) {
