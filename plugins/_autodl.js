@@ -19,10 +19,15 @@ handler.before = async function (m, { isPrems, match }) {
 
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
-        const { author: { nickname }, video, description } = await tiktokdl(link).catch(e => m.reply(eror))
-        const url = video.no_watermark || video.no_watermark2 || video.no_watermark_raw || false
-        if (!url) throw eror
-        await this.sendFile(m.chat, (url), (new Date * 1) + '.mp4', `@${nickname}\n${description}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        const { result } = await fetch(global.API('lolhumsn', '/api/tiktok', { url: link }, 'apikey'))
+            .catch(e => { throw `Error tidak diketahui` })
+        const url = result.link
+        let mp3 = /musi[ck]/i.test(command)
+        if (!mp3) {
+            if (!isPrems) m.limit = true
+            await m.reply('_Sedang proses mengirim..._')
+        }
+        await conn.sendFile(m.chat, url, (new Date * 1) + (mp3 ? '.mp3' : '.mp4'), (mp3 ? '' : `@${result.author.username}\n${result.title}`), m, null, { asDocument: global.db.data.users[m.sender].useDocument, mimetype: (mp3 ? 'audio/mpeg' : null) })
     }
 
     // if (/https?:\/\/i\.coco\.fun\//i.test(m.text)) {
@@ -50,7 +55,7 @@ handler.before = async function (m, { isPrems, match }) {
         m.reply(acc)
         let dl = await savefrom(m.text)
             .catch(async e => {
-                let res = await fetch(global.API('vhtear', '/instadl', { link: m.text }, 'apikey'))
+                let res = await fetch(global.API('vhtear', '/instadl', { link }, 'apikey'))
                 let json = await res.json()
                 let obj = {
                     url: json.result.post.map(v => ({
