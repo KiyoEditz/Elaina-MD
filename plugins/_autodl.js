@@ -21,10 +21,10 @@ handler.before = async function (m, { isPrems, match }) {
         m.reply(acc)
         const tt = await fetch(global.API('lolhuman', '/api/tiktok', { url: link }, 'apikey'))
             .catch(e => { throw `Error tidak diketahui` })
-        let result = await tt.json()
-        const url = result.link
+        let res = await tt.json()
+        const url = res.result.link
 
-        await conn.sendFile(m.chat, url, (new Date * 1) + '.mp4', `@${result.author.username}\n${result.title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        await conn.sendFile(m.chat, url, (new Date * 1) + '.mp4', `@${res.result.author.username}\n${res.result.title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
     }
 
     // if (/https?:\/\/i\.coco\.fun\//i.test(m.text)) {
