@@ -1,7 +1,7 @@
 //const { igdl, twitter, pin } = require('../lib/scrape')
 //const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
 const fetch = require('node-fetch')
-const { tiktokdl, savefrom } = require('@bochilteam/scraper')
+const { tiktokdl, youtubedlv2, savefrom } = require('@bochilteam/scraper')
 let eror = `Link salah`
 let acc = `Link accept`
 let handler = m => m
@@ -94,30 +94,35 @@ handler.before = async function (m, { isPrems, match }) {
     //     }).catch(_ => _)
     // }
 
-    //     if (ytIdRegex.test(m.text) || ytIdRegex.test(m.selectedButtonId)) {
-    //         let yt = false
-    //         let usedServer = servers[0]
-    //         for (let i in servers) {
-    //             let server = servers[i]
-    //             try {
-    //                 yt = await yta(vid.url, server)
-    //                 yt2 = await ytv(vid.url, server)
-    //                 usedServer = server
-    //                 break
-    //             } catch (e) {
-    //                 // m.reply(`Server ${server} error!${servers.length >= i + 1 ? '' : '\nmencoba server lain...'}`)
-    //             }
-    //         }
-    //         if (yt === false) return m.reply(eror)
-    //         if (yt2 === false) return m.reply(eror)
-    //         let { thumb, title, filesizeF } = yt
-    //         await this.send2ButtonLoc(m.chat, thumb, `
-    // *Judul:* ${title}
-    // *Ukuran File Audio:* ${filesizeF}
-    // *Ukuran File Video:* ${yt2.filesizeF}
-    // *Server y2mate:* ${usedServer}
-    // `.trim(), '© stikerin', 'Audio', `.yta ${vid.url}`, 'Video', `.ytv ${vid.url}`)
-    //     }
+    if (ytIdRegex.test(m.text) || ytIdRegex.test(m.selectedButtonId)) {
+        let yt = await youtubedlv2(m.text)
+        let { fileSize, fileSizeH, download } = yt.audio['128kbps']
+        let isLimit = (isPrems || isOwner ? 99 : limit) * 1024 < fileSize
+        conn.reply(m.chat, `
+      ${isLimit ? `
+      *Source:* ${m.text}
+      *Ukuran File:* ${fileSizeH}
+      _File terlalu besar, Download langsung dengan browser sekali klik menggunakan link:_ ${download()}` : '_Sedang proses mengirim..._\n_Mohon tunggu sebentar jangan spam desu_ ^_^'}
+      `.trim(), {
+            key: { remoteJid: 'status@broadcast', participant: '0@s.whatsapp.net', fromMe: false }, message: {
+                "imageMessage": {
+                    "mimetype": "image/jpeg", "caption": `
+      *Judul:* ${yt.title}
+      *Ukuran File:* ${fileSizeH}`.trim(),
+                    "jpegThumbnail": await (await fetch(yt.thumbnail)).buffer()
+                }
+            }
+        })
+        m.reply((await download()).toString())
+        if (!isLimit) {
+            conn.sendFile(m.chat, await download(), yt.title + '.mp3', '', m, null, {
+                asDocument: true
+            })
+            conn.sendFile(m.chat, await download(), yt.title + '.mp3', '', m, null, {
+                asDocument: false
+            })
+        }
+    }
 
     return !0
 }

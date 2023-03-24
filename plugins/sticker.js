@@ -26,11 +26,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
             if ((q.msg || q).seconds > 11) throw 'Maksimal 10 detik!'
             let img = await q.download()
             if (!img) throw `balas video dengan perintah ${usedPrefix + command}`
-            wsf = new WSF.Sticker(img, {
-                pack: global.packname,
-                author: global.author,
-                crop: true,
-            })
+            stiker = await sticker(img, false, global.packname, global.author)
         } else if (args[0]) {
             if (isUrl(args[0])) stiker = await sticker(false, args[0], global.packname, global.author)
             else throw 'URL tidak valid!'
