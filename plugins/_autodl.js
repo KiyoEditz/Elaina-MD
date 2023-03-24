@@ -1,5 +1,5 @@
 //const { igdl, twitter, pin } = require('../lib/scrape')
-//const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
+const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
 const fetch = require('node-fetch')
 const { tiktokdl, youtubedlv2, savefrom } = require('@bochilteam/scraper')
 let eror = `Link salah`
