@@ -19,7 +19,7 @@ let handler = async (m, { conn, command, args, usedPrefix }) => {
     throw false
 
   } else if (global.db.data.users[m.sender].exp <= xpperlimit * count) {
-    await conn.sendButton(m.chat, `_XP kamu tidak mencukupi untuk menukarkan ${count} limit_,\n1 Limit membutuhkan 350 XP\nSilahkan Cek XP kamu.. `, ``, 3, ['XP Gratis harian', '.claim', 'Cek XP', '.profile', 'Info XP', '.infoxp'], m)
+    await conn.reply(m.chat, `_XP kamu tidak mencukupi untuk menukarkan ${count} limit_,\n1 Limit membutuhkan 350 XP\nSilahkan Cek XP kamu.. `, m)
   }
 }
 
@@ -30,7 +30,7 @@ handler.all = async function (m) {
   if (/^(y(es|a)?)$/i.test(m.text)) {
     global.db.data.users[m.sender].exp -= xpperlimit * count
     global.db.data.users[m.sender].limit += count
-    this.sendButton(m.chat, `_Sukses menukarkan_\n-${xpperlimit * count} XP\n\n+ ${count} Limit`, `Tidak perlu satu persatu, kamu juga bisa memasukkan jumlah\n\nContoh\n.buy 5`, 1, ['Buy All', '.buyall'], m)
+    this.reply(m.chat, `_Sukses menukarkan_\n-${xpperlimit * count} XP\n\n+ ${count} Limit\n\nNb: Tidak perlu satu persatu, kamu juga bisa memasukkan jumlah\n\nContoh\n.buy 5`, m)
     clearTimeout(timeout)
     delete confirmbuy[m.sender]
     return !0

@@ -19,7 +19,7 @@ handler.before = async function (m) {
         chat.trial = 0
         chat.lastUse = -1
         chat.trialnotif = true
-return
+        return
     }
     if (json.map(v => v.replace(/[^0-9]/g, '')).includes(m.sender.split`@`[0]) && user.premdate && !user.premdate == 0) {
         if (user.premdate < new Date() * 1) {
@@ -30,7 +30,7 @@ return
             fs.writeFileSync('./src/premium.json', JSON.stringify(json))
             delete require.cache[require.resolve('../config')]
             require('../config')
-            this.sendButton(m.sender, `_Dear ${await conn.getName(m.sender)}, Masa aktif premium kamu telah habis_`, 'Silahkan perpanjang ke Owner', 2, ['Perpanjang', '.premium', 'Owner', '.owner'], m)
+            this.reply(m.sender, `_Dear ${await conn.getName(m.sender)}, Masa aktif premium kamu telah habis_ \nSilahkan perpanjang ke Owner`, m)
             db.data.users[m.sender].premdate = 0
         }
     }

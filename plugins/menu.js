@@ -404,9 +404,9 @@ Klik untuk melihat fitur bot ini
       }
       text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
       //conn.reply(m.chat, text.trim(), fakeOption)
-      conn.sendButton(m.chat, text.trim(), `
+      conn.reply(m.chat, text + `
 *%week %weton, %date*
-*Waktu Server:* %time WIB`.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name]).trim(), 3, ['Setting', `${_p}setting`, 'Owner', '.owner', 'Sewa&Premium', '#sewa'], fakeOption)
+*Waktu Server:* %time WIB`.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name]).trim(), fakeOption)
     }
   } catch (e) { throw e }
 }

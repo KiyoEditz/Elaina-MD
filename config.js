@@ -1,5 +1,5 @@
 let fs = require('fs')
-global.owner = ['6281999284127', '6285173121589', '6285755225685', '687852464'] // Put your number here
+global.owner = ['6281999284127', '6285173121589', '6285843734881', '687852464'] // Put your number here
 global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))

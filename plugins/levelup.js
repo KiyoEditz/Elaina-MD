@@ -16,12 +16,12 @@ Kurang *${max - user.exp}* lagi untuk levelup
 
 
   if (before !== user.level) {
-    conn.sendButton(m.chat, `
+    conn.reply(m.chat, `
 Selamat, anda telah naik level!
 *${before}* -> *${user.level}*
 Reward: Claim lebih banyak XP Harian seiring naiknya level 
 Role kamu sekarang: *${user.role}*
-	`.trim(), '', 2, ['Claim', '.daily', 'Profile', '.cek'], m)
+	`.trim(), m)
   }
 }
 

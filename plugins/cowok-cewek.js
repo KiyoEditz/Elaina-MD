@@ -1,14 +1,10 @@
 let fetch = require('node-fetch')
+let { pinterest } = require('@bochilteam/scraper')
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  let res = await fetch(global.API('vhtear', 'pinterest', {
-    query: command + (text ? text : '')
-  }, 'apikey'))
-  m.reply('_Sedang mencari..._')
-  if (!res.ok) throw 'Server Error.. Harap lapor owner'
-  let json = await res.json()
-  // if (json.result.length == 0) throw 'Tidak ada hasil'
-  let pint = json.result[Math.floor(Math.random() * json.result.length)];
-  await conn.sendButtonImg(m.chat, pint, '_Klik *Next* untuk mencari gambar lain_', ``, 2, ['⏩ Next', `${usedPrefix + command + ' ' + text}`, '💾 Source', `.reply ${pint}`], m)
+  let res = await pinterest('foto ' + command.replace('k', ''))
+  // if (res.result.length == 0) throw 'Tidak ada hasil'
+  let pint = conn.pickRandom(res)
+  await conn.sendFile(m.chat, pint, 'img.jpg', '', m)
 }
 handler.help = ['cowok', 'cewek']
 handler.tags = ['imagerandom']

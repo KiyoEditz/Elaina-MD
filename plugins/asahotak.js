@@ -21,12 +21,12 @@ let handler = async (m, { conn, usedPrefix }) => {
 Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*`.trim()
-    let btn = await conn.sendButton(m.chat, caption, '*ASAH OTAK*\nBantuan mengurangi 1 limit', 1, ['Bantuan', '.hintasah'], m)
+    let btn = await conn.reply(m.chat, caption + '\n*ASAH OTAK*\nBantuan mengurangi 1 limit', m)
     conn.asahotak[id] = [
         btn,
         json, poin,
         setTimeout(() => {
-            if (conn.asahotak[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.jawaban}*`, '', 1, ['Asah Otak', `.asahotak`], conn.asahotak[id][0])
+            if (conn.asahotak[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.jawaban}*`, conn.asahotak[id][0])
             delete conn.asahotak[id]
         }, timeout)
     ]

@@ -11,7 +11,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isAdmin, isOwner }) =
 			'close': 'announcement',
 		}[(args[0] || '')]
 		if (isClose === undefined)
-			return conn.sendButton(m.chat, '_Silahkan pilih opsi_', 'Pilih aku atau dia hayoo..', 2, ['Buka', '.gc open', 'Tutup', '.gc close'], m)
+			return conn.reply(m.chat, `_Silahkan pilih opsi_\n${usedPrefix + command} open/close`, m)
 		await conn.groupSettingUpdate(m.chat, isClose)
 
 	} else {

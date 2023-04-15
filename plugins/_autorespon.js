@@ -22,9 +22,9 @@ handler.all = async function (m, { isOwner }) {
 
     if (/^bot$/i.test(m.text)) {
         if (m.isGroup && chats.isBanned) return
-        await this.sendButton(m.chat, `
+        await this.reply(m.chat, `
 Hai, ${ucap()} ${user.registered ? name : m.name} 
-${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}`.trim(), teks2, 3, ['Menu', '.menu', 'Setting', '.setting', 'Statistic', '.topcmd'], m)
+${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}\n` + teks2, m)
         this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, {
             mimetype: 'audio/mp4',
             messageId: 'VNBOT678901'
@@ -128,13 +128,13 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
                 'Sudah faham', '.sayasudahfaham', 'Apa itu Bot?', '.help']
 
             let or = chatSender.faham ? init : notInit
-            await this.sendButton(m.chat, or[0].trim(), or[1].trim(), isinit ? 3 : 2, [or[2], or[3], or[4], or[5], or[6], or[7]], m, { contextInfo: { mentionedJid: conn.parseMention(teks2) } })
+            await this.reply(m.chat, or[0].trim() + ' \n\n ' + or[1].trim(), m, { contextInfo: { mentionedJid: conn.parseMention(teks2) } })
         }
 
         // ketika ada yang invite/kirim link grup di chat pribadi
 
         if (((this.user.jid == global.conn.user.jid) && m.mtype === 'groupInviteMessage' || m.text.includes('https://chat') || m.text.startsWith('Buka tautan ini')) && !m.isBaileys && !m.isGroup && !isOwner) {
-            this.sendButton(m.chat, `╔═〘 Invite Bot ke Grup 〙
+            this.reply(m.chat, `╔═〘 Invite Bot ke Grup 〙
 ║ *Harga Sewa Bot* :
 ╟ Rp. 10.000 / bulan
 ╟ ( Qris-Dana-GO-Pay-Shoopepay )
@@ -142,7 +142,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
 ║
 ╟ Hubungi Owner
 ╚════
-`.trim(), '', 2, ['List Harga', '.sewa', 'Owner', '.owner'], m, { contextInfo: { mentionedJid: [global.owner[2] + '@s.whatsapp.net'] } })
+`.trim(), m, { contextInfo: { mentionedJid: [global.owner[2] + '@s.whatsapp.net'] } })
         }
     }
 

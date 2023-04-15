@@ -8,7 +8,8 @@ let objhalf = data.group.half
 let obj = data.group.one
 let obj2 = data.group.two
 
-let handler = async (m, { conn, isPrems, isMods, text, command }) => {
+let handler = async (m, { conn, usedPrefix
+  , isPrems, isMods, text, command }) => {
   let users = global.db.data.users[m.sender]
   let { level, exp } = users
   let levelpast = levelling.findLevel(exp)
@@ -22,12 +23,12 @@ let handler = async (m, { conn, isPrems, isMods, text, command }) => {
   }
   let kode = /kode/i.test(text)
   if (new Date - users.lastclaim < ((isPrems || isMods) ? 86400000 : 43200000) && !kode) throw `Kamu sudah mengklaim klaim harian hari ini\ntunggu selama ${conn.msToDate(time - new Date())} lagi`
-  if (!users.autolevelup && !/force/i.test(command) && !kode && levelling.canLevelUp(users.level, users.exp, global.multiplier)) return conn.sendButton(m.chat, `_Kamu memiliki XP yang cukup untuk menaikan level_ *${level + ' - ' + levelpast}*`, `Naikann level! kamu akan dapat lebih banyak XP setiap claim harian\n\nClaim sekarang : ${xp}\nClaim setelah naik level : ${xpAfter}`, 2, ['Ya, naikan level', '.levelup', 'Tidak, claim biasa', '.claimforce'], m)
+  if (!users.autolevelup && !/now/i.test(command) && !kode && levelling.canLevelUp(users.level, users.exp, global.multiplier)) return conn.reply(m.chat, `_Kamu memiliki XP yang cukup untuk menaikan level_ *${level + ' - ' + levelpast}*\n\nNaikann level! kamu akan dapat lebih banyak XP setiap claim harian (ketik ${usedPrefix}levelup\n\nClaim sekarang : ${xp}\nClaim setelah naik level : ${xpAfter}\natau claim biasa (ketik ${usedPrefix}claimnow)`, m)
   if (isPrems) users.limit += 10
   if (text && kode) {
     if (m.isGroup) throw `_Hanya bisa klaim kode di chat Pribadi_`
     if (new Date - users.lastclaim_code < (86400000 * 2)) throw `_Kamu sudah mengklaim klaim kode reedem group gratis_\ntunggu selama ${conn.msToDate(timecode - new Date())} lagi\n\nKamu dapat klaim kode group gratis dalam 2 hari sekali`
-    conn.sendButton(m.chat, `*Jenis:* Trial (1 Hari)\n*Kode:* ${code}\n\n_Cara menggunakan:_\nKetik .use kode\nKetik di group yang ingin kamu aktifkan bot nya dan pastikan Bot sudah ditambahkan oleh admin\n\n Contoh: .use ABCDEFGHIJKLAM`, `Jika kamu ingin mendapatkan kode Premium dengan masa aktif lebih banyak, silahkan ketik _*.premium*_ atau bisa klik tombol dibawah ini`, 1, ['Kode Premium', '.premium'])
+    conn.reply(m.chat, `*Jenis:* Trial (1 Hari)\n*Kode:* ${code}\n\n_Cara menggunakan:_\nKetik .use kode\nKetik di group yang ingin kamu aktifkan bot nya dan pastikan Bot sudah ditambahkan oleh admin\n\n Contoh: .use ABCDEFGHIJKLAM\n\nNB: Jika kamu ingin mendapatkan kode Premium dengan masa aktif lebih banyak, silahkan ketik _*.premium*_ `,)
     users.lastclaim_code = new Date * 1 + 86400000
   } else {
     users.exp += xp
@@ -38,7 +39,7 @@ let handler = async (m, { conn, isPrems, isMods, text, command }) => {
 }
 handler.help = ['claim', 'daily']
 handler.tags = ['xp']
-handler.command = /^(daily|claim)(force)?$/i
+handler.command = /^(daily|claim)(now)?$/i
 
 module.exports = handler
 

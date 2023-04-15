@@ -1,4 +1,4 @@
-let handler = async (m, { conn, args, participants, command }) => {
+let handler = async (m, { conn, args, participants, command, usedPrefix }) => {
   let users = Object.entries(global.db.data.users).map(([key, value]) => {
     return { ...value, jid: key }
   })
@@ -24,7 +24,7 @@ ${sortedLim.slice(0, len).map(({ jid, limit, name }, i) => `${i + 1}. ${particip
 Kamu: *${usersLevel.indexOf(m.sender) + 1}* dari *${usersLevel.length}*
 ${sortedLevel.slice(0, len).map(({ jid, level, name }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *Level ${level}*`).join`\n`}
 `.trim()
-  conn.sendButton(m.chat, text, '', 1, ['Leaderboard Group', (!isGC ? '.lbgc' : '')], m, {
+  conn.reply(m.chat, text + `\n\nUntuk mengetahui leaderboard group ketik ${usedPrefix}lbgroup`, m, {
     mentions: [...usersExp.slice(0, len), ...usersLim.slice(0, len), ...usersLevel.slice(0, len)].filter(v => !participants.some(p => v === p.id))
   })
 }

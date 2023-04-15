@@ -60,7 +60,7 @@ handler.before = async function (m) {
 				if (index == member.length) room.curr = member[0]
 				else room.curr = member[index]
 				if (member.length == 1 && room.status == 'play') {
-					this.sendButton(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat).then(_ => {
+					this.reply(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan\n+${room.win_point}XP`, room.chat).then(_ => {
 						users[member[0]].exp += room.win_point
 						delete this.skata[id]
 						return !0
@@ -95,7 +95,7 @@ handler.before = async function (m) {
 			if (index == (member.length)) room.curr = member[0]
 			else room.curr = member[index]
 			if (member.length == 1 && room.status == 'play') {
-				await this.sendButton(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan`, `+${room.win_point}XP`, 2, ['Sambung Kata', '.skata', 'Top Player', '.topskata'], room.chat, { contextInfo: { mentionedJid: member } })
+				await this.reply(m.chat, `@${member[0].split`@`[0]} Berhasil bertahan\n+${room.win_point}XP`, room.chat, { contextInfo: { mentionedJid: member } })
 				users[member[0]].skata += win_skata
 				users[member[0]].exp += room.win_point
 				delete this.skata[id]
