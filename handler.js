@@ -249,7 +249,7 @@ module.exports = {
 
                         if (!['groupInfo.js', 'unbanchat.js', 'bot-on-off.js', 'sapa.js', 'setting.js'].includes(name) && chat && chat.isBanned && !isOwner) return m.reply(`_Bot telah dinonaktifkan untuk chat ${await this.getName(m.chat)}_ ${this.readmore}\n\n${m.isGroup && isAdmin ? `Silahkan aktifkan ketik ${usedPrefix}bot pada group` : m.isGroup ? `Tunggu hingga admin mengaktikan kembali` : `Silahkan aktifkan ketik ${usedPrefix}bot`}`, m.sender)
                         if (m.chat.endsWith('g.us') && chat.gcdate > (new Date * 1)) chat.init = true
-                        if (!['exec2.js', 'exec.js', 'expired.js', 'bot-on-off.js', 'setting.js', 'redeem_use.js', 'sewa.js'].includes(name) && m.chat.endsWith('g.us') && !chat.init && !chat.isBanned) return conn.sendButton(m.chat, `Group ini belum diaktivasi\n*Dapatkan kode aktivasi* kemudian ketik ${usedPrefix}use _KODEREDEEMNYA_\n\n*Jika kamu belum punya kode, silahkan ketik _.claim kode_ di _chat pribadi_ untuk mendapatkan kode\nhttps://wa.me/${this.user.jid.split('@')[0]}?text=.claim+kode`, ``, 1, ['Premium', '.premium'], m)
+                        if (!['exec2.js', 'exec.js', 'expired.js', 'bot-on-off.js', 'setting.js', 'redeem_use.js', 'sewa.js'].includes(name) && m.chat.endsWith('g.us') && !chat.init && !chat.isBanned) return conn.reply(m.chat, `Group ini belum diaktivasi\n*Dapatkan kode aktivasi* kemudian ketik ${usedPrefix}use _KODEREDEEMNYA_\n\n*Jika kamu belum punya kode, silahkan ketik _.claim kode_ di _chat pribadi_ untuk mendapatkan kode\nhttps://wa.me/${this.user.jid.split('@')[0]}?text=.claim+kode`, m)
                         if (!['unbanuser.js', '_banned.js', 'profile.js', 'creator.js'].includes(name) && user && user.banned) return m.reply(`*Kamu telah dibanned..*\n_Dikarena kamu telah melakukan pelanggaran Bot_\nHitung mundur:${this.msToDate(user.bannedtime - new Date * 1)}\n\natau Silahkan hubungi owner untuk membuka ban`, m.sender)
 
                         if (!global.db.data.chats[m.chat].game) {
@@ -300,12 +300,12 @@ module.exports = {
                     if (xp > 200) m.reply('Ngecit -_-') // Hehehe
                     else m.exp += xp
                     if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
-                        this.sendButton(m.chat, `
-            _Limit kamu tidak mencukupi untuk memakai fitur ini_`, `Kumpulkan XP dan dapatkan limit agar bisa menggunakan fitur ini`, 'Tukarkan XP => limit', '.buy', 'Info XP', '.infoxp', m)
+                        this.reply(m.chat, `
+            _Limit kamu tidak mencukupi untuk memakai fitur ini_\nKumpulkan XP dan dapatkan limit (.buy) agar bisa menggunakan fitur ini`, m)
                         continue // Limit habis
                     }
                     if (plugin.level > _user.level) {
-                        this.sendButton(m.chat, `Diperlukan *level ${plugin.level}* untuk menggunakan perintah ini.\nLevel kamu: *${_user.level}*`, ``, `Naikan Level`, '.levelup', m)
+                        this.reply(m.chat, `Diperlukan *level ${plugin.level}* untuk menggunakan perintah ini.\nLevel kamu: *${_user.level}*`, m)
                         continue // If the level has not been reached
                     }
                     let extra = {
@@ -466,7 +466,7 @@ module.exports = {
             if (groupUpdate.restrict == false) text = (chats.sRestrictOff || this.sRestrictOff || conn.sRestrictOff || '```Group has been only admin!')
             //console.log('=============\n\ngroupsUpdate \n\n============\n\n' + await groupUpdate)
             if (!text) continue
-            await this.sendButton(id, text, '.off detect', 1, ['Matikan Fitur', `.off detect`], null, { mentions: await this.parseMention(text) })
+            await this.reply(id, text + '\n.off detect')
         }
     },
     async delete({ fromMe, id, participant }) {
@@ -476,11 +476,11 @@ module.exports = {
         let msg = JSON.parse(JSON.stringify(chats[1].messages[id]))
         let chat = global.db.data.chats[msg.key.remoteJid] || {}
         if (chat.delete) return
-        await this.sendButton(msg.key.remoteJid, `
+        await this.reply(msg.key.remoteJid, `
 Terdeteksi @${participant.split`@`[0]} telah menghapus pesan
 Untuk mematikan fitur ini, ketik
 *.enable delete*
-`.trim(), wm, 1, ['Matikan Fitur ini', '.enable delete'], msg, {
+`.trim(), {
             mentions: [participant]
         })
         await this.delay(1000)
@@ -501,8 +501,8 @@ global.dfail = (type, m, conn) => {
         unreg: 'Silahkan daftar untuk menggunakan fitur ini dengan cara mengetik:\n\n*#daftar nama.umur*\n\nContoh: *#daftar Manusia.16*',
         restrict: 'Fitur ini di *disable*!'
     }[type]
-    if (type == 'group') return conn.sendButton(m.chat, msg, 'Ketik #group atau klik tombol dibawah ini', 1, ['Group', '.group'], m)
-    if (type == 'premium') return conn.sendButton(m.chat, msg, 'Ketik #premium atau klik tombol dibawah ini', 1, ['Premium', '.premium'], m)
+    if (type == 'group') return conn.reply(m.chat, msg + '\n\nKetik #group', m)
+    if (type == 'premium') return conn.reply(m.chat, msg + '\n\nKetik #premium', m)
     if (msg) return m.reply(msg)
 }
 

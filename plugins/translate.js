@@ -32,7 +32,7 @@ en: English
             tld,
             to: defaultLang,
         })
-        return conn.sendButton(m.chat, err, `Daftar bahasa yang didukung *${usedPrefix}kodebahasa*`, 1, ['Kode Bahasa', '.kodebahasa'], m)
+        return conn.reply(m.chat, err, + `\n\nDaftar bahasa yang didukung *${usedPrefix}kodebahasa*`, m)
     } finally {
         m.reply(result[0])
     }

@@ -1,5 +1,5 @@
 let handler = async (m, { conn, usedPrefix }) => {
-    await conn.sendButton(m.chat, `
+    await conn.reply(m.chat, `
 Setiap fitur yang kamu gunakan, 
 ada beberapa fitur yang menggunakan *batasan/limit*
 
@@ -15,7 +15,7 @@ Kamu bisa melihat jumlah limitmu dengan cara *klik Cek XP* di bawah
 `.trim(),
         `Fitur yang memakai limit ditandai dengan *symbol ($) di samping menu*
 Selama Limit kamu cukup, Fitur akan bekerja. Dan sebaliknya, 
-Jika limitmu 0, Fitur tidak akan bekerja`.trim(), 3, ['Cek XP', '.profile', 'Main Game', '.menu game', 'Tukar', '.buy'], m)
+Jika limitmu 0, Fitur tidak akan bekerja`.trim(), m)
 }
 
 handler.command = /^infoe?xp$/i
