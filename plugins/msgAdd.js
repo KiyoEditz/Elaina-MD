@@ -1,4 +1,4 @@
-// let { WAMessageProto } = require('@adiwajshing/baileys')
+// let { WAMessageProto } = require('@whiskeysockets/baileys')
 // let handler = async (m, { command, usedPrefix, text: teks }) => {
 //     let text = teks.toLowerCase()
 //     let M = WAMessageProto.WebMessageInfo

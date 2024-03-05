@@ -469,23 +469,7 @@ module.exports = {
             await this.reply(id, text + '\n.off detect')
         }
     },
-    async delete({ fromMe, id, participant }) {
-        if (fromMe) return
-        let chats = Object.entries(await this.chats).find(([user, data]) => data.messages && data.messages[id])
-        if (!chats) return
-        let msg = JSON.parse(JSON.stringify(chats[1].messages[id]))
-        let chat = global.db.data.chats[msg.key.remoteJid] || {}
-        if (chat.delete) return
-        await this.reply(msg.key.remoteJid, `
-Terdeteksi @${participant.split`@`[0]} telah menghapus pesan
-Untuk mematikan fitur ini, ketik
-*.enable delete*
-`.trim(), {
-            mentions: [participant]
-        })
-        await this.delay(1000)
-        this.copyNForward(msg.key.remoteJid, msg).catch(e => console.log(e, msg))
-    }
+
 }
 
 global.dfail = (type, m, conn) => {

@@ -42,9 +42,8 @@
     },
     "license": "GPL-3.0-or-later",
     "dependencies": {
-        "@adiwajshing/baileys": "^4.2.0",
-        "@adiwajshing/keyed-db": "^0.2.4",
         "@bochilteam/scraper": "^2.0.0",
+        "@whiskeysockets/baileys": "^6.6.0",
         "awesome-phonenumber": "^2.69.0",
         "axios": "^0.26.0",
         "brainly-scraper-v2": "^2.0.13",

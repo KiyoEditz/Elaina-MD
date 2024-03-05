@@ -1,4 +1,4 @@
-const { generateWAMessageFromContent } = require('@adiwajshing/baileys')
+const { generateWAMessageFromContent } = require('@whiskeysockets/baileys')
 
 let handler = async (m, { conn, text, participants, isOwner, isAdmin }) => {
   if (!(isAdmin || isOwner)) {
