@@ -50,7 +50,7 @@ handler.before = async function (m, { isPrems, match }) {
         }
         let link = (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
-        let ig = await fetch(global.API('alya', 'api/ig', { url: args[0] }, 'apikey'))
+        let ig = await fetch(global.API('alya', 'api/ig', { url: link }, 'apikey'))
         let res = await ig.json()
         let vid = res.data
 
