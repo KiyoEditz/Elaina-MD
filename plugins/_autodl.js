@@ -4,6 +4,7 @@ const fetch = require('node-fetch')
 const { tiktokdl, youtubedl, savefrom, instagramdl } = require('@bochilteam/scraper')
 let eror = `Link salah`
 let acc = `Link accept`
+const can_drop = 'Kamu bisa download link ini langsung tanpa harus menulis perintah!\nCukup langsung kirim link ke chat ini'
 let handler = m => m
 
 handler.before = async function (m, { isPrems, match }) {
@@ -14,7 +15,7 @@ handler.before = async function (m, { isPrems, match }) {
 
     if (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com/i.test(m.text)) {
         if (/..?(t(ik)?t(ok)?2?) /i.test(m.text)) {
-            return m.reply(`Kamu bisa download link ini langsung tanpa perintah\nCukup langsung kirim ke chat ini`)
+            return m.reply(can_drop)
         }
 
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
@@ -46,7 +47,7 @@ handler.before = async function (m, { isPrems, match }) {
 
     if (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)/i.test(m.text)) {
         if (/..?(ig|instagram)2? /i.test(m.text)) {
-            return m.reply(`Kamu bisa download link ini langsung tanpa perintah\nCukup langsung kirim ke chat ini`)
+            return m.reply(can_drop)
         }
         let link = (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
@@ -82,15 +83,24 @@ handler.before = async function (m, { isPrems, match }) {
     //     }).catch(_ => _)
     // }
 
-    if (ytIdRegex.test(m.text) || ytIdRegex.test(m.selectedButtonId)) {
+    if (ytIdRegex.test(m.text)) {
+        if (/..?youtu/i.test(m.text)) {
+            return m.reply(can_drop)
+        }
+
         let yt = await youtubedl(m.text)
-        let { fileSize, fileSizeH, download } = yt.audio['128kbps']
+        let audio = yt.audio['128kbps']
+        let video = yt.video['360p']
+        let { fileSize, fileSizeH } = video
+        let audiodl = await audio.download()
+        let videodl = await video.download()
+
         let isLimit = (isPrems || isOwner ? 99 : limit) * 1024 < fileSize
         conn.reply(m.chat, `
       ${isLimit ? `
       *Source:* ${m.text}
       *Ukuran File:* ${fileSizeH}
-      _File terlalu besar, Download langsung dengan browser sekali klik menggunakan link:_ ${download()}` : '_Sedang proses mengirim..._\n_Mohon tunggu sebentar jangan spam desu_ ^_^'}
+      _File terlalu besar, Download langsung dengan browser sekali klik menggunakan link:_ \nVideo : ${videodl.toString()}\n\nAudio : ${audiodl.toString()}` : '_Sedang proses mengirim..._\n_Mohon tunggu sebentar jangan spam desu_ ^_^'}
       `.trim(), {
             key: { remoteJid: 'status@broadcast', participant: '0@s.whatsapp.net', fromMe: false }, message: {
                 "imageMessage": {
@@ -103,11 +113,11 @@ handler.before = async function (m, { isPrems, match }) {
         })
         // m.reply((await download()).toString())
         if (!isLimit) {
-            conn.sendFile(m.chat, await download(), yt.title + '.mp3', '', m, null, {
+            conn.sendFile(m.chat, audiodl, yt.title + '.mp3', '', m, null, {
                 asDocument: true
             })
-            conn.sendFile(m.chat, await download(), yt.title + '.mp3', '', m, null, {
-                asDocument: false
+            conn.sendFile(m.chat, videodl, yt.title + '.mp4', '', m, null, {
+                asDocument: true
             })
         }
     }

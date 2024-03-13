@@ -26,7 +26,7 @@ Hai, ${ucap()} ${user.registered ? name : m.name}
 ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}\n` + teks2, m)
         this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, {
             mimetype: 'audio/mp4',
-            messageId: 'VNBOT678901'
+            // messageId: 'VNBOTJFHS875HF738FH73HU87EH7847H' || ''
         })
     }
 
@@ -56,7 +56,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     */
 
 
-    if (/audio/i.test(m.quoted && m.quoted.mimetype) && /vnbot/i.test(m.quoted.id)) {
+    if (/audio/i.test(m.quoted && m.quoted.mimetype) && (m.quoted.seconds == 1) && m.quoted.isBaileys && m.quoted.fromMe) {
         m.reply(this.pickRandom(['Kenafahh🙄', 'Bagus ya suaraku :v', 'Aku masih bocil kaka 😶']), m.chat, fakeImgReply)
     }
     // salam

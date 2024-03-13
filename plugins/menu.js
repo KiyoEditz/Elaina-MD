@@ -25,7 +25,7 @@ let handler = async (m, { conn, usedPrefix: _p, args }) => {
 `.trim(),
     header: '*〘 %category 〙*\n╔══════════════',
     body: '╟ %cmd%islimit',
-    footer: '╚════════════════',
+    footer: '╚════════════════\n',
     after: `*%week %weton, %date*\n*Waktu Server:* %time WIB`,
   }
   try {
@@ -178,152 +178,94 @@ Note: Fiturs ini hanya digunakan di Private Chat /Chat Pribadi
         type = ''
         break
     }
+    let { exp, limit, level, registered, role, name: namaa } = global.db.data.users[m.sender]
+    let { min, xp, max } = levelling.xpRange(level, global.multiplier)
+    let name = namaa
+    let d = new Date
+    let locale = 'id'
+    let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(((d * 1) + d.getTimezoneOffset()) / 84600000) % 5]
+    let week = d.toLocaleDateString(locale, { weekday: 'long' })
+    let date = d.toLocaleDateString(locale, {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    })
+    let time = d.toLocaleTimeString(locale, {
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    })
+    if (process.send) {
+      process.send('uptime')
+      _muptime = await new Promise(resolve => {
+        process.once('message', resolve)
+        setTimeout(resolve, 1000)
+      }) * 1000
+    }
+    let totalreg = Object.keys(global.db.data.users).length
+    let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
+    let before = conn.menu.before || defaultMenu.before
+    let header = conn.menu.header || defaultMenu.header
+    let body = conn.menu.body || defaultMenu.body
+    let footer = conn.menu.footer || defaultMenu.footer
+    let after = conn.menu.after || defaultMenu.after
+    let _text
     if (!type) {
-      let { exp, limit, level, registered, role, name: namaa } = global.db.data.users[m.sender]
-      let { min, xp, max } = levelling.xpRange(level, global.multiplier)
-      let name = (registered ? namaa : conn.getName(m.sender, true))
-      let d = new Date
-      let locale = 'id'
-      let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(((d * 1) + d.getTimezoneOffset()) / 84600000) % 5]
-      let week = d.toLocaleDateString(locale, { weekday: 'long' })
-      let date = d.toLocaleDateString(locale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      })
-      let time = d.toLocaleTimeString(locale, {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-      })
-      if (process.send) {
-        process.send('uptime')
-        _muptime = await new Promise(resolve => {
-          process.once('message', resolve)
-          setTimeout(resolve, 1000)
-        }) * 1000
-      }
-      let totalreg = Object.keys(global.db.data.users).length
-      let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
       tags = {
         'menuringkas': 'Daftar Menu',
       }
-      for (let plugin of Object.values(global.plugins))
-        if (plugin && 'tags' in plugin)
-          for (let tag of plugin.tags)
-            if (!tag in tags) tags[tag] = tag
-      let help = Object.values(global.plugins).map(plugin => {
-        return {
-          help: plugin.help,
-          tags: plugin.tags,
-          prefix: 'customPrefix' in plugin,
-          limit: plugin.limit
-        }
-      })
-      let groups = {}
-      for (let tag in tags) {
-        groups[tag] = []
-        for (let menu of help)
-          if (menu.tags && menu.tags.includes(tag))
-            if (menu.help) groups[tag].push(menu)
-      }
-      conn.menu = conn.menu ? conn.menu : {}
-      // let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
-      let before = conn.menu.before || `
+      before = conn.menu.before || `
 Hai, 
-_%ucap *%name*_
+_%ucap *%name!*_
 
 `
-      let header = conn.menu.header || defaultMenu.header
-      let body = conn.menu.body || defaultMenu.body
-      let footer = conn.menu.footer || defaultMenu.footer
-      let after = conn.menu.after || defaultMenu.after
-      let _text = before
-      for (let tag in groups) {
-        _text += header.replace(/%category/g, tags[tag]) + '\n'
-        for (let menu of groups[tag]) {
-          for (let help of menu.help)
-            _text += body.replace(/%cmd/g, menu.prefix ? help : '%p' + help).replace(/%islimit/g, menu.limit ? ' ' : '') + '\n'
-        }
-        _text += footer
-      }
-      _text += after
-      let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
-      let replace = {
-        '%': '%',
-        p: _p,
-        exp: exp - min,
-        maxexp: xp,
-        totalexp: exp,
-        xp4levelup: max - exp,
-        level, limit, name, ucap: ucap(), weton, week, date, time, totalreg, rtotalreg, role,
-        readmore: conn.readmore
-      }
-      text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-      conn.reply(m.chat, text.trim(), fakeOption)
-
-      return await conn.reply(m.chat, text.trim(), m)
+      _text = before
     } else {
-      let d = new Date
-      let hr = d.getHours();
-      let locale = 'id'
-      let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(((d * 1) + d.getTimezoneOffset()) / 84600000) % 5]
-      let week = d.toLocaleDateString(locale, { weekday: 'long' })
-      let date = d.toLocaleDateString(locale, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      })
-      let time = d.toLocaleTimeString(locale, {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-      })
-      for (let plugin of Object.values(global.plugins))
-        if (plugin && 'tags' in plugin)
-          for (let tag of plugin.tags)
-            if (!tag in tags) tags[tag] = tag
-      let help = Object.values(global.plugins).map(plugin => {
-        return {
-          help: plugin.help,
-          tags: plugin.tags,
-          prefix: 'customPrefix' in plugin,
-          limit: plugin.limit
-        }
-      })
-      let groups = {}
-      for (let tag in tags) {
-        groups[tag] = []
-        for (let menu of help)
-          if (menu.tags && menu.tags.includes(tag))
-            if (menu.help) groups[tag].push(menu)
-      }
-      conn.menu = conn.menu ? conn.menu : {}
-      let before = conn.menu.before || defaultMenu.before
-      let header = conn.menu.header || defaultMenu.header
-      let body = conn.menu.body || defaultMenu.body
-      let footer = conn.menu.footer || defaultMenu.footer
-      let after = conn.menu.after || defaultMenu.after
-      let _text = before + '\n' + desc + '\n'
-      for (let tag in groups) {
-        _text += header.replace(/%category/g, tags[tag]) + '\n'
-        for (let menu of groups[tag]) {
-          for (let help of menu.help)
-            _text += body.replace(/%cmd/g, menu.prefix ? help : '%p' + help).replace(/%islimit/g, menu.limit ? ' ' : '') + '\n'
-        }
-        _text += footer + '\n'
-      }
-      _text += after
-      let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
-      let replace = {
-        '%': '%',
-        p: _p,
-        weton, week, date, time
-      }
-      text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-      //conn.reply(m.chat, text.trim(), fakeOption)
-      conn.reply(m.chat, text, fakeOption)
+      _text = before + '\n' + desc + '\n'
     }
+
+    for (let plugin of Object.values(global.plugins))
+      if (plugin && 'tags' in plugin)
+        for (let tag of plugin.tags)
+          if (!tag in tags) tags[tag] = tag
+    let help = Object.values(global.plugins).map(plugin => {
+      return {
+        help: plugin.help,
+        tags: plugin.tags,
+        prefix: 'customPrefix' in plugin,
+        limit: plugin.limit
+      }
+    })
+    let groups = {}
+    for (let tag in tags) {
+      groups[tag] = []
+      for (let menu of help)
+        if (menu.tags && menu.tags.includes(tag))
+          if (menu.help) groups[tag].push(menu)
+    }
+    conn.menu = conn.menu ? conn.menu : {}
+    for (let tag in groups) {
+      _text += header.replace(/%category/g, tags[tag]) + '\n'
+      for (let menu of groups[tag]) {
+        for (let help of menu.help)
+          _text += body.replace(/%cmd/g, menu.prefix ? help : '%p' + help).replace(/%islimit/g, menu.limit ? ' ' : '') + '\n'
+      }
+      _text += footer
+    }
+    _text += after
+    let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
+    let replace = {
+      '%': '%',
+      p: _p,
+      exp: exp - min,
+      maxexp: xp,
+      totalexp: exp,
+      xp4levelup: max - exp,
+      level, limit, name, ucap: ucap(), weton, week, date, time, totalreg, rtotalreg, role,
+      readmore: conn.readmore
+    }
+    text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
+    conn.reply(m.chat, text.trim(), fakeOption)
   } catch (e) { throw e }
 }
 handler.help = [

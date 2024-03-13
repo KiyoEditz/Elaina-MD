@@ -44,7 +44,7 @@ _File terlalu besar, Download langsung dengan browser sekali klik menggunakan li
   catch (e) { }
   if (!isLimit) await conn.sendFile(m.chat, dl, title + '.mp4', `
 *Title:* ${title}
-*Filesize:* ${filesizeF}
+*Filesize:* ${fileSizeH}
 `.trim(), m, false, {
     ..._thumb,
     asDocument: user.useDocument
