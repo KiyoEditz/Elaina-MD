@@ -1,4 +1,4 @@
-let handler = async (m, { conn, args, participants, command }) => {
+let handler = async (m, { conn, args, participants, command, usedPrefix }) => {
     let users = Object.entries(global.db.data.users).map(([key, value]) => {
         return { ...value, jid: key }
     }).filter(v => v.suit !== 0)
