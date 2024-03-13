@@ -1,7 +1,7 @@
 let fs = require('fs')
 let timeout = 60000
 let poin = 500
-let handler = async (m, { conn }) => {
+let handler = async (m, { conn, usedPrefix }) => {
     conn.tekateki = conn.tekateki ? conn.tekateki : {}
     let id = m.chat
     if (id in conn.tekateki) {
@@ -18,12 +18,13 @@ Soal:
 ${json.pertanyaan}
 Waktu jawab *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
+Bantuan ${usedPrefix}tete
 `.trim()
     conn.tekateki[id] = [
-        await conn.sendButton(m.chat, caption, '*TEKA TEKI*', 1, ['Bantuan', '.tete'], m),
+        await conn.reply(m.chat, caption, m),
         json, poin,
         setTimeout(() => {
-            if (conn.tekateki[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, '', 1, ['Teka Teki', `.tekateki`], conn.tekateki[id][0])
+            if (conn.tekateki[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.tekateki[id][0])
             delete conn.tekateki[id]
         }, timeout)
     ]

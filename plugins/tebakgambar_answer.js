@@ -11,8 +11,8 @@ handler.before = async function (m) {
   if (/(.hint|bantuan|^$)/i.test(m.text)) return !0
   if (m.text.toLowerCase() == json.jawaban.toLowerCase()) {
     global.db.data.users[m.sender].exp += this.tebakgambar[id][2]
-    await this.sendButton(m.chat, `*Benar!*\n+${this.tebakgambar[id][2]} XP`, '', 1, ['Tebak Gambar', '.tebakgambar'], m)
-    this.sendMessage(m.chat, { delete :this.tebakgambar[id][0].key}).catch(e => e)
+    await this.reply(m.chat, `*Benar!*\n+${this.tebakgambar[id][2]} XP`, m)
+    this.sendMessage(m.chat, { delete: this.tebakgambar[id][0].key }).catch(e => e)
     clearTimeout(this.tebakgambar[id][3])
     delete this.tebakgambar[id]
   } else if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`*Dikit Lagi!*`)

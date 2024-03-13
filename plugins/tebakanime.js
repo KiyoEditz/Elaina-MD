@@ -23,12 +23,14 @@ Siapa nama Character ini?
 Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*
+Bantuan mengurangi 1 limi
+${usedPrefix}hintanime
     `.trim()
     conn.tebakanime[id] = [
-      await conn.sendButtonImg(m.chat, json.result.image, caption, '*TEBAK ANIME*\nBantuan mengurangi 1 limit', 1, ['Bantuan', '.hintanime'], m),
+      await conn.sendFile(m.chat, json.result.image, 'tebak.jpg', caption, m),
       json, poin,
       setTimeout(() => {
-        if (conn.tebakanime[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.name}*`, '', 1, ['Tebak Anime', `.tebakanime`], conn.tebakanime[id][0])
+        if (conn.tebakanime[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.name}*`, conn.tebakanime[id][0])
         delete conn.tebakanime[id]
       }, timeout)
     ]

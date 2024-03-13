@@ -1,4 +1,4 @@
-let handler = async (m, { conn, args, participants, command }) => {
+let handler = async (m, { conn, args, participants, command, usedPrefix }) => {
     let mem = global.db.data.users
     let users = Object.entries(mem).map(([key, value]) => {
         return { ...value, jid: key }
@@ -11,6 +11,8 @@ let handler = async (m, { conn, args, participants, command }) => {
     let text = `
 *Sambung Kata Leaderboard ${isGC ? 'Group' : `Top ${len}*`}
 Kamu: *${usersExp.indexOf(m.sender) + 1}* dari *${usersExp.length}*
+
+${isGC ? '' : `\nketik ${usedPrefix + command}gc >> untuk khusus top group`}
 ${sortedExp.slice(0, len).map(({ jid, skata, name }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} - ${skata} MMR`).join`\n`}
 `.trim()
     conn.reply(m.chat, text, m)

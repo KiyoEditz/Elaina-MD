@@ -10,7 +10,7 @@ handler.before = async function (m) {
         if (/(.hint|bantuan|^$)/i.test(m.text)) return !0
         if (m.text.toLowerCase() == this.tebaklagu[id][1].toLowerCase()) {
             global.db.data.users[m.sender].exp += this.tebaklagu[id][2]
-            this.sendButton(m.chat, `*Benar!*\n+${this.tebaklagu[id][2]} XP`, '', 1, ['Tebak Lagu', '.tebaklagu'], m)
+            this.reply(m.chat, `*Benar!*\n+${this.tebaklagu[id][2]} XP`, m)
             clearTimeout(this.tebaklagu[id][3])
             delete this.tebaklagu[id]
         } else if (similarity(m.text.toLowerCase(), this.tebaklagu[id][1].toLowerCase().trim()) >= threshold) m.reply(`*Dikit Lagi!*`)

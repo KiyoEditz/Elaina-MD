@@ -11,13 +11,10 @@ let handler = async (m, { conn, args, participants, command }) => {
     let text = `
 *Suit Leaderboard ${isGC ? 'Group' : `Top ${len}*`}
 Kamu: *${usersExp.indexOf(m.sender) + 1}* dari *${usersExp.length}*
+${isGC ? '' : `\nketik ${usedPrefix + command}gc >> untuk khusus top group`}
 ${sortedExp.slice(0, len).map(({ name, jid, suit }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${name}) wa.me/${jid.split`@`[0]}` : name} - ${suit} MMR`).join`\n`}
 `.trim()
-    conn.sendButton(m.chat, text, '', 1, ['Top Suit Group', (!isGC ? '.topsuitgc' : '')], m, {
-        contextInfo: {
-            mentionedJid: [...usersExp.slice(0, len)].filter(v => !participants.some(p => v === p.id))
-        }
-    })
+    conn.reply(m.chat, text, m)
 }
 handler.help = ['topsuit', 'topsuitgroup']
 handler.tags = ['xp']
