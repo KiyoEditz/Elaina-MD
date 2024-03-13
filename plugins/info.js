@@ -6,7 +6,7 @@ let handler = async (m, { conn }) => {
     const groups = chats.filter(v => v.id.endsWith('g.us') && !v.read_only)
     const groups_leave = chats.filter(v => v.id.endsWith('g.us') && v.read_only)
     let allHits = Object.entries(global.db.data.stats).map(v => v[1].total).reduce((a, b) => a + b)
-    let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
+    // let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
     let _uptime = process.uptime() * 1000
     let uptime = conn.clockString(_uptime)
     m.reply(`
