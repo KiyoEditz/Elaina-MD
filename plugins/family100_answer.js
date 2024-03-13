@@ -37,9 +37,11 @@ ${Array.from(room.jawaban, (jawaban, index) => {
 
 ${isSurrender ? '' : `+${room.winScore} XP tiap jawaban benar`}
     `.trim()
-        await this.reply(m.chat, caption, m).then(msg => {
+        let msg_old = await this.reply(m.chat, caption, m).then(msg => {
             return this.game[id].msg = msg
-        }).catch(_ => _)
+        }).catch(_ => _).then(m => {
+            conn.sendMessage(m.chat, { delete: msg_old.key }).catch(e => e)
+        })
         if (isWin || isSurrender) delete this.game[id]
         return !0
     }
