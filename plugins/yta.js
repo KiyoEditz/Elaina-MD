@@ -29,7 +29,7 @@ _File terlalu besar, Download langsung dengan browser sekali klik menggunakan li
       }
     }
   })
-  m.reply((await download()).toString())
+  // m.reply((await download()).toString())
   if (!isLimit) {
     conn.sendFile(m.chat, await download(), yt.title + '.mp3', '', m, null, {
       asDocument: true
