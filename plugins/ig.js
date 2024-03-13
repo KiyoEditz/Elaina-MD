@@ -8,15 +8,13 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   if (!args[0].match(/(https:\/\/www.)?instagram.com\/([A-Za-z0-9.\_]*\/)?(reel|p|tv)/)) throw `Link tidak valid \n\nContoh:\n${usedPrefix + command} https://www.instagram.com/p/linkurl`
   let ig = await fetch(global.API('alya', 'api/ig', { url: args[0] }, 'apikey'))
   let res = await ig.json()
-  let vid = res.data.map(v => {
-    v.url
-  })
+  let vid = res.data
 
   await m.reply('_Sedang proses mengirim..._')
 
-  for (let url of vid) {
-    await conn.sendFile(m.chat, url, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
-      , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+  for (let { type, url } of vid) {
+    await conn.sendFile(m.chat, url, 'ig' + (type == 'image') ? 'jpg' : 'mp4')
+      , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument }
   }
 }
 handler.help = ['ig', 'instagram'].map(v => v + ' <link>')
