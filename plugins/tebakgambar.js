@@ -29,6 +29,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     }
   })
   let caption = `
+*TEBAK GAMBAR*
 Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*

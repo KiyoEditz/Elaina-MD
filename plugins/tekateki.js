@@ -14,6 +14,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     let json = tekateki[Math.floor(Math.random() * tekateki.length)].data
 
     let caption = `
+*TEKA TEKI*
 Soal:
 ${json.pertanyaan}
 Waktu jawab *${(timeout / 1000).toFixed(2)} detik*
