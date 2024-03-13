@@ -423,7 +423,7 @@ module.exports = {
                     let groupMetadata = await this.groupMetadata(id).catch(_ => null) || (conn.chats[id] || {}).metadata
                     for (let user of participants) {
                         let pp = false
-                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', groupMetadata.subject).replace('@desc', groupMetadata.desc.toString()) :
+                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', groupMetadata.subject).replace('@desc', groupMetadata.desc) :
                             (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
                         try {
                             pp = await this.profilePictureUrl(user, 'image')
