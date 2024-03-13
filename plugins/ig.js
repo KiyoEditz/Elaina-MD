@@ -7,7 +7,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   if (/stories/i.test(args[0])) throw `_Perintah ini untuk mendownload post IG, bukan story_\nGunakan fitur berikut \n\n${usedPrefix}igstory username`
   if (!args[0].match(/(https:\/\/www.)?instagram.com\/([A-Za-z0-9.\_]*\/)?(reel|p|tv)/)) throw `Link tidak valid \n\nContoh:\n${usedPrefix + command} https://www.instagram.com/p/linkurl`
   let ig = await fetch(global.API('alya', 'api/ig', { url: args[0] }, 'apikey'))
-  let res = ig.json()
+  let res = await ig.json()
   let dl = {
     url: res.data.map(v => ({
       url: v.url
