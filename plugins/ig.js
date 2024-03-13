@@ -14,7 +14,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 
   await m.reply('_Sedang proses mengirim..._')
 
-  for (let { url } of vid) {
+  for (let url of vid) {
     await this.sendFile(m.chat, url, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
       , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument })
   }
