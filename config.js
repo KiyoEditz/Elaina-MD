@@ -5,7 +5,7 @@ global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna pre
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
 global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n')
 global.community = {
-  'skata': '120363242705186427@g.us'
+  game: '120363242705186427@g.us',
 }
 global.partner = ''
 global.wm = '© _*Levi Bot*_'
