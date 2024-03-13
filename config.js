@@ -4,6 +4,9 @@ global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
 global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n')
+global.community = {
+  'skata': '120363242705186427@g.us'
+}
 global.partner = ''
 global.wm = '© _*Levi Bot*_'
 global.playlist = '37i9dQZF1DWTwnEm1IYyoj'
