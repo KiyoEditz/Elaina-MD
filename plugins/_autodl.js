@@ -1,7 +1,7 @@
 //const { igdl, twitter, pin } = require('../lib/scrape')
 const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
 const fetch = require('node-fetch')
-const { tiktokdl, youtubedl, savefrom } = require('@bochilteam/scraper')
+const { tiktokdl, youtubedl, savefrom, instagramdl } = require('@bochilteam/scraper')
 let eror = `Link salah`
 let acc = `Link accept`
 let handler = m => m
@@ -19,12 +19,12 @@ handler.before = async function (m, { isPrems, match }) {
 
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
-        const tt = await fetch(global.API('lolhuman', '/api/tiktok', { url: link }, 'apikey'))
+        let tt = await tiktokdl(link)
             .catch(e => { throw `Error tidak diketahui` })
-        let res = await tt.json()
-        const url = res.result.link
+        let { nickname, avatar, unique_id } = tt.author
+        let vid = tt.video.no_watermark
 
-        await conn.sendFile(m.chat, url, (new Date * 1) + '.mp4', `@${res.result.author.username}\n${res.result.title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        await conn.sendFile(m.chat, vid, (new Date * 1) + '.mp4', `@${unique_id}\n${nickname}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
     }
 
     // if (/https?:\/\/i\.coco\.fun\//i.test(m.text)) {
@@ -50,22 +50,17 @@ handler.before = async function (m, { isPrems, match }) {
         }
         let link = (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
-        let dl = await savefrom(m.text)
-            .catch(async e => {
-                let res = await fetch(global.API('vhtear', '/instadl', { link }, 'apikey'))
-                let json = await res.json()
-                let obj = {
-                    url: json.result.post.map(v => ({
-                        url: v.urlDownload
-                    })
-                    ),
-                    meta: {
-                        title: json.result.caption
-                    }
-                }
-                return obj
+        let res = await instagramdl(link)
+        let dl = {
+            url: res.medias.map(v => ({
+                url: v.url
+            })
+            ),
+            meta: {
+                title: res.title
             }
-            ).catch(e => { throw 'Error tidak diketahui..' })
+        }
+
         await m.reply('_Sedang proses mengirim..._')
 
         for (let { url } of dl.url) {
@@ -113,7 +108,7 @@ handler.before = async function (m, { isPrems, match }) {
                 }
             }
         })
-        m.reply((await download()).toString())
+        // m.reply((await download()).toString())
         if (!isLimit) {
             conn.sendFile(m.chat, await download(), yt.title + '.mp3', '', m, null, {
                 asDocument: true
