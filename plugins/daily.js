@@ -28,7 +28,9 @@ let handler = async (m, { conn, usedPrefix
   if (text && kode) {
     if (m.isGroup) throw `_Hanya bisa klaim kode di chat Pribadi_`
     if (new Date - users.lastclaim_code < (86400000 * 2)) throw `_Kamu sudah mengklaim klaim kode reedem group gratis_\ntunggu selama ${conn.msToDate(timecode - new Date())} lagi\n\nKamu dapat klaim kode group gratis dalam 2 hari sekali`
-    conn.reply(m.chat, `*Jenis:* Trial (1 Hari)\n*Kode:* ${code}\n\n_Cara menggunakan:_\nKetik .use kode\nKetik di group yang ingin kamu aktifkan bot nya dan pastikan Bot sudah ditambahkan oleh admin\n\n Contoh: .use ABCDEFGHIJKLAM\n\nNB: Jika kamu ingin mendapatkan kode Premium dengan masa aktif lebih banyak, silahkan ketik _*.premium*_ `,)
+    m.reply(`*Jenis:* ${text}\n\n_Cara menggunakan:_\nSalin kode di bawah ini\nTempelkan di group yang ingin kamu aktifkan bot nya\n\n*Note : pastikan Bot sudah ditambahkan ke group kamu*\n\nJika kamu ingin mendapatkan kode aktivasi dengan masa aktif lebih banyak, silahkan ketik _*.premium*_ atau hubungi .owner`,)
+    m.reply(`${usedPrefix}.use ${code}`)
+
     users.lastclaim_code = new Date * 1 + 86400000
   } else {
     users.exp += xp

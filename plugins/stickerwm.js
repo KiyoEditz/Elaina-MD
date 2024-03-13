@@ -32,7 +32,6 @@ let handler = async (m, { conn, text }) => {
 handler.help = ['wm <packname|author>']
 handler.tags = ['stickerprems', 'premium']
 handler.command = /^wm$/i
-handler.premium = true
 handler.limit = true
 
 module.exports = handler
