@@ -202,6 +202,7 @@ Note: Fiturs ini hanya digunakan di Private Chat /Chat Pribadi
         setTimeout(resolve, 1000)
       }) * 1000
     }
+    conn.menu = conn.menu ? conn.menu : {}
     let totalreg = Object.keys(global.db.data.users).length
     let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
     let before = conn.menu.before || defaultMenu.before
@@ -243,7 +244,7 @@ _%ucap *%name!*_
         if (menu.tags && menu.tags.includes(tag))
           if (menu.help) groups[tag].push(menu)
     }
-    conn.menu = conn.menu ? conn.menu : {}
+
     for (let tag in groups) {
       _text += header.replace(/%category/g, tags[tag]) + '\n'
       for (let menu of groups[tag]) {
