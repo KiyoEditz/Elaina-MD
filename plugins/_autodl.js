@@ -50,22 +50,15 @@ handler.before = async function (m, { isPrems, match }) {
         }
         let link = (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
         m.reply(acc)
-        let res = await instagramdl(link)
-        let dl = {
-            url: res.medias.map(v => ({
-                url: v.url
-            })
-            ),
-            meta: {
-                title: res.title
-            }
-        }
+        let ig = await fetch(global.API('alya', 'api/ig', { url: args[0] }, 'apikey'))
+        let res = await ig.json()
+        let vid = res.data
 
         await m.reply('_Sedang proses mengirim..._')
 
-        for (let { url } of dl.url) {
-            await this.sendFile(m.chat, url, 'ig' // + (link.includes('mp4') ? 'mp4' : 'jpg')//
-                , dl.meta.title, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        for (let { type, url } of vid) {
+            await conn.sendFile(m.chat, url, 'ig.' + (type == 'image') ? 'jpg' : 'mp4')
+                , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument }
         }
     }
 

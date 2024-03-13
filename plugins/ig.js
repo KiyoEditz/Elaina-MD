@@ -13,7 +13,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   await m.reply('_Sedang proses mengirim..._')
 
   for (let { type, url } of vid) {
-    await conn.sendFile(m.chat, url, 'ig' + (type == 'image') ? 'jpg' : 'mp4')
+    await conn.sendFile(m.chat, url, 'ig.' + (type == 'image') ? 'jpg' : 'mp4')
       , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument }
   }
 }
