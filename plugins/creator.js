@@ -4,7 +4,7 @@ let handler = async (m, { conn }) => {
   let msg
   // if (global.conn.user.jid !== conn.user.jid) {
   let owner = global.db.data.settings[conn.user.jid].owner || conn.user.jid
-  let list = [owner, global.owner[2]]
+  let list = [owner, global.owner[1]]
   let listContact = []
   for (let i of list.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net')) {
     let name = `${db.data.users[i].name}`
