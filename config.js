@@ -15,6 +15,7 @@ global.APIs = { // API Prefix
   xteam: 'https://api.xteam.xyz',//
   vhtear: 'https://api.vhtear.com',//
   lolhuman: 'http://api.lolhuman.xyz',//
+  alya: 'https://api.alyachan.dev/'
 }
 global.APIKeys = { // APIKey Here
   // 'https://website': 'apikey'
@@ -22,6 +23,7 @@ global.APIKeys = { // APIKey Here
   'https://api.xteam.xyz': 'Syahrulidhamz30',
   'http://api.lolhuman.xyz': 'Syahrulidhamz30',
   'https://api.vhtear.com': 'Syahrulidhamz30',
+  'https://api.alyachan.dev/': 'syah11'
 }
 global.packname = 'Hi'
 global.author = 'LevBot'
