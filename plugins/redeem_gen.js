@@ -15,7 +15,7 @@ let handler = async (m, { text, usedPrefix }) => {
         code = newCode()
     }
     m.reply(`*Jenis:* ${text}\n\n_Cara menggunakan:_\nSalin kode di bawah ini\nTempelkan di group yang ingin kamu aktifkan bot nya\n\n*Note : pastikan Bot sudah ditambahkan ke group kamu*`)
-    m.reply(`${usedPrefix}.use ${code}`)
+    m.reply(`${usedPrefix}use ${code}`)
 
 
 }
