@@ -2,7 +2,7 @@ let limit = 30
 let fetch = require('node-fetch')
 const { youtubedl } = require('@bochilteam/scraper')
 const q = ['144', '240', '360', '480', '720', '1080']
-const ytIdRegex = /(?:http(?:s|):\/\/|)(?:(?:www\.|)?youtube(?:\-nocookie|)\.com\/(?:shorts\/)?(?:watch\?.*(?:|\&)v=|embed\/|v\/)?|youtu\.be\/)([-_0-9A-Za-z]{11})/
+const { ytIdRegex } = require('../lib/y2mate')
 
 let handler = async (m, { conn, args, isPrems, isOwner, usedPrefix, command }) => {
   if (!args[0] || !ytIdRegex.test(args[0])) throw `

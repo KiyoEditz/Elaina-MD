@@ -22,7 +22,7 @@ let handler = async (m, { conn }) => {
 ╟ Total Chats Terbanned: *${Object.entries(global.db.data.chats).filter(chat => chat[1].isBanned).length}* 
 ╟ Total Grups: *${groups.length}*
 ╟ Total Groups Left: *${groups_leave.length}*
-╟ Total Cloning Jadibot: *${jadibot.length}* 
+╟ Total Cloning Jadibot: 
 ╚════
 ╔═〘 Settings Bot 〙
 ╟ Anti Call: ${anticall ? '✅' : '❌'}
