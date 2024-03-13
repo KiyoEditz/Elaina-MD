@@ -2,7 +2,7 @@ const limit = 30
 const yts = require('yt-search')
 const fetch = require('node-fetch')
 const { yta, ytv } = require('../lib/y2mate')
-const { youtubedlv2 } = require('@bochilteam/scraper')
+const { youtubedl } = require('@bochilteam/scraper')
 let confirmation = {}
 let confirmation2 = {} //rencana mau bikin audio/video
 
@@ -48,7 +48,7 @@ handler.all = async function (m) {
     let yt = false
     let temu = pilih.find((v, i) => i == (t - 1))
 
-    yt = await youtubedlv2(temu.url)
+    yt = await youtubedl(temu.url)
     let type
     if (!isVideo) {
       type = yt.audio['128kbps']

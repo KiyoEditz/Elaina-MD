@@ -26,7 +26,7 @@ let handler = async (m, { conn, usedPrefix: _p, args }) => {
     header: '*〘 %category 〙*\n╔══════════════',
     body: '╟ %cmd%islimit',
     footer: '╚════════════════',
-    after: ``
+    after: `*%week %weton, %date*\n*Waktu Server:* %time WIB`,
   }
   try {
     let tags
@@ -228,15 +228,27 @@ Note: Fiturs ini hanya digunakan di Private Chat /Chat Pribadi
             if (menu.help) groups[tag].push(menu)
       }
       conn.menu = conn.menu ? conn.menu : {}
-      let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
+      // let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
       let before = conn.menu.before || `
 Hai, 
 _%ucap *%name*_
 
-Klik untuk melihat fitur bot ini
 `
+      let header = conn.menu.header || defaultMenu.header
+      let body = conn.menu.body || defaultMenu.body
+      let footer = conn.menu.footer || defaultMenu.footer
+      let after = conn.menu.after || defaultMenu.after
       let _text = before
-      text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
+      for (let tag in groups) {
+        _text += header.replace(/%category/g, tags[tag]) + '\n'
+        for (let menu of groups[tag]) {
+          for (let help of menu.help)
+            _text += body.replace(/%cmd/g, menu.prefix ? help : '%p' + help).replace(/%islimit/g, menu.limit ? ' ' : '') + '\n'
+        }
+        _text += footer
+      }
+      _text += after
+      let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
       let replace = {
         '%': '%',
         p: _p,
@@ -248,103 +260,9 @@ Klik untuk melihat fitur bot ini
         readmore: conn.readmore
       }
       text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-      // conn.reply(m.chat, text.trim(), fakeOption)
-      /*conn.sendButton(m.chat, text.trim(), `
-*%week %weton, %date*
-*Waktu Server:* %time WIB`.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name]).trim(), 'Owner', '.owner', 'Sewa / Premium', '#sewa', { quoted: fakeOption })*/
-      const sections = [
-        {
-          "title": "Menu All",
-          "rows": [
-            {
-              "title": `Stiker`,
-              "description": "",
-              "rowId": `${_p}menu stiker`
-            }, {
-              "title": "Anonymous",
-              "description": "",
-              "rowId": `${_p}menu anony`
+      conn.reply(m.chat, text.trim(), fakeOption)
 
-            }, {
-              "title": "Download",
-              "description": "",
-              "rowId": `${_p}menu download`
-
-            }, {
-              "title": "Media Lagu & Video",
-              "description": "",
-              "rowId": `${_p}menu media`
-            }, {
-              "title": "Edukasi",
-              "description": "",
-              "rowId": `${_p}menu edukasi`
-            }, {
-              "title": "Gambar",
-              "description": "",
-              "rowId": `${_p}menu gambar`
-            }, {
-              "title": "Maker",
-              "description": "",
-              "rowId": `${_p}menu maker `
-            }, {
-              "title": "Pencarian",
-              "description": "",
-              "rowId": `${_p}menu pencarian`
-            }, {
-              "title": "Alat",
-              "description": "",
-              "rowId": `${_p}menu tools`
-            }, {
-              "title": "Sastra",
-              "description": "",
-              "rowId": `${_p}menu sastra`
-            }, {
-              "title": "Group & Admin",
-              "description": "",
-              "rowId": `${_p}menu group `
-            }, {
-              "title": "Absen & Vote",
-              "description": "",
-              "rowId": `${_p}menu kelas`
-            }, {
-              "title": "Fun",
-              "description": "",
-              "rowId": `${_p}menu fun`
-            }, {
-              "title": "Game",
-              "description": "",
-              "rowId": `${_p}menu game`
-            }, {
-              "title": "Premium",
-              "description": "",
-              "rowId": `${_p}menu premium`
-            }, {
-              "title": "Database",
-              "description": "",
-              "rowId": `${_p}menu penyimpanan`
-            }, {
-              "title": "Editor",
-              "description": "",
-              "rowId": `${_p}menu editor`
-            }, {
-              "title": "Fitur Owner",
-              "description": "",
-              "rowId": `${_p}menu owner`
-            }, {
-              "title": "Info",
-              "description": "",
-              "rowId": `${_p}menu info`
-            },
-          ]
-        }
-      ]
-
-      return await conn.sendMessage(m.chat, {
-        text: text.trim(),
-        title: 'Yolooo',
-        buttonText: "Ini di klik",
-        sections
-      }, { quoted: m })
+      return await conn.reply(m.chat, text.trim(), m)
     } else {
       let d = new Date
       let hr = d.getHours();
@@ -404,9 +322,7 @@ Klik untuk melihat fitur bot ini
       }
       text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
       //conn.reply(m.chat, text.trim(), fakeOption)
-      conn.reply(m.chat, text + `
-*%week %weton, %date*
-*Waktu Server:* %time WIB`.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name]).trim(), fakeOption)
+      conn.reply(m.chat, text, fakeOption)
     }
   } catch (e) { throw e }
 }

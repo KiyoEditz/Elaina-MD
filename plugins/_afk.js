@@ -22,11 +22,7 @@ _@${jid.split`@`[0]} sedang OFF/AFK_
 Alasan: ${reason}
 Sudah OFF selama: ${this.msToDate(new Date - afkTime)} 
 `.trim()
-    m.reply(teks, m.chat, {
-      contextInfo: {
-        mentionedJid: this.parseMention(teks)
-      }
-    })
+    m.reply(teks, m.chat)
   }
   return true
 }

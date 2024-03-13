@@ -1,7 +1,7 @@
 //const { igdl, twitter, pin } = require('../lib/scrape')
 const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
 const fetch = require('node-fetch')
-const { tiktokdl, youtubedlv2, savefrom } = require('@bochilteam/scraper')
+const { tiktokdl, youtubedl, savefrom } = require('@bochilteam/scraper')
 let eror = `Link salah`
 let acc = `Link accept`
 let handler = m => m
@@ -95,7 +95,7 @@ handler.before = async function (m, { isPrems, match }) {
     // }
 
     if (ytIdRegex.test(m.text) || ytIdRegex.test(m.selectedButtonId)) {
-        let yt = await youtubedlv2(m.text)
+        let yt = await youtubedl(m.text)
         let { fileSize, fileSizeH, download } = yt.audio['128kbps']
         let isLimit = (isPrems || isOwner ? 99 : limit) * 1024 < fileSize
         conn.reply(m.chat, `

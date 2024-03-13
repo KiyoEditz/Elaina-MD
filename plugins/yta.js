@@ -1,6 +1,6 @@
 let limit = 30
 
-const { youtubedlv2 } = require('@bochilteam/scraper')
+const { youtubedl } = require('@bochilteam/scraper')
 let fetch = require('node-fetch')
 const ytIdRegex = /(?:http(?:s|):\/\/|)(?:(?:www\.|)?youtube(?:\-nocookie|)\.com\/(?:shorts\/)?(?:watch\?.*(?:|\&)v=|embed\/|v\/)?|youtu\.be\/)([-_0-9A-Za-z]{11})/
 
@@ -11,7 +11,7 @@ let handler = async (m, { conn, args, isPrems, isOwner, usedPrefix, command }) =
   Contoh
   ${usedPrefix + command} https://youtu.be/inihuruf`.trim()
 
-  let yt = await youtubedlv2(args[0])
+  let yt = await youtubedl(args[0])
   let { fileSize, fileSizeH, download } = yt.audio['128kbps']
   let isLimit = (isPrems || isOwner ? 99 : limit) * 1024 < fileSize
   conn.reply(m.chat, `

@@ -2,7 +2,6 @@ let fs = require('fs')
 let handler = m => m
 
 handler.all = async function (m, { isOwner }) {
-    let jadibot = [...new Set([...global.conns.filter(conn => conn.user && conn.state !== 'close').map(conn => conn.user)])]
     if (m.isBaileys) return
     if (m.fromMe) return
     if (m.chat.endsWith('broadcast')) return
@@ -12,7 +11,7 @@ handler.all = async function (m, { isOwner }) {
     let user = global.db.data.users[m.sender]
     let { name, banned, registered } = user
 
-    let teks2 = `${this.user.jid !== global.conn.user.jid ? `Bot utama: @${global.conn.user.jid.split`@`[0]}` : ''}\nKloning Bot: ${jadibot == '' ? '' : '\n' + jadibot.map(v => `@${v.jid.split`@`[0]}`).join('\n')}\n\nInstagram Bot: https://instagram.com/lev_botwa`.trim()
+    let teks2 = `${`Bot utama: @${global.conn.user.jid.split`@`[0]}`}\n\nInstagram Bot: https://instagram.com/lev_botwa`.trim()
 
     /*
     //////////////
