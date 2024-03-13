@@ -22,6 +22,7 @@ Ariffb
 Syahrul`.trim()
 let poin = 500
 let handler = async (m, { conn, text, isPrems, isROwner, usedPrefix, command }) => {
+	if (m.chat !== '120363242705186427@g.us') throw `Group ini tidak support Game Sambung Kata, silahkan pindah ke group yang ada di komunitas`
 	let isDebug = /debug/i.test(command) && isROwner
 	//if (!isPrems) throw `Game ini dalam tahap pengemmbangan.. cooming soon`
 	conn.skata = conn.skata ? conn.skata : {}
