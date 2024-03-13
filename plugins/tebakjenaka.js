@@ -22,7 +22,7 @@ Soal: ${question}
 Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*
-Bantuan mengurangi 1 limit'
+Bantuan mengurangi 1 limit
 ${usedPrefix}hintjenaka`.trim()
     let btn = await conn.reply(m.chat, caption, m)
     conn.tebakjenaka[id] = [
@@ -30,6 +30,7 @@ ${usedPrefix}hintjenaka`.trim()
         json, poin,
         setTimeout(() => {
             if (conn.tebakjenaka[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${answer}*`, conn.tebakjenaka[id][0])
+            conn.sendMessage(m.chat, { delete: btn.key }).catch(e => e)
             delete conn.tebakjenaka[id]
         }, timeout)
     ]

@@ -12,6 +12,7 @@ handler.before = async function (m) {
         if (m.text.toLowerCase() == json.jawaban.toLowerCase().replace(' ', '')) {
             global.db.data.users[m.sender].exp += this.tebakkalimat[id][2]
             this.reply(m.chat, `*Benar!*\n+${this.tebakkalimat[id][2]} XP`, m)
+            this.sendMessage(m.chat, { delete: this.tebakkalimat[id][0].key }).catch(e => e)
             clearTimeout(this.tebakkalimat[id][3])
             delete this.tebakkalimat[id]
         } else if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`*Dikit Lagi!*`)

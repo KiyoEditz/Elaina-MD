@@ -26,11 +26,14 @@ Bonus: ${poin} XP
 Bantuan mengurangi 1 limi
 ${usedPrefix}hintanime
     `.trim()
+    let msg = await conn.sendFile(m.chat, json.result.image, 'tebak.jpg', caption, m)
+     
     conn.tebakanime[id] = [
-      await conn.sendFile(m.chat, json.result.image, 'tebak.jpg', caption, m),
-      json, poin,
+      msg, json, poin,
       setTimeout(() => {
         if (conn.tebakanime[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.name}*`, conn.tebakanime[id][0])
+        conn.sendMessage(m.chat, { delete: msg.key }).catch(e => e)
+    
         delete conn.tebakanime[id]
       }, timeout)
     ]

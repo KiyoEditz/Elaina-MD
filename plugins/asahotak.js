@@ -27,6 +27,7 @@ Bonus: ${poin} XP
         json, poin,
         setTimeout(() => {
             if (conn.asahotak[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.jawaban}*`, conn.asahotak[id][0])
+            conn.sendMessage(m.chat, { delete: btn.key }).catch(e => e)
             delete conn.asahotak[id]
         }, timeout)
     ]

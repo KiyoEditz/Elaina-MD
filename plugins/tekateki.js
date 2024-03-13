@@ -21,11 +21,13 @@ Waktu jawab *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 Bantuan ${usedPrefix}tete
 `.trim()
+let msg = await conn.reply(m.chat, caption, m)
     conn.tekateki[id] = [
-        await conn.reply(m.chat, caption, m),
+        msg,
         json, poin,
         setTimeout(() => {
             if (conn.tekateki[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.tekateki[id][0])
+            conn.sendMessage(m.chat, { delete: msg.key }).catch(e => e)
             delete conn.tekateki[id]
         }, timeout)
     ]

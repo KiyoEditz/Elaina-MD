@@ -23,11 +23,14 @@ let handler = async (m, { conn, usedPrefix }) => {
 Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*`.trim()
+
+let msg = await m.reply(caption)
     conn.tebakkata[id] = [
-        await m.reply(caption),
+        msg,
         json, poin,
         setTimeout(() => {
             if (conn.tebakkata[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.jawaban}*`, conn.tebakkata[id][0])
+            conn.sendMessage(m.chat, { delete: msg.key }).catch(e => e)
             delete conn.tebakkata[id]
         }, timeout)
     ]

@@ -22,11 +22,13 @@ Apa nama lain dari unsur *${json.result.lambang}?*
 Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
 Bonus: ${poin} XP
 *Reply pesan ini untuk menjawab!*`.trim()
+let msg = await m.reply(caption)
     conn.tebakkimia[id] = [
-        await m.reply(caption),
+        msg,
         json, poin,
         setTimeout(() => {
             if (conn.tebakkimia[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.nama}*`, conn.tebakkimia[id][0])
+            conn.sendMessage(m.chat, { delete: msg.key }).catch(e => e)
             delete conn.tebakkimia[id]
         }, timeout)
     ]

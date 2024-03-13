@@ -29,6 +29,7 @@ ${usedPrefix}siapasih`.trim()
         json, poin,
         setTimeout(() => {
             if (conn.siapaaku[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.answer}*`, conn.siapaaku[id][0])
+            conn.sendMessage(m.chat, { delete: btn.key }).catch(e => e)
             delete conn.siapaaku[id]
         }, timeout)
     ]
