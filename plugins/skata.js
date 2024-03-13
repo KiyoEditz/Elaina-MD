@@ -85,7 +85,7 @@ ${member.map((v, i) => `╟ ${i + 1}. @${v.split`@`[0]}`).join('\n')}
 ╚════
 Sambung kata akan dimainkan sesuai urutan player ( *Bergiliran* )
 Dan hanya bisa dimainkan oleh player yang terdaftar`.trim()
-			room.chat = await conn.reply(m.chat, caption + `\nKetik\n*${usedPrefix + command}* untuk join/ikut\n*${usedPrefix + command} start* untuk memulai`, m, { mentions: conn.parseMention(caption) })
+			room.chat = await conn.reply(m.chat, caption + `\nKetik\n*${usedPrefix + command}* untuk join/ikut\n*${usedPrefix + command} start* untuk memulai`, m)
 		}
 	} else {
 		conn.skata[id] = {

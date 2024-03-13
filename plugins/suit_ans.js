@@ -23,11 +23,7 @@ handler.before = async function (m) {
 @${room.p2.split`@`[0]}
 
 Silahkan pilih suit di chat masing"
-klik wa.me/${this.user.jid.split`@`[0]}`, m.chat, {
-        contextInfo: {
-          mentionedJid: [room.p, room.p2]
-        }
-      })
+klik wa.me/${this.user.jid.split`@`[0]}`)
 
       if (!room.pilih) this.reply(room.p, 'Silahkan pilih\n\nBatu/Kertas/Gunting' + `\n\nMenang +${room.poin}XP\nKalah -${room.poin_lose}XP`, m)
       await delay(1500)

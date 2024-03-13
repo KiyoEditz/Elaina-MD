@@ -16,7 +16,7 @@ Silahkan @${m.mentionedJid[0].split`@`[0]}
 Ketik "terima/ok/gas" untuk memulai suit
 Ketik "tolak/gabisa/nanti" untuk menolak`.trim()
   conn.suit[id] = {
-    chat: m.reply(caption, m.chat, { contextInfo: { mentionedJid: conn.parseMention(caption) } }),
+    chat: m.reply(caption),
     id: id,
     p: m.sender,
     p2: m.mentionedJid[0],
