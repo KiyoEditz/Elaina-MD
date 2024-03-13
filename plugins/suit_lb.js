@@ -18,7 +18,7 @@ ${sortedExp.slice(0, len).map(({ name, jid, suit }, i) => `${i + 1}. ${participa
 }
 handler.help = ['topsuit', 'topsuitgroup']
 handler.tags = ['xp']
-handler.command = /^(topsuit(g(c|ro?up)?))$/i
+handler.command = /^(topsuit(g(c|ro?up)?)?)$/i
 module.exports = handler
 
 function sort(property, ascending = true) {
