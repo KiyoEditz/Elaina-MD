@@ -26,6 +26,7 @@ Hai, ${ucap()} ${user.registered ? name : m.name}
 ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner untuk membuka banned_' : `Ada yg bisa dibantu?`}\n` + teks2, m)
         this.sendFile(m.chat, './src/vn/hyu.mp3', 'vn.mp3', null, m, true, {
             mimetype: 'audio/mp4',
+            ephemeralExpiration: 86400
             // messageId: 'VNBOTJFHS875HF738FH73HU87EH7847H' || ''
         })
     }
@@ -88,16 +89,25 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     */
 
     if (/^ara.ara$/i.test(m.text)) {
-        this.sendFile(m.chat, './src/vn/araara.opus', 'suara.opus', null, m, true)
+        this.sendFile(m.chat, './src/vn/araara.opus', 'suara.opus', null, m, true, {
+            ephemeralExpiration: 86400
+        })
     }
     if (/^yamete/i.test(m.text)) {
-        this.sendFile(m.chat, './src/vn/yamete.opus', 'suara.opus', null, m, true)
+        this.sendFile(m.chat, './src/vn/yamete.opus', 'suara.opus', null, m, true, {
+            ephemeralExpiration: 86400
+        })
     }
     if (/^baka/i.test(m.text)) {
-        this.sendFile(m.chat, './src/vn/bakasong.mp3', 'bakasong.mp3', null, m, true, { mimetype: 'audio/mp4' })
+        this.sendFile(m.chat, './src/vn/bakasong.mp3', 'bakasong.mp3', null, m, true, {
+            mimetype: 'audio/mp4',
+            ephemeralExpiration: 86400
+        })
     }
     if (/chan/i.test(m.text)) {
-        this.sendFile(m.chat, './src/vn/onichan_1.oga', 'yaa.opus', null, m, true)
+        this.sendFile(m.chat, './src/vn/onichan_1.oga', 'yaa.opus', null, m, true, {
+            ephemeralExpiration: 86400
+        })
     }
 
     ///////// Private chat //////////
