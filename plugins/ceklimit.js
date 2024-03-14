@@ -12,14 +12,12 @@ let handler = async (m, { conn, usedPrefix }) => {
 *Role     :* ${role}
 *Limit    :* ${limit} 
 *MMR Total:* ${suit + (skata ? skata : 1)} \n${conn.readmore}
-Harga penukaran 1 limit = -350 XP
+Harga penukaran 1 limit = 350 XP
 
 Cara penukaran: ketik
 ${usedPrefix}buy
 
-Bagaimana cara menambah XP? 
-
-Kamu bisa mengumpulkan XP dengan bermain game yg ada di *${usedPrefix}menu game*
+XP bisa kamu dapatkan dengan bermain game Bot di *${usedPrefix}menu game*
 `.trim(), m)
 }
 handler.help = ['cek']
