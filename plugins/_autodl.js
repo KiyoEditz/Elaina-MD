@@ -12,12 +12,16 @@ handler.before = async function (m, { isPrems, match }) {
     let user = db.data.users[m.sender]
     let set = db.data.settings[this.user.jid]
     if (chat.isBanned || user.banned || m.isBaileys) return
+    conn.autodl = conn.autodl ? conn.autodl : {}
+    if (m.sender in conn.autodl) {
+        delete conn.autodl[m.sender]
+        return
+    }
 
     if (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com/i.test(m.text)) {
         if (/..?(t(ik)?t(ok)?2?) /i.test(m.text)) {
             return m.reply(can_drop)
         }
-
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
 
         m.reply(acc)
@@ -28,15 +32,8 @@ handler.before = async function (m, { isPrems, match }) {
         let vid = data.find(v => v.type == 'nowatermark').url
 
         await conn.sendFile(m.chat, vid, (new Date * 1) + '.mp4', `@${author.fullname}\n${author.nickname}\n${title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        return true
     }
-
-    // if (/https?:\/\/i\.coco\.fun\//i.test(m.text)) {
-    //     let res = await fetch(API('jojo', '/api/cocofun-no-wm', { url: m.text.match(/https?:\/\/i\.coco\.fun\/.*/i)[0].split(/\n| /i)[0] }))
-    //     if (!res.ok) return m.reply(eror)
-    //     let json = await res.json()
-    //     await m.reply(wait)
-    //     await this.sendFile(m.chat, json.download, '', '© stikerin', m)
-    // }
 
     // if (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.test(m.text)) {
     //     let res = await fetch(API('neoxr', '/api/download/fb', { url: m.text.match(/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)\/.*/i)[0].split(/\n| /i)[0] }, 'apikey'))
@@ -63,16 +60,9 @@ handler.before = async function (m, { isPrems, match }) {
             await conn.sendFile(m.chat, url, 'ig.' + (type == 'image') ? 'jpg' : 'mp4')
                 , '', m, null, { asDocument: global.db.data.users[m.sender].useDocument }
         }
+        return
     }
 
-    // if (/https?:\/\/(www\.)?(pinterest\.com\/pin|pin\.it)/i.test(m.text)) {
-    //     pin(m.text.match(/https?:\/\/(www\.)?(pinterest\.com\/pin|pin\.it).*/i)[0].split(/\n| /i)[0]).then(async res => {
-    //         let json = JSON.parse(JSON.stringify(res))
-    //         if (!json.status) return m.reply(eror)
-    //         await m.reply(wait)
-    //         this.sendFile(m.chat, json.data[0].url, json.data[0].url, '© stikerin', m)
-    //     }).catch(_ => _)
-    // }
 
     // if (/https?:\/\/(www\.)?twitter\.com\/.*\/status/i.test(m.text)) {
     //     twitter(m.text.match(/https?:\/\/(www\.)?twitter\.com\/.*\/status\/.*/i)[0].split(/\n| /i)[0]).then(async res => {
@@ -123,7 +113,7 @@ handler.before = async function (m, { isPrems, match }) {
             })
         }
     }
-
+    delete conn.autodl[m.sender]
     return !0
 }
 
