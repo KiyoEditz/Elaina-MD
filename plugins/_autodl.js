@@ -19,13 +19,15 @@ handler.before = async function (m, { isPrems, match }) {
         }
 
         let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
-        m.reply(acc)
-        let tt = await tiktokdl(link)
-            .catch(e => { throw `Error tidak diketahui` })
-        let { nickname, avatar, unique_id } = tt.author
-        let vid = tt.video.no_watermark
 
-        await conn.sendFile(m.chat, vid, (new Date * 1) + '.mp4', `@${unique_id}\n${nickname}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        m.reply(acc)
+        let tt = await fetch(global.API('alya', 'api/tiktok', { url: link }, 'apikey'))
+        let res = await tt.json()
+        if (!res.status) throw `Error`
+        let { title, music_info, author, data } = res
+        let vid = data.find(v => v.type == 'nowatermark').url
+
+        await conn.sendFile(m.chat, vid, (new Date * 1) + '.mp4', `@${author.fullname}\n${author.nickname}\n${title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
     }
 
     // if (/https?:\/\/i\.coco\.fun\//i.test(m.text)) {

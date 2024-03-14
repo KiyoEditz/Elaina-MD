@@ -37,22 +37,22 @@ ${Array.from(room.jawaban, (jawaban, index) => {
 
 ${isSurrender ? '' : `+${room.winScore} XP tiap jawaban benar`}
     `.trim()
-    conn.sendMessage(m.chat, { delete: this.game[id].msg_old.key }).catch(e => e)
-    let msg_old = await this.reply(m.chat, caption, m).then(msg => {
-        return this.game[id].msg = msg
-    }).catch(_ => _)
-    this.game[id].msg_old = msg_old
+        if (this.game[id].msg_old) await conn.sendMessage(m.chat, { delete: this.game[id].msg_old.key }).catch(e => e)
+        let msg_old = await this.reply(m.chat, caption, m).then(msg => {
+            return this.game[id].msg = msg
+        }).catch(_ => _)
+        this.game[id].msg_old = msg_old
 
-        
-        
+
+
         if (isWin || isSurrender) {
             setTimeout(() => {
                 conn.sendMessage(m.chat, { delete: this.game[id].msg.key }).catch(e => e)
                 delete this.game[id]
             }, 10000)
-           
+
         }
         return !0
-        
+
     }
 }
