@@ -35,7 +35,7 @@ Apa yang kamu dapatkan jika premium?
     conn.reply(m.chat, `Bagaimana? sudah menentukan pilihan kamu?? kalau udah yuk gass joinn\n${_p}owner\n${_p}payment`, msg)
 
 
-  })
+  }, 50000)
 }
 handler.help = ['sewabot', 'premium']
 handler.tags = ['main', 'group']
