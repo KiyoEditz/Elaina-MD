@@ -253,7 +253,7 @@ module.exports = {
                         if (!['unbanuser.js', '_banned.js', 'profile.js', 'creator.js'].includes(name) && user && user.banned) return m.reply(`*Kamu telah dibanned..*\n_Dikarena kamu telah melakukan pelanggaran Bot_\nHitung mundur:${this.msToDate(user.bannedtime - new Date * 1)}\n\natau Silahkan hubungi owner untuk membuka ban`, m.sender)
 
                         if (plugin.tags && plugin.tags.includes('game')) {
-                            if (m.chat !== global.community.game) return m.reply(`Group ini tidak support untuk bermain game, silahkan gabung ke group khusus game >> https://chat.whatsapp.com/${await conn.groupInviteCode(global.community.game)}`)
+                            if (m.chat !== global.community.game && m.chat == '6281999284127-1616417360@g.us') return m.reply(`Group ini tidak support untuk bermain game, silahkan gabung ke group khusus game >> https://chat.whatsapp.com/${await conn.groupInviteCode(global.community.game)}`)
                         }
 
                         if (!global.db.data.chats[m.chat].game) {
