@@ -1,15 +1,20 @@
 let handler = async (m, { conn }) => {
-    conn.sendFile(m.chat, 'https://telegra.ph/file/055edd68d70d701168122.jpg', 'img.jpg', `
+    conn.sendFile(m.chat, 'foto QRIS', 'img.jpg', `
 ╔══「 *Pembayaran* 」
 ╟
-╟ Go-Pay/Dana/Shoope-pay:
-╟ 0819-9928-4127
-╟ Pulsa AXIS: 
-╟ 0831-9656-4521 (+5000)
+╟ Dana:
+╟ 0821-8152-3670
+╟ go-pay:
+╟ *segera*
+╟ Pulsa indosat: 
+╟ 0858-7406-8202 (+2000)
+╟ Pulsa XL:
+╟ 0877-9196-6892 (+5000)
 ╟ 
 ╚════════════════ 
 _Jika sudah melakukan pembayaran harap hubungi Owner_
 
+*QRIS belum di buat*
 Cara scan QRIS
 ${conn.readmore}
 1. Download gambar di atas

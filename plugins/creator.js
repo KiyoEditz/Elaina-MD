@@ -18,9 +18,9 @@ FN:${name}
 item1.TEL;waid=${i.split`@`[0]}:${i.split`@`[0]}${(i == global.owner[2] + '@s.whatsapp.net') ? `\nitem1.X-ABLabel:🎹 Piano Musician
 item2.EMAIL;type=INTERNET:ini.email@gmail.com
 item2.X-ABLabel:✉️ Email
-item3.URL:https://www.instagram.com/syhrl_idh
+item3.URL:-
 item3.X-ABLabel:Instagram
-item4.ADR:;;Puncu, Kediri Regency, East Java, Indonesia;;;;
+item4.ADR:;;Indonesia;;;;
 item4.X-ABADR:id
 item4.X-ABLabel:📍 Home Address
 BDAY;value=date:2022-06-18

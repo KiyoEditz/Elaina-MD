@@ -20,7 +20,7 @@ let handler = async (m, { conn, usedPrefix: _p, args }) => {
   let defaultMenu = {
     before: `
 ╔══════════════
-╟「 *${conn.user.name}* 」
+╟「 Hai, %ucap *${conn.user.name}* 」
 ╚════════════════
 `.trim(),
     header: '*〘 %category 〙*\n╔══════════════',

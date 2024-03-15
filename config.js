@@ -1,5 +1,5 @@
 let fs = require('fs')
-global.owner = ['6281999284127', '6285173121589', '6285843734881', '687852464'] // Put your number here
+global.owner = ['6281999284127', '6285173121589', '6285843734881', '6285874068202'] // Put your number here
 global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
@@ -8,7 +8,7 @@ global.community = {
   game: '120363242705186427@g.us',
 }
 global.partner = ''
-global.wm = '© _*Levi Bot*_'
+global.wm = '*Elaina-MD*'
 global.playlist = '37i9dQZF1DWTwnEm1IYyoj'
 const moment = require('moment-timezone')
 
@@ -29,14 +29,14 @@ global.APIKeys = { // APIKey Here
   'https://api.alyachan.dev/': 'syah11'
 }
 global.packname = 'Hi'
-global.author = 'LevBot'
+global.author = 'Elainabot'
 
 global.dtu = 'ɪɴꜱᴛᴀɢʀᴀᴍ'
-global.urlnya = "https://www.instagram.com/syahrul_idh"
+global.urlnya = "-"
 
 //============= callButtons =============//
 global.dtc = 'ᴄᴀʟʟ ᴏᴡɴᴇʀ'
-global.phn = '+62 831-9616-2908'
+global.phn = '+62 858-7406-8202'
 
 global.multiplier = 69 // The higher, The harder levelup
 

@@ -1,5 +1,5 @@
 {
-    "name": "levibotmd",
+    "name": "Elaina-MD",
     "version": "2.3.5",
     "description": "Simple Bot WhatsApp with Baileys Multi Device",
     "depecrated": false,
@@ -29,16 +29,16 @@
         "stikerin",
         "wabot-aq"
     ],
-    "homepage": "https://github.com/syahrularranger/levibotmd",
+    "homepage": "https://github.com/KiyoEditz/Elaina-MD",
     "author": {
         "name": "Nurutomo"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/syahrularranger/levibotmd.git"
+        "url": "git+https://github.com/KiyoEditz/Elaina-MD.git"
     },
     "bugs": {
-        "url": "https://github.com/syahrularranger/levibotmd/issues"
+        "url": "https://github.com/KiyoEditz/Elaina-MD/issues"
     },
     "license": "GPL-3.0-or-later",
     "dependencies": {

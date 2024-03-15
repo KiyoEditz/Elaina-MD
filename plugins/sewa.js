@@ -6,9 +6,9 @@ Kode Aktivasi Group
 ===================
 1. Silver [gratis]\nBot aktif trial selama 3 hari https://wa.me/${conn.user.jid.split('@')[0]}?text=.claim+kode
 2. Gold
-Harga:\n- Pengguna baru: Rp. 5000\n- Perpanjang: Rp. 3000\nMasa aktif: 30 Hari
+Harga:\n- Pengguna baru: Rp. 8000\n- Perpanjang: Rp. 6000\nMasa aktif: 30 Hari
 3. Diamond
-Harga:\n- Pengguna baru: Rp. 8000\n- Perpanjang: Rp. 5000\nMasa aktif: 60 Hari
+Harga:\n- Pengguna baru: Rp. 11000\n- Perpanjang: Rp. 8000\nMasa aktif: 60 Hari
 
 Fitur Bot Untuk Group:
 • Hidetag, mentionAll member
@@ -20,7 +20,7 @@ Fitur Bot Untuk Group:
 MEMBER PREMIUM 
 ===================
 [30 Hari] *Harga:*
-- Pengguna baru: Rp. 10.000
+- Pengguna baru: Rp. 15.000
 - Perpanjang: Rp. 8.000
 
 Apa yang kamu dapatkan jika premium?

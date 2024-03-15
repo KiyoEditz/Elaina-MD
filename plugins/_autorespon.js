@@ -109,6 +109,11 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             ephemeralExpiration: 86400
         })
     }
+    if (/^dame$/i.test(m.text)) {
+        this.sendFile(m.chat, './src/vn/dame.mp3', 'suara.opus', null, m, true, {
+            ephemeralExpiration: 86400
+        })
+    }
 
     ///////// Private chat //////////
 
