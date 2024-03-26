@@ -13,5 +13,5 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 handler.help = ['gimage <Keyword>', 'image <Keyword>']
 handler.tags = ['image', 'search']
 handler.command = /^(gimage|image)$/i
-
+handler.premium = false
 module.exports = handler

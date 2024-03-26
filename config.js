@@ -1,9 +1,14 @@
 let fs = require('fs')
-global.owner = ['6281999284127', '6285173121589', '6285843734881', '6285874068202', '687852464'] // Put your number here
+global.owner = ['6285874068202', '6281999284127', '6285173121589', '6285843734881', '687852464'] // Put your number here
 global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
 global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n')
+global.numberowner = '6285874068202'
+global.nameowner = 'KiyoEditz'
+global.name = 'Kiyo•Editz™'
+global.mail = 'abiandriansyah3@gmail.com'
+global.instagram = ''
 global.community = {
   game: '120363242705186427@g.us',
 }
@@ -12,7 +17,7 @@ global.wait = '_*Tunggu sedang di proses...*_'
 global.wm = '*Elaina-MD*'
 global.playlist = '37i9dQZF1DWTwnEm1IYyoj'
 const moment = require('moment-timezone')
-
+/*
 //INI WAJIB DI ISI!//
 global.lann = 'beta-KiyoEditz'
 //Daftar terlebih dahulu https://api.betabotz.eu.org
@@ -20,7 +25,7 @@ global.lann = 'beta-KiyoEditz'
 //INI OPTIONAL BOLEH DI ISI BOLEH JUGA ENGGA//
 global.btc = 'lvxVAfDd'
 //Daftar https://api.botcahx.eu.org 
-
+*/
 global.APIs = { // API Prefix
   // name: 'https://website'
   nrtm: 'https://nurutomo.herokuapp.com',//

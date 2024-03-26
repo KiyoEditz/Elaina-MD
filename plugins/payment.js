@@ -1,11 +1,11 @@
 let handler = async (m, { conn }) => {
-    conn.sendFile(m.chat, 'foto QRIS', 'img.jpg', `
+    conn.sendFile(m.chat, 'https://telegra.ph/file/60ee2273e7e571239a1ad.jpg', 'img.jpg', `
 ╔══「 *Pembayaran* 」
 ╟
 ╟ Dana:
 ╟ 0821-8152-3670
-╟ go-pay:
-╟ *segera*
+╟ go-pay/ovo:
+╟ 0858-7406-8202
 ╟ Pulsa indosat: 
 ╟ 0858-7406-8202 (+2000)
 ╟ Pulsa XL:

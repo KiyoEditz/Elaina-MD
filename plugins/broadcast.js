@@ -1,4 +1,4 @@
-let handler = async (m, { conn, text, command }) => {
+/*let handler = async (m, { conn, text, command }) => {
   let chats = conn.chats.all().filter(v => !v.read_only && v.message).map(v => v.jid)
   if (/pc/i.test(command)) chats = conn.chats.all().filter(v => !v.read_only && v.message && !v.jid.endsWith('g.us')).map(v => v.jid)
   let cc = conn.serializeM(text ? m : m.quoted ? await m.getQuotedObj() : false || m)
@@ -21,4 +21,4 @@ handler.botAdmin = false
 
 handler.fail = null
 
-module.exports = handler
+module.exports = handler*/
