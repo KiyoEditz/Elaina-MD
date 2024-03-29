@@ -13,6 +13,11 @@
 <a href="https://github.com/KiyoEditz/Elaina-MD/pulls"><img title="Pull Request" src="https://img.shields.io/github/issues-pr/KiyoEditz/Elaina-MD?label=PullRequest&color=success&style=flat-square"></a>
 <a href="https://github.com/KiyoEditz/Elaina-MD/pulls?q=is%3Apr+is%3Aclosed"><img title="Pull Request" src="https://img.shields.io/github/issues-pr-closed/KiyoEditz/Elaina-MD?label=PullRequest&color=red&style=flat-square"></a>
 
+## INFORMATION
+* A Multi Device based WhatsApp bot with various features.
+* Don't sell this source bot. 
+* If you are caught selling source bots, you will be dealt with seriously and you will have to make compensation according to the mistake.
+* Jika ketahuan menjual source bot maka akan di tindak secara serius dan harus melakukan ganti rugi sesuai dengan dengan kesalahan.
 
 ## DEPLOYMENT
 
