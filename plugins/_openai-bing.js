@@ -11,15 +11,15 @@ let handler = async (m, {
     try {
       m.reply(wait)
       let response = await fetch('https://api.betabotz.eu.org/api/search/bing-chat', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            text: text,
-            apikey: lann
-          })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: text,
+          apikey: lann
         })
+      })
         .then(res => res.json());
 
       await conn.reply(m.chat, response.message, m);
@@ -33,15 +33,15 @@ let handler = async (m, {
     try {
       m.reply(wait)
       let response = await fetch('https://api.betabotz.eu.org/api/search/bing-img', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            text: text,
-            apikey: lann
-          })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: text,
+          apikey: lann
         })
+      })
         .then(res => res.json());
 
       for (let i = 0; i < 4; i++) {

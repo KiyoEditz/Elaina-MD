@@ -13,7 +13,7 @@ handler.help = ['delete']
 handler.tags = ['main']
 
 handler.command = /^del(ete)?$/i
-handler.admin = false
+handler.admin = true
 handler.botAdmin = true
 
 module.exports = handler

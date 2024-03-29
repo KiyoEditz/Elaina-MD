@@ -3,13 +3,13 @@ const uploader = require('../lib/uploadImage');
 
 let handler = async (m, { conn, text, command, usedPrefix }) => {
   let q = m.quoted ? m.quoted : m
-  let mime = (q.msg || q).mimetype || q.mediaType || '' 
+  let mime = (q.msg || q).mimetype || q.mediaType || ''
   if (/image/g.test(mime) && !/webp/g.test(mime)) {
     let buffer = await q.download()
-    await m.reply(wait)    
+    await m.reply(wait)
     try {
       let media = await uploader(buffer)
-      let json = await (await fetch(`https://api.betabotz.eu.org/api/search/bard-img?url=${media}&text=${text}&apikey=${lann}`)).json()  
+      let json = await (await fetch(`https://api.betabotz.eu.org/api/search/bard-img?url=${media}&text=${text}&apikey=beta-KiyoEditz`)).json()
       conn.sendMessage(m.chat, { text: json.result }, { quoted: m })
     } catch (err) {
       throw `${eror}`

@@ -8,7 +8,7 @@ const Readline = require('readline')
 const yargs = require('yargs/yargs')
 const rl = Readline.createInterface(process.stdin, process.stdout)
 
-CFonts.say('Levi-Bot', {
+CFonts.say('Elaina-MD', {
   colors: ['#f2aa4c'],
   font: 'block',
   align: 'center',

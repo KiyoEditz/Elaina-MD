@@ -7,7 +7,7 @@ var handler = async (m, {
   if (!text) throw `Masukkan pertanyaan!\n\n*Contoh:* Siapa presiden Indonesia? `
   try {
     await m.reply(wait)
-    var apii = await fetch(`https://api.betabotz.eu.org/api/search/openai-chat?text=${text}&apikey=apikey`)
+    var apii = await fetch(`https://api.betabotz.eu.org/api/search/openai-chat?text=${text}&apikey=beta-KiyoEditz`)
     var res = await apii.json()
     await m.reply(res.message)
   } catch (err) {
@@ -15,7 +15,7 @@ var handler = async (m, {
     throw "Terjadi kesalahan dalam menjawab pertanyaan"
   }
 }
-handler.command = handler.help = ['ai2', 'openai2'];
+handler.command = handler.help = ['ai2'];
 handler.tags = ['tools'];
 handler.premium = false
 module.exports = handler;

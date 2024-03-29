@@ -8,20 +8,21 @@ global.numberowner = '6285874068202'
 global.nameowner = 'KiyoEditz'
 global.name = 'Kiyo•Editz™'
 global.mail = 'abiandriansyah3@gmail.com'
-global.instagram = ''
+global.instagram = 'https://www.instagram.com/kiyoeditz'
 global.community = {
   game: '120363242705186427@g.us',
 }
 global.partner = ''
+global.eror = '_*Server Error*_'
 global.wait = '_*Tunggu sedang di proses...*_'
 global.wm = '*Elaina-MD*'
 global.playlist = '37i9dQZF1DWTwnEm1IYyoj'
 const moment = require('moment-timezone')
-/*
+
 //INI WAJIB DI ISI!//
 global.lann = 'beta-KiyoEditz'
 //Daftar terlebih dahulu https://api.betabotz.eu.org
-
+/*
 //INI OPTIONAL BOLEH DI ISI BOLEH JUGA ENGGA//
 global.btc = 'lvxVAfDd'
 //Daftar https://api.botcahx.eu.org 
@@ -47,7 +48,7 @@ global.APIKeys = { // APIKey Here
   'https://api.alyachan.dev/': 'syah11'
 }
 global.packname = 'Hi'
-global.author = 'Elainabot'
+global.author = '⫹⫺ ᴇʟᴀɪɴᴀ 𝙱𝙾𝚃'
 
 global.dtu = 'ɪɴꜱᴛᴀɢʀᴀᴍ'
 global.urlnya = "-"
@@ -57,6 +58,28 @@ global.dtc = 'ᴄᴀʟʟ ᴏᴡɴᴇʀ'
 global.phn = '+62 858-7406-8202'
 
 global.multiplier = 69 // The higher, The harder levelup
+
+let wibh = moment.tz('Asia/Jakarta').format('HH')
+let wibm = moment.tz('Asia/Jakarta').format('mm')
+let wibs = moment.tz('Asia/Jakarta').format('ss')
+let wktuwib = `${wibh} H ${wibm} M ${wibs} S`
+
+let d = new Date(new Date + 3600000)
+let locale = 'id'
+// d.getTimeZoneOffset()
+// Offset -420 is 18.00
+// Offset    0 is  0.00
+// Offset  420 is  7.00
+let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(d / 84600000) % 5]
+let week = d.toLocaleDateString(locale, { weekday: 'long' })
+let date = d.toLocaleDateString(locale, {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+})
+
+global.botdate = `⫹⫺ Day's: ${week} ${date}`
+global.bottime = `ᴛɪᴍᴇ: ${wktuwib}`
 
 global.ucap = ucap
 function ucap() {

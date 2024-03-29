@@ -77,7 +77,7 @@
             keys: makeCacheableSignalKeyStore(state.keys, P({ level: 'silent' }).child({ level: 'silent' })),
         },
         logger: P({ level: 'silent' }),
-        browser: ['LeviBot', 'Safari', '1.0.0'],
+        browser: ['Elaina-MD', 'Safari', '1.0.0'],
         printQRInTerminal: opts['pairing'] ? false : true,
         getMessage: async (key) => {
             let jid = jidNormalizedUser(key.remoteJid)

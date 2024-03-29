@@ -114,7 +114,11 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             ephemeralExpiration: 86400
         })
     }
-
+    if (/^rawr$/i.test(m.text)) {
+        this.sendFile(m.chat, './src/vn/rawr.opus', 'suara.opus', null, m, true, {
+            ephemeralExpiration: 86400
+        })
+    }
     ///////// Private chat //////////
 
     if (!m.isGroup) {
