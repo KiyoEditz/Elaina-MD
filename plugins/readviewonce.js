@@ -1,12 +1,13 @@
-let handler = async (m, { conn, text }) => {
-    if (!m.quoted) return conn.sendMessage(m.chat, 'Reply pesan sekali lihat', 'conversation')
-    if (m.quoted.mtype !== 'viewOnceMessage') throw 'Itu bukan pesan viewOnce'
-    await conn.copyNForward(m.chat, await conn.loadMessage(m.chat, m.quoted.id), false, { readViewOnce: true }).catch(_ => m.reply('Mungkin dah pernah dibuka bot'))
+var handler = async (m, { conn }) => {
+    if (!/viewOnce/.test(m.quoted?.mtype)) throw 'Itu Bukan Pesan ViewOnce'
+    let mtype = Object.keys(m.quoted.message)[0]
+    let buffer = await m.quoted.download()
+    let caption = m.quoted.message[mtype].caption || ''
+    conn.sendMessage(m.chat, { [mtype.replace(/Message/, '')]: buffer, caption }, { quoted: m })
 }
 
 handler.help = ['readviewonce']
 handler.tags = ['tools']
-
-handler.command = /^readviewonce/i
+handler.command = /^readviewonce|rvo/i
 
 module.exports = handler
