@@ -1,4 +1,26 @@
-const baileys = require('@adiwajshing/baileys')
+const fetch = require('node-fetch')
+let handler = async (m, {
+ text, 
+ usedPrefix, 
+ command
+ }) => {
+    
+if (!text) throw m.reply(`Masukkan textnya!\n\n*Contoh:* .pr 5 dikali 5`)
+try {
+  var apii2 = await fetch(`https://mfarels.my.id/api/brainly?q=${text}`)
+  var js2 = await apii2.json()
+  m.reply(js2.result)
+} catch(e) {
+  try {
+    var apii = await fetch(`https://mfarels.my.id/api/brainly?q=${text}`)
+    var js = await apii.json()
+    m.reply(js.data.data)
+  } catch(e) {
+    m.reply('Error: Server down!')
+  }
+}
+}      
+/*const baileys = require('@adiwajshing/baileys')
 const { Brainly } = require('brainly-scraper-v2')
 const fetch = require('node-fetch')
 let brainly = new Brainly('id')
@@ -22,7 +44,7 @@ let handler = async (m, { conn, text }) => {
       await baileys.delay(2000)
     }
   }
-}
+}*/
 handler.help = ['brainly <soal>']
 handler.tags = ['belajar']
 
