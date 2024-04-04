@@ -5,7 +5,7 @@ let handler = async (m, {
  command
  }) => {
     
-if (!text) throw m.reply(`Masukkan textnya!\n\n*Contoh:* .pr 5 dikali 5`)
+if (!text) throw m.reply(`Masukkan textnya!\n\n*Contoh:* .brainly 5 dikali 5`)
 try {
   var apii2 = await fetch(`https://mfarels.my.id/api/brainly?q=${text}`)
   var js2 = await apii2.json()
