@@ -69,7 +69,7 @@ $ node .
 
 menggunakan session dari nama file yang berbeda, default `session.data.json`
 
-contoh nama file `levibot.json` maka penggunaannya `node . --session 'levibot'`
+contoh nama file `Elaina.json` maka penggunaannya `node . --session 'Elaina'`
 
 ### `--prefix <prefix>`
 
