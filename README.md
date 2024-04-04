@@ -120,6 +120,10 @@ Content-Type: application/json
 
 Jika qr unicode kecil tidak mendukung
 
+### `--pairing`
+
+jika ingin menggunakan nomor telepon dan bukan QR
+
 ### `--img`
 
 Aktifkan pemeriksa gambar melalui terminal
