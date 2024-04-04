@@ -1,10 +1,10 @@
 let handler = async (m, { conn, usedPrefix }) => {
     m.reply(`
 ╔══════════════
-╟「 *LeviBot* 」
+╟「 *${global.namebot}* 」
 ┣═══════════════
 ╟   *Hai ${await conn.getName(m.sender)}*
-╟   Terimakasih telah menggunakan *LeviBot*
+╟   Terimakasih telah menggunakan *${global.namebot}*
 ╟   
 ╟   *Prefix/perintah:* ! # . /
 ╟   Pilih prefix sesuai kenyamanan mengetik
@@ -36,7 +36,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 ╟     mengirim banyak media
 ╟   
 ╟   Jika ada yang ditanyakan hubungi 
-╟   wa.me/${global.owner[2]}
+╟   wa.me/${global.nuberowner}
 ╟   
 ╟   Sekian, Terimakasih.. Have fun ^_^
 ╚════════════════
