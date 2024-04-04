@@ -7,11 +7,12 @@ global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n')
 global.numberowner = '6285874068202'
 global.nameowner = 'KiyoEditz'
 global.name = 'Kiyo•Editz™'
+global.namebot = 'Elaina-MD'
 global.mail = 'abiandriansyah3@gmail.com'
 global.instagram = 'https://www.instagram.com/kiyoeditz'
-global.community = {
+/*global.community = {
   game: '120363242705186427@g.us',
-}
+}*/
 global.partner = ''
 global.eror = '_*Server Error*_'
 global.wait = '_*Tunggu sedang di proses...*_'
