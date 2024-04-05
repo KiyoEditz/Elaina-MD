@@ -10,7 +10,7 @@ const rl = Readline.createInterface(process.stdin, process.stdout)
 
 CFonts.say('Elaina-MD', {
   colors: ['#f2aa4c'],
-  font: 'block',
+  font: 'chrome',
   align: 'center',
 })
 CFonts.say(`${package.name} Oleh @${package.author.name || package.author}`, {
