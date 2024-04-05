@@ -1,9 +1,9 @@
 let obj
 let handler = async (m, { conn, usedPrefix: _p, text }) => {
   let teks = '```Hai, perkenalkan!\nAku adalah *Bot (Robot) WhatsApp*\n\nAku diciptakan dan dirancang untuk membalas pesan kamu secara otomatis sesuai fitur yang tersedia pada bot```'
-  conn.sendButton(m.chat, teks, ``, 1, ['Lanjut', 'lanjut'], m)
+  /*conn.sendButton(m.chat, teks, ``, 1, ['Lanjut', 'lanjut'], m)
   conn.tutor[m.sender] = {}
-}
+}*/
 handler.all = async function (m) {
   this.tutor = this.tutor ? this.tutor : {}
   if (!m.sender.endsWith('.net')) return
