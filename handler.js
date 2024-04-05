@@ -252,9 +252,9 @@ module.exports = {
                         if (!['exec2.js', 'exec.js', 'expired.js', 'bot-on-off.js', 'setting.js', 'redeem_use.js', 'sewa.js'].includes(name) && m.chat.endsWith('g.us') && !chat.init && !chat.isBanned) return conn.reply(m.chat, `Group ini belum diaktivasi\n*Dapatkan kode aktivasi* kemudian ketik ${usedPrefix}use _KODEREDEEMNYA_\n\n*Jika kamu belum punya kode, silahkan ketik _.claim kode_ di _chat pribadi_ untuk mendapatkan kode\nhttps://wa.me/${this.user.jid.split('@')[0]}?text=.claim+kode`, m)
                         if (!['unbanuser.js', '_banned.js', 'profile.js', 'creator.js'].includes(name) && user && user.banned) return m.reply(`*Kamu telah dibanned..*\n_Dikarena kamu telah melakukan pelanggaran Bot_\nHitung mundur:${this.msToDate(user.bannedtime - new Date * 1)}\n\natau Silahkan hubungi owner untuk membuka ban`, m.sender)
 
-                        if (plugin.tags && plugin.tags.includes('game')) {
+                        /*if (plugin.tags && plugin.tags.includes('game')) {
                             if (m.chat !== global.community.game && m.chat == '6281999284127-1616417360@g.us') return m.reply(`Group ini tidak support untuk bermain game, silahkan gabung ke group khusus game >> https://chat.whatsapp.com/${await conn.groupInviteCode(global.community.game)}`)
-                        }
+                        }*/
 
                         if (!global.db.data.chats[m.chat].game) {
                             if (plugin.tags && plugin.tags.includes('game')) return m.reply(`Game sedang dimatikan untuk chat ini${this.readmore}\nSilahkan ketik ${usedPrefix}setting`)
