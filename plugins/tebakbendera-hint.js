@@ -3,9 +3,9 @@ let handler = async (m, { conn }) => {
     let id = m.chat
     if (!(id in conn.tebakbendera)) throw false
     let json = conn.tebakbendera[id][1]
-    let nya = json.jawaban
-    let nyanya = nya.replace(/[bcdfghjklmnpqrstvwxyz]/g, '_')
-    m.reply('```' + nyanya + '```')
+    let ans = json.name.trim()
+    let clue = ans.replace(/[AIUEOaiueo]/g, '_')
+    conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.tebakbendera[id][0])
 }
 handler.command = /^tbhint$/i
 handler.limit = true
