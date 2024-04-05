@@ -124,6 +124,12 @@ ${_p}play bertaut
         }
         desc = `Ini adalah beberapa fitur game`
         break
+        case 'rpg':
+        tags = {
+          'rpg': 'Menu rpg',
+        }
+        desc = `Ini adalah beberapa fitur rpg`
+        break
       case 'premium':
         tags = {
           'premium': 'Menu Premium',
@@ -284,6 +290,7 @@ handler.help = [
   'kelas',
   'fun',
   'game',
+  'rpg',
   'premium',
   'penyimpanan',
   'editor',
