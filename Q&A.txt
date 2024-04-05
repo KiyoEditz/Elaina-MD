@@ -1,7 +1,7 @@
 Cara install? Lihat di readme!
 
 Ganti nomor owner:
-Buka folder settings didalemnya ada file json bernama 'owner.json' lalu edit nomor di dalemnya!
+Buka folder settings didalemnya ada file json bernama 'config.json' lalu edit nomor di dalemnya!
 
 Ganti WM di sticker?
 Buka folder plugins cari file '__allfake.js', File ini berisi banyak settingan!
