@@ -9,7 +9,7 @@ let fakeOption = {
   message: {
     "imageMessage": {
       "mimetype": "image/jpeg",
-      "caption": `LevBot WhatsApp`,
+      "caption": `Elaina-bot WhatsApp`,
       "jpegThumbnail": fs.readFileSync(`./src/logo.jpg`)
     }
   }
