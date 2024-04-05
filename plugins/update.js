@@ -48,7 +48,7 @@ handler.all = async m => {
 }
 
 handler.rowner = true
-handler.help = ['update2']
+handler.help = ['update']
 handler.tags = ['owner']
 handler.command = ['update']
 
