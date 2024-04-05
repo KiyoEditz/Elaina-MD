@@ -9,7 +9,8 @@ const yargs = require('yargs/yargs')
 const rl = Readline.createInterface(process.stdin, process.stdout)
 
 CFonts.say('Elaina-MD', {
-  colors: ['#f2aa4c'],
+  //colors: ['#f2aa4c'],
+  gradient: ['red', 'magenta'],
   font: 'chrome',
   align: 'center',
 })
