@@ -1,3 +1,8 @@
+/* lu kok anjing banget sih, jangan di colong kontol, kasih wm lah ajg, ngotak ding.
+ -KiyoEditz
+ -syahrul
+ */
+
 var name = global.nameowner
 var numberowner = global.numberowner
 var gmail = global.mail
