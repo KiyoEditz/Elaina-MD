@@ -15,7 +15,8 @@ CFonts.say('Elaina-MD', {
   align: 'center',
 })
 CFonts.say(`${package.name} Oleh @${package.author.name || package.author}`, {
-  colors: ['#f2aa4c'],
+  //colors: ['#f2aa4c'],
+  gradient: ['red', 'magenta'] ,
   font: 'console',
   align: 'center',
 })
