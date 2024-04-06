@@ -22,7 +22,7 @@ let handler = async (m, { conn, text }) => {
 }
 
 handler.help = ['spamwa <number>|<mesage>|<no of messages>']
-handler.tags = ['tools']
+handler.tags = ['tools','premium']
 handler.command = /^spam(wa)$/i
 
 handler.group = false
