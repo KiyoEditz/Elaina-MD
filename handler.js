@@ -33,6 +33,7 @@ module.exports = {
                     if (!('registered' in user)) user.registered = false
                     if (!user.registered) {
                         if (!('name' in user)) user.name = m.name
+                        if (!('pasangan' in user)) user.pasangan = ''
                         if (!isNumber(user.age)) user.age = -1
                         if (!isNumber(user.regTime)) user.regTime = -1
                     }
@@ -52,6 +53,7 @@ module.exports = {
                     unreg: 0,
                     registered: false,
                     name: m.name,
+                    pasangan: '',
                     age: -1,
                     regTime: -1,
                     afk: -1,
