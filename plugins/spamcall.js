@@ -11,7 +11,7 @@ let handler = async (m, { conn, text, usedPrefix }) => {
 }
 // by Aine
 handler.help = ['spamcall <nomor>']
-handler.tags = ['tools']
+handler.tags = ['tools','premium']
 handler.command = /^(spamcall)$/i
 handler.premium = true
 module.exports = handler
