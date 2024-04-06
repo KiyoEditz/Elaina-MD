@@ -13,6 +13,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     if (!(who in global.db.data.users)) throw 'User belum terdaftar'
     let { min, xp, max } = levelling.xpRange(level, global.multiplier)
     let prem = global.prems.includes(who.split`@`[0])
+    let jodoh = `Berpacaran @${pasangan.split`@`[0]}`
     let math = max - xp
     let nama = (registered ? name : await conn.getName(who, { withoutContact: true }))
     let str = `
@@ -27,6 +28,7 @@ ${prem ? '✅' : '❌'} Premium
 *XP:* ${exp} (${exp - min} / ${xp})
 [ ${math <= 0 ? `Siap✅ untuk *${usedPrefix}levelup*` : `Butuh ${math} XP lagi untuk levelup`} ]
 *Level:* ${level}
+*Status:* ${pasangan ? jodoh : 'Jomblo' }
 *Role:* ${role}
 *Limit:* ${limit}
 `.trim()
