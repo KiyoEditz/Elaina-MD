@@ -1,7 +1,7 @@
 let levelling = require('../lib/levelling')
 let handler = async (m, { conn, usedPrefix }) => {
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
-  let { name, limit, exp, level, role, suit, skata } = global.db.data.users[who]
+  let { name, limit, exp, pasangan, level, role, suit, skata } = global.db.data.users[who]
   let jodoh = `Berpacaran @${pasangan.split`@`[0]}`
   let { min, xp, max } = levelling.xpRange(level, global.multiplier)
   let math = max - exp
@@ -11,6 +11,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 [${math <= 0 ? `Siap untuk ${usedPrefix}levelup` : `Butuh ${math} XP lagi untuk levelup`}]
 *Level    :* ${level}
 *Role     :* ${role}
+*Status:* ${pasangan ? jodoh : 'Jomblo' }
 *Limit    :* ${limit} 
 *MMR Total:* ${suit + (skata ? skata : 1)} \n${conn.readmore}
 Harga penukaran 1 limit = 350 XP
