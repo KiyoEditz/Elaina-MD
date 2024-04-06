@@ -2,6 +2,7 @@ let levelling = require('../lib/levelling')
 let handler = async (m, { conn, usedPrefix }) => {
   let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
   let { name, limit, exp, level, role, suit, skata } = global.db.data.users[who]
+  let jodoh = `Berpacaran @${pasangan.split`@`[0]}`
   let { min, xp, max } = levelling.xpRange(level, global.multiplier)
   let math = max - exp
   conn.reply(m.chat, `
