@@ -9,7 +9,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 
   } finally {
     let about = (await conn.fetchStatus(who).catch(console.error) || {}).status || ''
-    let { name, limit, exp, lastclaim, registered, regTime, age, level, role, banned } = global.db.data.users[who]
+    let { name, limit, exp, pasangan, lastclaim, registered, regTime, age, level, role, banned } = global.db.data.users[who]
     if (!(who in global.db.data.users)) throw 'User belum terdaftar'
     let { min, xp, max } = levelling.xpRange(level, global.multiplier)
     let prem = global.prems.includes(who.split`@`[0])
