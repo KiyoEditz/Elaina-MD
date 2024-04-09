@@ -5,29 +5,33 @@ global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna pre
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
 global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n')
 global.numberowner = '6285874068202'
-global.nameowner = 'KiyoEditz'
-global.name = 'Kiyo•Editz™'
-global.namebot = 'Elaina-MD'
-global.mail = 'abiandriansyah3@gmail.com'
-global.instagram = 'https://www.instagram.com/kiyoeditz'
+global.nameowner = 'KiyoEditz' //Owner name
+global.name = 'Kiyo•Editz™' // owner name for contacts
+global.namebot = 'Elaina-MD' // bot name 
+global.mail = 'abiandriansyah3@gmail.com' // email or gmail
+global.instagram = 'https://www.instagram.com/kiyoeditz'//Instagram 
 /*global.community = {
   game: '120363242705186427@g.us',
 }*/
 global.partner = ''
-global.eror = '_*Server Error*_'
-global.wait = '_*Tunggu sedang di proses...*_'
-global.wm = '*Elaina-MD*'
-global.playlist = '37i9dQZF1DWTwnEm1IYyoj'
-const moment = require('moment-timezone')
+global.menu = 'https://telegra.ph/file/cce9ab4551f7150f1970d.jpg' //image menu , but not work 
+global.eror = '_*Server Error*_' // for eror message 
+//global.rwait = '⌛' //wait message 
+global.wait = '_*Tunggu sedang di proses...*_' //wait message 
+global.wm = '*Elaina-MD*' // watermark bot 
+global.playlist = '37i9dQZF1DWTwnEm1IYyoj' //song play list
+const moment = require('moment-timezone') 
 
+
+////// ALL of apikey ///////
 //INI WAJIB DI ISI!//
 global.lann = 'beta-KiyoEditz'
 //Daftar terlebih dahulu https://api.betabotz.eu.org
-/*
+
 //INI OPTIONAL BOLEH DI ISI BOLEH JUGA ENGGA//
 global.btc = 'lvxVAfDd'
 //Daftar https://api.botcahx.eu.org 
-*/
+
 global.APIs = { // API Prefix
   // name: 'https://website'
   nrtm: 'https://nurutomo.herokuapp.com',//
@@ -48,18 +52,25 @@ global.APIKeys = { // APIKey Here
   'https://api.botcahx.eu.org': 'lvxVAfDd',
   'https://api.alyachan.dev/': 'syah11'
 }
-global.packname = 'Hi'
-global.author = '⫹⫺ ᴇʟᴀɪɴᴀ 𝙱𝙾𝚃'
+global.set = {
+    footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™', //another watermark message?
+    
+}
+global.Func = new (require('./lib/functions')) //just function 
+global.scrap = new (require('./lib/scrape')) //just scraper 
+global.packname = 'Hi' // another Watermark 
+global.author = '⫹⫺ ᴇʟᴀɪɴᴀ 𝙱𝙾𝚃' //watermark author?
 
-global.dtu = 'ɪɴꜱᴛᴀɢʀᴀᴍ'
-global.urlnya = "-"
+global.dtu = 'ɪɴꜱᴛᴀɢʀᴀᴍ'//just message 
+global.urlnya = "-" //apa lah 
 
 //============= callButtons =============//
-global.dtc = 'ᴄᴀʟʟ ᴏᴡɴᴇʀ'
-global.phn = '+62 858-7406-8202'
+global.dtc = 'ᴄᴀʟʟ ᴏᴡɴᴇʀ' //don't change 
+global.phn = '+62 858-7406-8202' //tell me it work 
 
 global.multiplier = 69 // The higher, The harder levelup
 
+//////FOR TIME//////
 let wibh = moment.tz('Asia/Jakarta').format('HH')
 let wibm = moment.tz('Asia/Jakarta').format('mm')
 let wibs = moment.tz('Asia/Jakarta').format('ss')
