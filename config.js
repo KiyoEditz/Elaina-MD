@@ -3,7 +3,7 @@ global.owner = ['6285874068202'] // Put your number here
 global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
-global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n')
+global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n');
 global.numberowner = '6285874068202'
 global.nameowner = 'KiyoEditz' //Owner name
 global.name = 'Kiyo•Editz™' // owner name for contacts
