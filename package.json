@@ -94,6 +94,6 @@
         "wa-sticker-formatter": "^4.4.4",
         "yargs": "^17.2.1",
         "yt-search": "^2.10.2",
-        "ytdl-core": "npm:@distube/ytdl-core@^4.13.3",
+        "ytdl-core": "^4.11.5",
     }
 }
