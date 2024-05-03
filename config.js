@@ -10,9 +10,9 @@ global.name = 'Kiyo•Editz™' // owner name for contacts
 global.namebot = 'Elaina-MD' // bot name 
 global.mail = 'abiandriansyah3@gmail.com' // email or gmail
 global.instagram = 'https://www.instagram.com/kiyoeditz'//Instagram 
-/*global.community = {
-  game: '120363242705186427@g.us',
-}*/
+//global.community = {
+  //game: '120363242705186427@g.us',
+//}
 global.partner = ''
 global.menu = 'https://telegra.ph/file/cce9ab4551f7150f1970d.jpg' //image menu , but not work 
 global.eror = '_*Server Error*_' // for eror message 
@@ -56,8 +56,8 @@ global.set = {
     footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™', //another watermark message?
     
 }
-global.Func = new (require('./lib/functions')) //just function 
-global.scrap = new (require('./lib/scrape')) //just scraper 
+//global.Func = new (require('./lib/functions')) //just function 
+//global.scrap = new (require('./lib/scrape')) //just scraper 
 global.packname = 'Hi' // another Watermark 
 global.author = '⫹⫺ ᴇʟᴀɪɴᴀ 𝙱𝙾𝚃' //watermark author?
 
