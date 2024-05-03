@@ -109,3 +109,105 @@ handler.tags = ['media']
 handler.command = /^(play2?|lagu|vid(e|i)o)$/i
 
 module.exports = handler
+  
+/** !! BACKUP CODE!! **/
+
+/*
+let ytdl = require('ytdl-core');
+let fs = require('fs');
+let ffmpeg = require('fluent-ffmpeg');
+let search = require ('yt-search');
+const path = require('path');
+
+
+let handler = async (m, { conn, text, usedPrefix, command }) => {
+  if (!text) return m.reply(`*example*: ${usedPrefix}${command} Metaphorposis Slowed`);
+    conn.sendMessage(m.chat, {
+      react: {
+        text: '🕒',
+        key: m.key,
+      }
+    });
+  try {
+    let results = await search(text);
+    let videoId = results.videos[0].videoId;
+    let info = await ytdl.getInfo(videoId);
+    let title = info.videoDetails.title.replace(/[^\w\s]/gi, '');
+    let thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+    let url = info.videoDetails.video_url;
+    let duration = parseInt(info.videoDetails.lengthSeconds);
+    let uploadDate = new Date(info.videoDetails.publishDate).toLocaleDateString();
+    let views = info.videoDetails.viewCount;
+    let minutes = Math.floor(duration / 60);
+    let description = results.videos[0].description;
+    let seconds = duration % 60;
+    let durationText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;       
+    let audio = ytdl(videoId, { quality: 'highestaudio' });
+    let inputFilePath = 'tmp/' + title + '.webm';
+    let outputFilePath = 'tmp/' + title + '.mp3';
+    let viewsFormatted = formatViews(views);
+    let infoText = `╭─ •  *${layout.xl} P L A Y*\n│ ◦ *Title*: ${title}\n│ ◦ *Duration*: ${durationText}\n│ ◦ *Upload*: ${uploadDate}\n│ ◦ *Views*: ${viewsFormatted}\n│ ◦ *ID*: ${videoId}\n╰──── •\n${set.footer}
+  `;
+    const pesan = await conn.relayMessage(m.chat, {
+                extendedTextMessage:{
+                text: infoText, 
+                contextInfo: {
+                     externalAdReply: {
+                        title: `${layout.xl} P L A Y`,
+                        body: `${description}`,
+                        mediaType: 1,
+                        previewType: 0,
+                        renderLargerThumbnail: true,
+                        thumbnailUrl: thumbnailUrl,
+                        sourceUrl: url
+                    }
+                }, mentions: [m.sender]
+}}, {});
+
+    audio.pipe(fs.createWriteStream(inputFilePath)).on('finish', async () => {
+      ffmpeg(inputFilePath)
+        .toFormat('mp3')
+        .on('end', async () => {
+          let thumbnailData = await conn.getFile(thumbnailUrl);
+          let buffer = fs.readFileSync(outputFilePath);
+          let fileName = title + '.mp3';
+          //let outputFileName = path.basename(inputFilePath, '.webm') + '.mp3';
+          //let readStream = fs.createReadStream(path.join('tmp', outputFileName));
+          //conn.sendFile(m.chat, buffer, outputFileName, null, m, { asDocument: true });
+          conn.sendFile(m.chat, buffer, `${title}.mp3`, '', m);
+          conn.sendFile(m.chat, buffer, fileName, '', m, null, { asDocument: true });
+          fs.unlinkSync(inputFilePath);
+          fs.unlinkSync(outputFilePath);
+        })
+        .on('error', (err) => {
+          console.log(err);
+          m.reply(`There was an error converting the audio: ${err.message}`);
+          fs.unlinkSync(inputFilePath);
+          fs.unlinkSync(outputFilePath);
+        })
+        .save(outputFilePath);
+    });
+  } catch (e) {
+    console.log(e);
+    m.reply(`An error occurred while searching for the song: ${e.message}`);
+  }
+};
+
+handler.command = handler.help = ['play', 'song'];
+handler.tags = ['downloader'];
+handler.premium = false;
+handler.limit = false;
+
+module.exports = handler
+
+function formatViews(views) {
+  if (views >= 1000000) {
+    return (views / 1000000).toFixed(1) + 'M';
+  } else if (views >= 1000) {
+    return (views / 1000).toFixed(1) + 'K';
+  } else {
+    return views.toString();
+  }
+}
+
+  */
