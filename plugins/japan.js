@@ -1,6 +1,6 @@
 let handler = (m, { text, usedPrefix, command }) => {
-	let teks = text ? text : m.quoted.text ? m.quoted.text : false
-	if (!text) throw `_Masukkan nama!_\n\nContoh\n${usedPrefix + command + ' ' + global.author}`
+	let teks = text || (m.quoted && m.quoted.text) || false;
+    if (!teks) throw '_Masukkan teks!_\n\nContoh\n' + usedPrefix + command + ' ' + global.author;
 	let japan = teks.replace(/[a-z]/gi, v => {
 		switch (v.toLowerCase()) {
 			case 'a': return 'ka'
