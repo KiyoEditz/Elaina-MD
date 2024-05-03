@@ -22,7 +22,7 @@
 ## Change log
 
 * bot bakal update berkala jika saya menemukan bug atau laporan bug.
-* sc ini selalu di belakang bot yang saya run pribadi, jadi silahkan cek fitur terbaru di nomor [`Klik Disini`](wa.me/627791966892)
+* sc ini selalu di belakang bot yang saya run pribadi, jadi silahkan cek fitur terbaru di nomor [`Klik Disini`](Https://wa.me/627791966892)
 
 
 ## DEPLOYMENT
