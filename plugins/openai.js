@@ -13,7 +13,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     await m.reply('AI: ' + ai)
 }
 handler.help = ['ai'].map(v => v + ' <prompt>')
-handler.tags = ['tools']
+handler.tags = ['tools','ai']
 handler.command = /^ai$/i
 handler.limit = true
 
