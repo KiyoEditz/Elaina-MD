@@ -124,7 +124,13 @@ ${_p}play bertaut
         }
         desc = `Ini adalah beberapa fitur game`
         break
-        case 'rpg':
+      case 'ai':
+        tags = {
+        'ai': 'Menu AI',
+          }
+        desc = `Ini adalah menu AI`
+        break
+       case 'rpg':
         tags = {
           'rpg': 'Menu rpg',
         }
@@ -281,6 +287,7 @@ handler.help = [
   'download',
   'media',
   'edukasi',
+  'ai',
   'gambar',
   'maker',
   'pencarian',
