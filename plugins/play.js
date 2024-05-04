@@ -146,14 +146,14 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     let inputFilePath = 'tmp/' + title + '.webm';
     let outputFilePath = 'tmp/' + title + '.mp3';
     let viewsFormatted = formatViews(views);
-    let infoText = `╭─ •  *${layout.xl} P L A Y*\n│ ◦ *Title*: ${title}\n│ ◦ *Duration*: ${durationText}\n│ ◦ *Upload*: ${uploadDate}\n│ ◦ *Views*: ${viewsFormatted}\n│ ◦ *ID*: ${videoId}\n╰──── •\n${set.footer}
+    let infoText = `╭─ •  *P L A Y*\n│ ◦ *Title*: ${title}\n│ ◦ *Duration*: ${durationText}\n│ ◦ *Upload*: ${uploadDate}\n│ ◦ *Views*: ${viewsFormatted}\n│ ◦ *ID*: ${videoId}\n╰──── •\n${set.footer}
   `;
     const pesan = await conn.relayMessage(m.chat, {
                 extendedTextMessage:{
                 text: infoText, 
                 contextInfo: {
                      externalAdReply: {
-                        title: `${layout.xl} P L A Y`,
+                        title: `P L A Y`,
                         body: `${description}`,
                         mediaType: 1,
                         previewType: 0,
