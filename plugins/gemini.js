@@ -1,38 +1,43 @@
-const fetch = require('node-fetch');
 
-const handler = async (m, { conn, args, usedPrefix, command }) => {
-    try {
-        const text = args?.join(' ');
-        if (!text) {
-            return conn.reply(m.chat, `Silakan coba lagi, teks jangan kosong.\n*Ex: ${usedPrefix + command} berikan saya kodingan python kalkulator!*`, m);
-        }
 
-        conn.reply(m.chat, "Mohon tunggu sebentar\n" + wait, m);
+const axios = require("axios")
 
-        const response = await fetch(`https://aemt.me/gemini?text=${encodeURIComponent(text)}`);
-        if (!response.ok) {
-            return conn.reply(m.chat, 'Tidak dapat memproses permintaan Anda saat ini.', m);
-        }
+let danz = async (m, {
+conn,
+text,
+usedPrefix,
+command
+}) => {
+  if (!text) {
+    return m.reply(`Masukkan Pertanyaan!\n\nContoh: *${usedPrefix + command} siapa kamu*`)
+  }
+  
+  let res = await bard(text)
+  conn.reply(m.chat, res, m)
+}
 
-        const data = await response.json();
-        const result = data?.result;
+handler.command = handler.help = ["bard2", "gbard2"]
+handler.tags = ["ai"]
 
-        if (!result) {
-            return conn.reply(m.chat, 'Tidak dapat memproses permintaan Anda saat ini.', m);
-        }
+module.exports = handler
 
-        conn.reply(m.chat, result, m);
-    } catch (error) {
-        console.error('Error:', error);
-        conn.reply(m.chat, 'Terjadi kesalahan saat memproses permintaan Anda.', m);
-    }
-};
+async function bard(prompt) {
+  try {
+    const response = await axios.post('https://bard.rizzy.eu.org/backend/conversation/gemini', {
+      ask: prompt
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      }
+    });
+    return response.data.content;
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-handler.help = ['gemini <Query>'];
-handler.tags = ['tools'];
-handler.limit = true;
-//handler.register = true;
-
-handler.command = /^(bard|gemini)$/i;
-
-module.exports = handler;
+/**
+ * DannTeam
+ * ig: @dannalwaysalone
+*/
