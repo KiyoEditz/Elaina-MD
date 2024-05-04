@@ -11,9 +11,9 @@ let handler = async (m, { conn, args, text, command, usedPrefix, isCreator, isPr
 	})
   m.react('🕒')
   try {
-  let radit1 = await fetch(`https://api.alyachan.dev/api/bing-image?q=${text}&apikey=${api.alya}`)
-  const res1 = await radit1.json()
- let teks1 = `${layout.xl} *B I N G - I M G - V2*\n\n`
+  let url = await fetch(`https://api.alyachan.dev/api/bing-image?q=${text}&apikey=${api.alya}`)
+  const res1 = await url.json()
+ let teks1 = `*B I N G - I M G*\n\n`
     teks1 += `  ∘  *Prompt* : ${text}`
   res1.data.map((v, i) => {
             conn.sendFile(m.chat, v.url, '', teks1, m)
