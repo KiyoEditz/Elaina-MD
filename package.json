@@ -63,6 +63,7 @@
         "form-data": "^4.0.0",
         "formdata-node": "^4.3.3",
         "g-i-s": "^2.1.6",
+        "g4f": "^1.4.2",
         "google-it": "^1.6.2",
         "human-readable": "^0.2.1",
         "image-to-base64": "^2.2.0",
