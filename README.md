@@ -19,7 +19,7 @@
 * If you are caught selling source bots, you will be dealt with seriously and you will have to make compensation according to the mistake.
 * Jika ketahuan menjual source bot maka akan di tindak secara serius dan harus melakukan ganti rugi sesuai dengan dengan kesalahan.
 
-## Change log
+## NOTES
 
 * bot bakal update berkala jika saya menemukan bug atau laporan bug.
 * sc ini selalu di belakang bot yang saya run pribadi, jadi silahkan cek fitur terbaru di nomor [`Klik Disini`](Https://wa.me/6287791966892)
