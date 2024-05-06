@@ -24,7 +24,7 @@ const handler = async (m, {
 
     try {
         const res = new BingImageCreator({
-            cookie: "1JdrVHBbcJfHYpwh4QBBZ_2gOzvf90gwb_QXrs_t5kmYnrUemFv0IT8NhMseWfQqQtiq_tRi20WKqSE2780dCeLvBIQcxHgNJjsQghTAHchnMRvGZ6ZprqbQ8x55XavHLtvJoXCZzM4mJTW8KU42ix5iBBrgzuzsWp0n8siAPTcUr36e6d3xF-CfE1_BbScynpbKn-1KBH4ihJwkGttsKzgFCL_8_mzHNzI3VqUyS85Q"
+            cookie: "1sfTMLE7SIGaVvH4IFq0EhSvl-tf oKDXbvwV2ZqaU1yZWJ8rJredf 04RtZtjPSimcVy0yn1s5IMHM4 NZoi30ghgww5ZbZliweetOpq72 DLjio514r1tNNkAq8z-g87zHtCX XZqr_jd0jcXPFK7KfyDCsBHkEK QjXZiQUm1RVTA3Jal4QdMo6а oPbD_wklbKw8X2Tbe9LQHEHH GgBUor_Asg"
           //add your own cookie
         });
         const data = await res.createImage(text);
