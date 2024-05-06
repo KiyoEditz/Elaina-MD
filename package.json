@@ -46,6 +46,7 @@
         "@bochilteam/scraper-root": "github:bochilteam/scraper",
         "@whiskeysockets/baileys": "^6.6.0",
         "awesome-phonenumber": "^2.69.0",
+        "@moonr/to-anime": "^1.0.0",
         "axios": "^0.26.0",
         "brainly-scraper-v2": "^2.0.13",
         "catch": "^1.0.48",
