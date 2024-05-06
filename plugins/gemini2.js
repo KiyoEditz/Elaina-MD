@@ -4,7 +4,7 @@ const axios = require("axios")
 const uploadImage = require('../lib/uploadImage.js')
 
 
-let rodotz = async (m, {
+let handler = async (m, {
 conn,
 text,
 usedPrefix,
