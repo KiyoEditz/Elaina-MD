@@ -1,3 +1,10 @@
+const {
+  proto,
+  generateWAMessageFromContent,
+  prepareWAMessageMedia
+} = require('@adiwajshing/baileys');
+const moment = require("moment-timezone");
+const fetch = require("node-fetch");
 let free = 500
 const prem = 20000
 let levelling = require('../lib/levelling')
@@ -28,9 +35,10 @@ let handler = async (m, { conn, usedPrefix
   if (text && kode) {
     if (m.isGroup) throw `_Hanya bisa klaim kode di chat Pribadi_`
     if (new Date - users.lastclaim_code < (86400000 * 2)) throw `_Kamu sudah mengklaim klaim kode reedem group gratis_\ntunggu selama ${conn.msToDate(timecode - new Date())} lagi\n\nKamu dapat klaim kode group gratis dalam 2 hari sekali`
-    await m.reply(`*Jenis:* ${text}\n\n_Cara menggunakan:_\nSalin kode di bawah ini\nTempelkan di group yang ingin kamu aktifkan bot nya\n\n*Note : pastikan Bot sudah ditambahkan ke group kamu*\n\nJika kamu ingin mendapatkan kode aktivasi dengan masa aktif lebih banyak, silahkan ketik _*.premium*_ atau hubungi .owner`,)
-    await m.reply(`${usedPrefix}use ${code}`)
-
+    //await m.reply(`*Jenis:* ${text}\n\n_Cara menggunakan:_\nSalin kode di bawah ini\nTempelkan di group yang ingin kamu aktifkan bot nya\n\n*Note : pastikan Bot sudah ditambahkan ke group kamu*\n\nJika kamu ingin mendapatkan kode aktivasi dengan masa aktif lebih banyak, silahkan ketik _*.premium*_ atau hubungi .owner`,)
+    //await m.reply(`${usedPrefix}use ${code}`)
+    await m.reply(`Fitur di nonaktifkan karena spam\nSilahkan chat owner untuk aktivasi manual`)
+    
     users.lastclaim_code = new Date * 1 + 86400000
   } else {
     users.exp += xp
@@ -38,7 +46,63 @@ let handler = async (m, { conn, usedPrefix
     users.lastclaim = new Date * 1
 
   }
-}
+  let msg = generateWAMessageFromContent(m.chat, {
+    viewOnceMessage: {
+      message: {
+        "messageContextInfo": {
+          "deviceListMetadata": {},
+          "deviceListMetadataVersion": 2
+        },
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: caption.trim()
+          }),
+          footer: proto.Message.InteractiveMessage.Footer.create({
+            text: footer
+          }),
+          header: proto.Message.InteractiveMessage.Header.create({
+  ...(await prepareWAMessageMedia({
+    image: {
+      url: 'URL_VIDEO.MP4' //buat thumb video
+    }
+  }, {
+    upload: conn.waUploadToServer
+  })),
+  title: text,
+  gifPlayback: true,
+  subtitle: namebot, //ganti aja
+  hasMediaAttachment: false
+}),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: [{
+                 "name": "quick_reply",
+                "buttonParamsJson": "{\"display_text\":\"OWNER\",\"id\":\".owner\"}"
+              },
+              {
+                "name": "quick_reply",
+                "buttonParamsJson": "{\"display_text\":\"PREMIUM\",\"id\":\".premium\"}"
+              }
+            ],
+          }),
+          contextInfo: {
+            mentionedJid: [m.sender],
+            forwardingScore: 999,
+            isForwarded: true,
+            forwardedNewsletterMessageInfo: {
+              newsletterJid: '0@newsletter',
+              newsletterName: name,
+              serverMessageId: 143
+            }
+          }
+        })
+      }
+    },
+  }, {});
+
+  await conn.relayMessage(msg.key.remoteJid, msg.message, {
+    messageId: msg.key.id
+  });
+};
 handler.help = ['claim', 'daily']
 handler.tags = ['xp']
 handler.command = /^(daily|claim)(now)?$/i
