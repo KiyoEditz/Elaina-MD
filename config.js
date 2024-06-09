@@ -52,6 +52,7 @@ global.APIKeys = { // APIKey Here
   'https://api.botcahx.eu.org': 'lvxVAfDd',
   'https://api.alyachan.dev/': 'syah11'
 }
+global.footer = 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™'
 global.set = {
     footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™', //another watermark message?
     

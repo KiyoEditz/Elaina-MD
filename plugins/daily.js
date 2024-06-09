@@ -5,6 +5,7 @@ const {
 } = require('@adiwajshing/baileys');
 const moment = require("moment-timezone");
 const fetch = require("node-fetch");
+const caption = `tes`
 let free = 500
 const prem = 20000
 let levelling = require('../lib/levelling')
@@ -34,12 +35,12 @@ let handler = async (m, { conn, usedPrefix
   if (isPrems) users.limit += 10
   if (text && kode) {
     if (m.isGroup) throw `_Hanya bisa klaim kode di chat Pribadi_`
-    if (new Date - users.lastclaim_code < (86400000 * 2)) throw `_Kamu sudah mengklaim klaim kode reedem group gratis_\ntunggu selama ${conn.msToDate(timecode - new Date())} lagi\n\nKamu dapat klaim kode group gratis dalam 2 hari sekali`
+    //if (new Date - users.lastclaim_code < (86400000 * 2)) throw `_Kamu sudah mengklaim klaim kode reedem group gratis_\ntunggu selama ${conn.msToDate(timecode - new Date())} lagi\n\nKamu dapat klaim kode group gratis dalam 2 hari sekali`
     //await m.reply(`*Jenis:* ${text}\n\n_Cara menggunakan:_\nSalin kode di bawah ini\nTempelkan di group yang ingin kamu aktifkan bot nya\n\n*Note : pastikan Bot sudah ditambahkan ke group kamu*\n\nJika kamu ingin mendapatkan kode aktivasi dengan masa aktif lebih banyak, silahkan ketik _*.premium*_ atau hubungi .owner`,)
     //await m.reply(`${usedPrefix}use ${code}`)
     await m.reply(`Fitur di nonaktifkan karena spam\nSilahkan chat owner untuk aktivasi manual`)
     
-    users.lastclaim_code = new Date * 1 + 86400000
+   // users.lastclaim_code = new Date * 1 + 86400000
   } else {
     users.exp += xp
     m.reply(`+${xp} XP ${isPrems ? '\n+10 Limit' : ''}`)
@@ -62,16 +63,16 @@ let handler = async (m, { conn, usedPrefix
           }),
           header: proto.Message.InteractiveMessage.Header.create({
   ...(await prepareWAMessageMedia({
-    image: {
-      url: 'URL_VIDEO.MP4' //buat thumb video
-    }
-  }, {
-    upload: conn.waUploadToServer
+    //image: {
+      //url: 'thumbnail.jpg' //buat thumb video
+   // }
+  //}, {
+    //upload: conn.waUploadToServer
   })),
-  title: text,
-  gifPlayback: true,
-  subtitle: namebot, //ganti aja
-  hasMediaAttachment: false
+  //title: text,
+ // gifPlayback: true,
+ // subtitle: namebot, //ganti aja
+ // hasMediaAttachment: false
 }),
           nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
             buttons: [{

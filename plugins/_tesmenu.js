@@ -37,7 +37,7 @@ const {
             header: proto.Message.InteractiveMessage.Header.create({
     ...(await prepareWAMessageMedia({
       image: {
-        url: 'URL_VIDEO.MP4' //buat thumb video
+        url: 'thumbnail.jpg' //buat thumb video
       }
     }, {
       upload: conn.waUploadToServer
@@ -81,7 +81,7 @@ const {
                           mediaType: 1,
                           previewType: 0,
                           renderLargerThumbnail: false,
-                          thumbnailUrl: 'THUMB_IMAGE.jpg',
+                          thumbnailUrl: 'thumnail.jpg',
                           sourceUrl: ''
                       }
             }
@@ -99,7 +99,7 @@ const {
   handler.tags = ["main"];
   handler.command = /^(menu2)$/i;
   
-  handler.register = true;
+  //handler.register = true;
   
   module.exports = handler;
   
