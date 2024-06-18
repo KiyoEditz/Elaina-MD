@@ -62,7 +62,7 @@ const {
                 },
                 {
                   "name": "quick_reply",
-                  "buttonParamsJson": "{\"display_text\":\"ALL MENU\",\"id\":\".allmenu\"}"
+                  "buttonParamsJson": "{\"display_text\":\".menu all\",\"id\":\".menu all\"}"
                 }
               ],
             }),

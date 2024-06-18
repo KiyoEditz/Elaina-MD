@@ -1,30 +1,42 @@
+//const { BufferJSON, 
+  //WA_DEFAULT_EPHEMERAL, 
+  //generateWAMessageFromContent, 
+  //proto, 
+  //generateWAMessageContent, 
+  //generateWAMessage, 
+  //prepareWAMessageMedia, 
+  //areJidsSameUser, 
+  //getContentType 
+  //} = require('@adiwajshing/baileys')
+  //process.env.TZ = 'Asia/Jakarta'
+  const {
+    proto,
+    generateWAMessageFromContent,
+    prepareWAMessageMedia
+  } = require('@adiwajshing/baileys');
 let fs = require('fs')
+let path = require('path')
+let fetch = require('node-fetch')
+let moment = require('moment-timezone')
 let levelling = require('../lib/levelling')
-let name =  `@${m.sender.split`@`[0]}`
+//let name =  `@${m.sender.split`@`[0]}`
 let desc = ''
 
 let handler = async (m, { conn, usedPrefix: _p, args }) => {
-  //let fakeOption = {
-    //key: {
-      //mentionedJid: [m.sender],
-      //forwardingScore: 999,
-      //isForwarded: true,
-      //forwardedNewsletterMessageInfo: {
-        //newsletterJid: '0@newsletter',
-        //newsletterName: name,
-        //serverMessageId: 143
-      //}
-    //},
-    //message: {
-      //"imageMessage": {
-        //mediaType: 1,
-        //previewType: 0,
-        //renderLargerThumbnail: false,
-        //thumbnailUrl: 'thumnail.jpg',
-        //sourceUrl: ''
-      //}
-    //}
-  //}
+  let fakeOption = {
+    key: {
+      remoteJid: 'status@broadcast',
+      participant: '0@s.whatsapp.net',
+      fromMe: false
+    },
+    message: {
+      "imageMessage": {
+        "mimetype": "image/jpeg",
+        "caption": `Elaina-bot WhatsApp`,
+        "jpegThumbnail": fs.readFileSync(`./thumbnail.jpg`)
+      }
+    }
+  }
   let defaultMenu = {
     before: `
 ╔══════════════
@@ -50,6 +62,32 @@ let handler = async (m, { conn, usedPrefix: _p, args }) => {
           'stickerprems': 'Sticker Premium',
         }
         desc = 'Ini adalah fitur untuk membuat stiker kamu sendiri dari gambar/video/teks'
+        break
+      case 'all':
+        tags = {
+          "main": "Main",
+        "anonymous": "Anonymous",
+        "islami": "Islami",
+        "game": "Game",
+        "tools": "Tools",
+        "fun": "Fun",
+        "primbon": "Primbon",
+        "group": "Group",
+        "info": "Info",
+        "audio": "Audio",
+        "maker": "Maker",
+        "internet": "Internet",
+        "downloader": "Downloader",
+        "nsfw": "Nsfw",
+        "vote": "Voting",
+        "absen": "Absen",
+        "premium": "Premium",
+        "advanced": "Advanced",
+        "owner": "Owner",
+        "giveaway": "Giveaway",
+        "nocategory": "No Category"
+        }
+        desc = `Ini adalah semua fitur bot yang ada`
         break
       case 'download':
         tags = {
@@ -287,9 +325,30 @@ _%ucap *%name!*_
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
     conn.reply(m.chat, text.trim(), fakeOption)
+    let msg = generateWAMessageFromContent(m.chat, {
+    viewOnceMessage: {
+      message: {
+        "messageContextInfo": {
+          "deviceListMetadata": {},
+          "deviceListMetadataVersion": 2
+        },
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: [{
+                "name": "quick_reply",
+                  "buttonParamsJson": "{\"display_text\":\"TQTO\",\"id\":\".tqto\"}"
+                }
+            ]
+              }),
+          }
+        }
+      })
+      return await conn.relayMessage(msg.key.remoteJid, msg.message, {
+        messageId: msg.key.id
+      });
   } catch (e) { throw e }
 }
 handler.help = [
+  'all',
   'stiker',
   'anony',
   'download',
