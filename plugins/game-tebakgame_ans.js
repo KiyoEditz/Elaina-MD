@@ -18,7 +18,7 @@ handler.before = async function (m) {
       //global.db.data.users[m.sender].money += 100000
       global.db.data.users[m.sender].exp += 1000
             // benar
-conn.sendFie(m.chat, './src/media/image/true.webp', m, { packname: packname, author: author })
+conn.sendFile(m.chat, './src/media/image/true.webp', m, { packname: packname, author: author })
       setTimeout(() => {
       conn.reply(m.chat, `*+1.000 exp*`, m)
 }, 3000)
@@ -27,7 +27,7 @@ conn.sendFie(m.chat, './src/media/image/true.webp', m, { packname: packname, aut
     } else if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`*Dikit Lagi!*`)
     else // salah
 conn.sendFile(m.chat, './src/media/image/false.webp', m, { packname: packname, author: author })
-conn.reply(m.chat, `*Salah!*`, m)
+//conn.reply(m.chat, `*Salah!*`, m)
   }
   return !0
 }

@@ -1,8 +1,8 @@
 {
   "users": {
     "6285874068202@s.whatsapp.net": {
-      "exp": 7859,
-      "limit": 125,
+      "exp": 18033,
+      "limit": 127,
       "lastclaim": 0,
       "lastclaim_code": 1717761585666,
       "unreg": 0,
@@ -1461,8 +1461,8 @@
       "suit": 0
     },
     "6288242338973@s.whatsapp.net": {
-      "exp": 937,
-      "limit": 9,
+      "exp": 966,
+      "limit": 8,
       "lastclaim": 1718683567458,
       "lastclaim_code": 0,
       "unreg": 0,
@@ -1998,6 +1998,46 @@
       "role": "Beginner",
       "autolevelup": false,
       "suit": 0
+    },
+    "6283867228380@s.whatsapp.net": {
+      "exp": 8,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "damar",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6289520112157@s.whatsapp.net": {
+      "exp": 5,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "𐙚ᐢ..ᐢ",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
     }
   },
   "chats": {
@@ -2476,6 +2516,22 @@
       "gcdate": 0,
       "trial": 0,
       "permanent": false
+    },
+    "6289520112157@s.whatsapp.net": {
+      "isBanned": false,
+      "welcome": false,
+      "detect": true,
+      "sWelcome": "",
+      "sBye": "",
+      "sPromote": "",
+      "sDemote": "",
+      "delete": true,
+      "antiLink": false,
+      "game": true,
+      "pc": 0,
+      "gcdate": 0,
+      "trial": 0,
+      "permanent": false
     }
   },
   "settings": {
@@ -2681,10 +2737,10 @@
       "lastSuccess": 1718745482913
     },
     "game-tebakbendera.js": {
-      "total": 12,
-      "success": 11,
-      "last": 1718749385400,
-      "lastSuccess": 1718749385400
+      "total": 13,
+      "success": 12,
+      "last": 1718751715795,
+      "lastSuccess": 1718751715795
     },
     "game-tebakbendera_hint.js": {
       "total": 8,
@@ -2699,16 +2755,28 @@
       "lastSuccess": 1718748481835
     },
     "game-tebakgame.js": {
-      "total": 2,
-      "success": 2,
-      "last": 1718751068726,
-      "lastSuccess": 1718751068726
+      "total": 4,
+      "success": 3,
+      "last": 1718751392071,
+      "lastSuccess": 1718751319120
     },
     "game-tebakgame_hint.js": {
+      "total": 3,
+      "success": 3,
+      "last": 1718751331813,
+      "lastSuccess": 1718751331813
+    },
+    "game-tebakhewan.js": {
       "total": 2,
       "success": 2,
-      "last": 1718751087282,
-      "lastSuccess": 1718751087282
+      "last": 1718751995409,
+      "lastSuccess": 1718751995409
+    },
+    "game-tebakhewan_hint.js": {
+      "total": 2,
+      "success": 2,
+      "last": 1718752048643,
+      "lastSuccess": 1718752048643
     }
   },
   "msgs": {},
