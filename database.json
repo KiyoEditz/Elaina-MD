@@ -1,7 +1,7 @@
 {
   "users": {
     "6285874068202@s.whatsapp.net": {
-      "exp": 1693,
+      "exp": 2151,
       "limit": 120,
       "lastclaim": 0,
       "lastclaim_code": 1717761585666,
@@ -21,7 +21,7 @@
       "suit": 0
     },
     "6285789553996@s.whatsapp.net": {
-      "exp": 13,
+      "exp": 23,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -81,7 +81,7 @@
       "suit": 0
     },
     "6285866831420@s.whatsapp.net": {
-      "exp": 19,
+      "exp": 20,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -121,7 +121,7 @@
       "suit": 0
     },
     "6285281859097@s.whatsapp.net": {
-      "exp": 360,
+      "exp": 616,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -381,7 +381,7 @@
       "suit": 0
     },
     "6281395861695@s.whatsapp.net": {
-      "exp": 89,
+      "exp": 264,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -481,7 +481,7 @@
       "suit": 0
     },
     "6281555920737@s.whatsapp.net": {
-      "exp": 149,
+      "exp": 162,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -501,7 +501,7 @@
       "suit": 0
     },
     "6282117278792@s.whatsapp.net": {
-      "exp": 165,
+      "exp": 235,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -521,7 +521,7 @@
       "suit": 0
     },
     "6283193984167@s.whatsapp.net": {
-      "exp": 17,
+      "exp": 23,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -761,7 +761,7 @@
       "suit": 0
     },
     "6289613959010@s.whatsapp.net": {
-      "exp": 34,
+      "exp": 40,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -821,7 +821,7 @@
       "suit": 0
     },
     "62895336763965@s.whatsapp.net": {
-      "exp": 27,
+      "exp": 232,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -981,7 +981,7 @@
       "suit": 0
     },
     "6288225750488@s.whatsapp.net": {
-      "exp": 183,
+      "exp": 593,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1001,7 +1001,7 @@
       "suit": 0
     },
     "6282231652839@s.whatsapp.net": {
-      "exp": 10,
+      "exp": 26,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1041,7 +1041,7 @@
       "suit": 0
     },
     "6281289694906@s.whatsapp.net": {
-      "exp": 13,
+      "exp": 29,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1161,7 +1161,7 @@
       "suit": 0
     },
     "6282120413457@s.whatsapp.net": {
-      "exp": 9,
+      "exp": 10,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1301,7 +1301,7 @@
       "suit": 0
     },
     "6285965981742@s.whatsapp.net": {
-      "exp": 177,
+      "exp": 244,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1341,7 +1341,7 @@
       "suit": 0
     },
     "62895353708585@s.whatsapp.net": {
-      "exp": 70,
+      "exp": 148,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1361,7 +1361,7 @@
       "suit": 0
     },
     "62895628117900@s.whatsapp.net": {
-      "exp": 314,
+      "exp": 320,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1381,7 +1381,7 @@
       "suit": 0
     },
     "6282130756675@s.whatsapp.net": {
-      "exp": 90,
+      "exp": 100,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1461,9 +1461,9 @@
       "suit": 0
     },
     "6288242338973@s.whatsapp.net": {
-      "exp": 78,
+      "exp": 875,
       "limit": 10,
-      "lastclaim": 0,
+      "lastclaim": 1718683567458,
       "lastclaim_code": 0,
       "unreg": 0,
       "registered": false,
@@ -1474,7 +1474,7 @@
       "afk": -1,
       "afkReason": "",
       "banned": false,
-      "level": 0,
+      "level": 1,
       "call": 0,
       "role": "Beginner",
       "autolevelup": false,
@@ -1501,7 +1501,7 @@
       "suit": 0
     },
     "6282341668004@s.whatsapp.net": {
-      "exp": 34,
+      "exp": 43,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1521,7 +1521,7 @@
       "suit": 0
     },
     "6288989505969@s.whatsapp.net": {
-      "exp": 38,
+      "exp": 70,
       "limit": 10,
       "lastclaim": 0,
       "lastclaim_code": 0,
@@ -1608,6 +1608,286 @@
       "unreg": 0,
       "registered": false,
       "name": "ﾒ 𝓕ahri 야디 와자야",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6282223537406@s.whatsapp.net": {
+      "exp": 3,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "Nzx",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6283171710709@s.whatsapp.net": {
+      "exp": 17,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "undefined",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6282320261187@s.whatsapp.net": {
+      "exp": 103,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "Syeck Afdal",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6283844028337@s.whatsapp.net": {
+      "exp": 81,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "Human",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6285789758624@s.whatsapp.net": {
+      "exp": 605,
+      "limit": 10,
+      "lastclaim": 1718683578148,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "طريق",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6282221792667@s.whatsapp.net": {
+      "exp": 502,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "~",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6285731780137@s.whatsapp.net": {
+      "exp": 644,
+      "limit": 10,
+      "lastclaim": 1718683063083,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "tasya",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": 1718683071263,
+      "afkReason": "",
+      "banned": false,
+      "level": 1,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6282213174833@s.whatsapp.net": {
+      "exp": 19,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "Gw Heya",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6287792911529@s.whatsapp.net": {
+      "exp": 12,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "نايلة حنيفة",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6282180223325@s.whatsapp.net": {
+      "exp": 22,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "เกตุต",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6288238544909@s.whatsapp.net": {
+      "exp": 6,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "+62 882-3854-4909",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "62895334402456@s.whatsapp.net": {
+      "exp": 44,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "WhyteSky^}",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6281632189569@s.whatsapp.net": {
+      "exp": 0,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "leniyunita777",
+      "pasangan": "",
+      "age": -1,
+      "regTime": -1,
+      "afk": -1,
+      "afkReason": "",
+      "banned": false,
+      "level": 0,
+      "call": 0,
+      "role": "Beginner",
+      "autolevelup": false,
+      "suit": 0
+    },
+    "6285789987714@s.whatsapp.net": {
+      "exp": 6,
+      "limit": 10,
+      "lastclaim": 0,
+      "lastclaim_code": 0,
+      "unreg": 0,
+      "registered": false,
+      "name": "maourafa store",
       "pasangan": "",
       "age": -1,
       "regTime": -1,
@@ -2058,16 +2338,16 @@
   },
   "stats": {
     "menu.js": {
-      "total": 30,
-      "success": 22,
-      "last": 1718682248749,
-      "lastSuccess": 1718680664743
+      "total": 55,
+      "success": 23,
+      "last": 1718684919483,
+      "lastSuccess": 1718682603852
     },
     "daily.js": {
-      "total": 15,
-      "success": 3,
-      "last": 1718682225828,
-      "lastSuccess": 1717677036122
+      "total": 21,
+      "success": 5,
+      "last": 1718683578151,
+      "lastSuccess": 1718683540652
     },
     "redeem_use.js": {
       "total": 9,
@@ -2142,10 +2422,10 @@
       "lastSuccess": 1718680240333
     },
     "jadian.js": {
-      "total": 2,
-      "success": 2,
-      "last": 1718680678859,
-      "lastSuccess": 1718680678859
+      "total": 6,
+      "success": 6,
+      "last": 1718683376170,
+      "lastSuccess": 1718683376170
     },
     "jadianime.js": {
       "total": 2,
@@ -2184,10 +2464,52 @@
       "lastSuccess": 1718681729777
     },
     "pengumuman.js": {
-      "total": 3,
+      "total": 13,
       "success": 1,
-      "last": 1718681953849,
+      "last": 1718683110512,
       "lastSuccess": 1718681953849
+    },
+    "profile.js": {
+      "total": 8,
+      "success": 7,
+      "last": 1718683212063,
+      "lastSuccess": 1718683212063
+    },
+    "levelup.js": {
+      "total": 3,
+      "success": 3,
+      "last": 1718683558562,
+      "lastSuccess": 1718683558562
+    },
+    "addprem.js": {
+      "total": 4,
+      "success": 4,
+      "last": 1718683295149,
+      "lastSuccess": 1718683295149
+    },
+    "afk.js": {
+      "total": 2,
+      "success": 2,
+      "last": 1718683071264,
+      "lastSuccess": 1718683071264
+    },
+    "listprem.js": {
+      "total": 2,
+      "success": 0,
+      "last": 1718683307883,
+      "lastSuccess": 0
+    },
+    "anonymous_chat.js": {
+      "total": 2,
+      "success": 2,
+      "last": 1718683631939,
+      "lastSuccess": 1718683631939
+    },
+    "asahotak.js": {
+      "total": 2,
+      "success": 2,
+      "last": 1718683645706,
+      "lastSuccess": 1718683645706
     }
   },
   "msgs": {},

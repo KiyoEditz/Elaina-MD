@@ -49,6 +49,7 @@ let handler = async (m, { conn, usedPrefix: _p, args }) => {
     after: `*%week %weton, %date*\n*Waktu Server:* %time WIB`,
   }
   try {
+    //let package = JSON.parse(await fs.promises.readFile(path.join(_dirname, '../package.json')).catch(_=> '{}'))
     let tags
     let type = (args[0] || '').toLowerCase()
     switch (type) {
@@ -253,6 +254,8 @@ Note: Fiturs ini hanya digunakan di Private Chat /Chat Pribadi
       minute: 'numeric',
       second: 'numeric'
     })
+    let _uptime = process.uptime() * 1000
+    let _muptime
     if (process.send) {
       process.send('uptime')
       _muptime = await new Promise(resolve => {
@@ -261,6 +264,8 @@ Note: Fiturs ini hanya digunakan di Private Chat /Chat Pribadi
       }) * 1000
     }
     conn.menu = conn.menu ? conn.menu : {}
+    let muptime = clockString(_muptime)
+    let uptime = clockString(_uptime)
     let totalreg = Object.keys(global.db.data.users).length
     let rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length
     let before = conn.menu.before || defaultMenu.before
@@ -277,6 +282,21 @@ Note: Fiturs ini hanya digunakan di Private Chat /Chat Pribadi
 Hai, 
 _%ucap *%name!*_
 
+┏❏──「 *INFO* 」───⬣
+│○ *Library:* Baileys
+│○ *Function:* Assistant
+┗––––––––––✦
+ 
+┌  ◦ Uptime : %uptime
+│  ◦ Hari : %week %weton
+│  ◦ Waktu : %time
+│  ◦ Tanggal : %date
+│  ◦ Version : %version
+└  ◦ Prefix Used : [ %p ]
+
+┏❏──「 *NOTE* 」───⬣
+│○ If you find a bug or want a premium\n│ upgrade, please contact the owner.\n│○ *Ⓟ* = Premium\n│○ *Ⓛ* = Limit
+┗––––––––––✦
 `
       _text = before
     } else {
@@ -315,10 +335,11 @@ _%ucap *%name!*_
     let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : ''
     let replace = {
       '%': '%',
-      p: _p,
+      p: _p, uptime, muptime,
       exp: exp - min,
       maxexp: xp,
       totalexp: exp,
+      version: `5.0.0`,
       xp4levelup: max - exp,
       level, limit, name, ucap: ucap(), weton, week, date, time, totalreg, rtotalreg, role,
       readmore: conn.readmore
@@ -375,3 +396,10 @@ handler.tags = ['menuringkas']
 handler.command = /^(menu)$/i
 handler.exp = 3
 module.exports = handler
+
+function clockString(ms) {
+  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000)
+  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+  return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+}
