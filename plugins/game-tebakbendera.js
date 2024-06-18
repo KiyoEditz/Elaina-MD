@@ -1,7 +1,11 @@
+
+
 let fetch = require('node-fetch')
 
 let timeout = 120000
-let poin = 2500
+let poin = 1000
+let tiketcoin = 1
+let src
 let handler = async (m, { conn, usedPrefix }) => {
     conn.tebakbendera = conn.tebakbendera ? conn.tebakbendera : {}
     let id = m.chat
@@ -13,13 +17,11 @@ let handler = async (m, { conn, usedPrefix }) => {
     let json = src[Math.floor(Math.random() * src.length)]
     if (!json) throw json
     let caption = `
-*「 Tebak Bendera 」*
-
 Timeout *${(timeout / 1000).toFixed(2)} detik*
 Ketik *${usedPrefix}tbhint* untuk bantuan
-Bonus: ${poin} XP`
-//Tiketcoin: ${tiketcoin} TiketCoin
-.trim()
+Bonus: *${poin} XP*
+limit: *${tiketcoin} limit*
+`.trim()
     conn.tebakbendera[id] = [
         await conn.sendFile(m.chat, json.img, 'img.jpg', caption, m),
         json, poin,
@@ -29,11 +31,11 @@ Bonus: ${poin} XP`
         }, timeout)
     ]
 }
-  handler.help = ['tebakbendera']
-  handler.tags = ['game']
-  handler.command = /^tebakbendera/i
-  //handler.register = true
+handler.help = ['tebakbendera']
+handler.tags = ['game']
+handler.command = /^tebakbendera/i
+handler.limit = true
+handler.game = true
+handler.group = true
 
-  //handler.limit = true
-  
-  module.exports = handler
+module.exports = handler

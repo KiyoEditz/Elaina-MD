@@ -1,3 +1,5 @@
+
+
 let handler = async (m, { conn }) => {
     conn.tebakbendera = conn.tebakbendera ? conn.tebakbendera : {}
     let id = m.chat
@@ -9,4 +11,5 @@ let handler = async (m, { conn }) => {
 }
 handler.command = /^tbhint$/i
 handler.limit = true
+
 module.exports = handler
