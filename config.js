@@ -110,7 +110,6 @@ function ucap() {
   return 'Selamat ' + ucap
 }
 
-let fs = require('fs')
 let chalk = require('chalk')
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
