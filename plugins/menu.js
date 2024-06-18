@@ -1,22 +1,30 @@
 let fs = require('fs')
 let levelling = require('../lib/levelling')
-let fakeOption = {
-  key: {
-    remoteJid: 'status@broadcast',
-    participant: '0@s.whatsapp.net',
-    fromMe: false
-  },
-  message: {
-    "imageMessage": {
-      "mimetype": "image/jpeg",
-      "caption": `Elaina-bot WhatsApp`,
-      "jpegThumbnail": fs.readFileSync(`./thumbnail.jpg`)
-    }
-  }
-}
+let name =  `@${m.sender.split`@`[0]}`
 let desc = ''
 
 let handler = async (m, { conn, usedPrefix: _p, args }) => {
+  //let fakeOption = {
+    //key: {
+      //mentionedJid: [m.sender],
+      //forwardingScore: 999,
+      //isForwarded: true,
+      //forwardedNewsletterMessageInfo: {
+        //newsletterJid: '0@newsletter',
+        //newsletterName: name,
+        //serverMessageId: 143
+      //}
+    //},
+    //message: {
+      //"imageMessage": {
+        //mediaType: 1,
+        //previewType: 0,
+        //renderLargerThumbnail: false,
+        //thumbnailUrl: 'thumnail.jpg',
+        //sourceUrl: ''
+      //}
+    //}
+  //}
   let defaultMenu = {
     before: `
 ╔══════════════

@@ -4,6 +4,7 @@ let fs = require('fs')
 let path = require('path')
 let util = require('util')
 let moment = require('moment-timezone')
+//let owner = global.numberowner
 const defaultMenu = {
   before: ``.trimStart(),
   //header: '〘 %category 〙\n╔══════════════',
@@ -98,7 +99,7 @@ if (teks == 'nsfw') tags = {
     nsfw: 'NSFW'
   }
   try {
-    let package = JSON.parse(await fs.promises.readFile(path.join(_dirname, '../package.json')).catch(_ => '{}'))
+   // let package = JSON.parse(await fs.promises.readFile(path.join(_dirname, '../package.json')).catch(_ => '{}'))
     let { exp, limit, level, role, registered } = global.db.data.users[m.sender]
     let { min, xp, max } = levelling.xpRange(level, global.multiplier)
     let name = registered ? global.db.data.users[m.sender].name : conn.getName(m.sender)
@@ -149,12 +150,12 @@ if (teks == 'nsfw') tags = {
       }
     })
     if (teks == '404') {
-      let owner = `${own.no}@s.whatsapp.net`
+      let owner = `${global.owner}@s.whatsapp.net`
       let radit = `@${owner.split("@")[0]}`
       let capt = `${ucapan()} @${m.sender.replace(/@.+/g, '')}\n`
       capt += `I am an automatic system (WhatsApp Bot), which can help you to complete small jobs such as downloading videos or images etc. just via WhatsApp.\n\n`
       capt += `┏❏──「 *INFO* 」───⬣\n│☂  *User* : ${rtotalreg} of ${totalreg}\n`
-      capt += `│☂  *Instagram* : ${sosial.ig}\n`
+      capt += `│☂  *Instagram* : ${global.instagram}\n`
       capt += `│☂  *Creator* : Kiyo•Editz™\n┗––––––––––✦\n\n //use ${radit} to tag `
       capt += `If you find a bug or want a premium upgrade, please contact the owner.\n\n *Ⓟ* = Premium\n *Ⓛ* = Limit\n\n`
       capt += `┌  ○  ${_p + command} all\n`
@@ -184,12 +185,12 @@ mentionedJid: [m.sender, owner],
 externalAdReply: {
 title: set.bot,
 body: set.wm,
-thumbnailUrl: media.thumbnail,
-sourceUrl: sosial.gc,
+thumbnailUrl: `thumbnail.jpg`,
+sourceUrl: `${global.group}`,
 mediaType: 1,
 renderLargerThumbnail: true
 }}}, {quoted: m})
-return conn.sendFile(m.chat, './src/menu.opus', 'tes.mp3', null, m, true)
+return conn.sendFile(m.chat, './src/menu.opus', 'tes.mp3', '', m, true, { mimetype: 'audio/mp4'})
     }
     let groups = {}
     for (let tag in tags) {
@@ -230,14 +231,14 @@ return conn.sendFile(m.chat, './src/menu.opus', 'tes.mp3', null, m, true)
       uptime,
       muptime,
       me: conn.user.name,
-      npmname: package.name,
-      npmdesc: package.description,
-      version: package.version,
+      //npmname: package.name,
+      //npmdesc: package.description,
+      //version: package.version,
       exp: exp - min,
       maxexp: xp,
       totalexp: exp,
       xp4levelup: max - exp <= 0 ? `Siap untuk *${_p}levelup*` : `${max - exp} XP lagi untuk levelup`,
-      github: package.homepage ? package.homepage.url || package.homepage : '[unknown github url]',
+      //github: package.homepage ? package.homepage.url || package.homepage : '[unknown github url]',
       level,
       limit,
       name,
@@ -309,9 +310,9 @@ renderLargerThumbnail: true
     throw e
   }
 }
-handler.help = ['menu3', 'help', '?']
+handler.help = ['menu3', 'help3', '?']
 handler.tags = ['main']
-handler.command = /^(menu|help|\?)$/i
+handler.command = /^(menu3|help3|\?)$/i
 handler.owner = false
 handler.mods = false
 handler.premium = false
