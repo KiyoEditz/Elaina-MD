@@ -3,4 +3,4 @@ package-lock.json
 tmp
 scrape
 session
-database.json/
+database.json

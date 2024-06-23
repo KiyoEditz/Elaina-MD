@@ -1,25 +1,8 @@
-//const { BufferJSON, 
-  //WA_DEFAULT_EPHEMERAL, 
-  //generateWAMessageFromContent, 
-  //proto, 
-  //generateWAMessageContent, 
-  //generateWAMessage, 
-  //prepareWAMessageMedia, 
-  //areJidsSameUser, 
-  //getContentType 
-  //} = require('@adiwajshing/baileys')
-  //process.env.TZ = 'Asia/Jakarta'
-  const {
-    proto,
-    generateWAMessageFromContent,
-    prepareWAMessageMedia
-  } = require('@adiwajshing/baileys');
 let fs = require('fs')
 let path = require('path')
 let fetch = require('node-fetch')
 let moment = require('moment-timezone')
 let levelling = require('../lib/levelling')
-//let name =  `@${m.sender.split`@`[0]}`
 let desc = ''
 
 let handler = async (m, { conn, usedPrefix: _p, args }) => {
@@ -295,7 +278,7 @@ _%ucap *%name!*_
 └  ◦ Prefix Used : [ %p ]
 
 ┏❏──「 *NOTE* 」───⬣
-│○ If you find a bug or want a premium\n│ upgrade, please contact the owner.\n│○ *Ⓟ* = Premium\n│○ *Ⓛ* = Limit
+│○ If you find a bug or want\n│ a premium upgrade, please\n│ contact the owner.\n│○ *Ⓟ* = Premium\n│○ *Ⓛ* = Limit
 ┗––––––––––✦
 `
       _text = before
@@ -346,26 +329,6 @@ _%ucap *%name!*_
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
     conn.reply(m.chat, text.trim(), fakeOption)
-    let msg = generateWAMessageFromContent(m.chat, {
-    viewOnceMessage: {
-      message: {
-        "messageContextInfo": {
-          "deviceListMetadata": {},
-          "deviceListMetadataVersion": 2
-        },
-          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-            buttons: [{
-                "name": "quick_reply",
-                  "buttonParamsJson": "{\"display_text\":\"TQTO\",\"id\":\".tqto\"}"
-                }
-            ]
-              }),
-          }
-        }
-      })
-      return await conn.relayMessage(msg.key.remoteJid, msg.message, {
-        messageId: msg.key.id
-      });
   } catch (e) { throw e }
 }
 handler.help = [

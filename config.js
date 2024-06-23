@@ -25,11 +25,11 @@ const moment = require('moment-timezone')
 
 ////// ALL of apikey ///////
 //INI WAJIB DI ISI!//
-global.lann = 'beta-KiyoEditz'
+global.lann = 'XwxIaeoY'
 //Daftar terlebih dahulu https://api.betabotz.eu.org
 
 //INI OPTIONAL BOLEH DI ISI BOLEH JUGA ENGGA//
-global.btc = 'lvxVAfDd'
+global.btc = 'PjoZNP4j'
 //Daftar https://api.botcahx.eu.org 
 
 global.APIs = { // API Prefix
@@ -48,8 +48,8 @@ global.APIKeys = { // APIKey Here
   'https://api.xteam.xyz': 'Syahrulidhamz30',
   'http://api.lolhuman.xyz': 'Syahrulidhamz30',
   'https://api.vhtear.com': 'Syahrulidhamz30',
-  'https://api.betabotz.eu.org': 'beta-KiyoEditz',
-  'https://api.botcahx.eu.org': 'lvxVAfDd',
+  'https://api.betabotz.eu.org': 'XwxIaeoY',
+  'https://api.botcahx.eu.org': 'PjoZNP4j',
   'https://api.alyachan.dev/': 'syah11'
 }
 global.footer = 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™'
