@@ -1,48 +1,38 @@
-let fs = require('fs')
+
+
 let fetch = require('node-fetch')
-let timeout = 60000
+let timeout = 120000
 let poin = 500
+let tiketcoin = 1
 let handler = async (m, { conn, usedPrefix }) => {
-  try {
     conn.tebakanime = conn.tebakanime ? conn.tebakanime : {}
     let id = m.chat
     if (id in conn.tebakanime) {
-      if (conn.tebakanime[id].length !== 0) return conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tebakanime[id][0])
-      delete conn.tebakanime[id]
-      throw false
+        conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.tebakanime[id][0])
+        throw false
     }
-    conn.tebakanime[id] = []
-    let src = JSON.parse(fs.readFileSync(`./src/scrap/tebakanime.json`))
-    let json = src[Math.floor(Math.random() * src.length)]
-
-    // conn.scrapGame(global.API('lolhuman', '/api/tebakchara', '', 'apikey'), 'tebakanime').catch(e => e)
-
-    let caption = `
-Siapa nama Character ini?
-
-Waktu Jawab: *${(timeout / 1000).toFixed(2)} detik*
-Bonus: ${poin} XP
-*Reply pesan ini untuk menjawab!*
-Bantuan mengurangi 1 limi
-${usedPrefix}hintanime
-    `.trim()
-    let msg = await conn.sendFile(m.chat, json.result.image, 'tebak.jpg', caption, m)
-     
+    let res = await fetch('https://raw.githubusercontent.com/unx21/ngetezz/main/src/data/nyenyenye.json')
+    if (!res.ok) throw eror
+    let data = await res.json()
+    let json = data[Math.floor(Math.random() * data.length)]
+    let caption = `Timeout ${(timeout / 1000).toFixed(2)} detik
+Ketik *${usedPrefix}hnime* untuk clue
+Bonus: *${poin} XP*
+`.trim()
     conn.tebakanime[id] = [
-      msg, json, poin,
-      setTimeout(() => {
-        if (conn.tebakanime[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.result.name}*`, conn.tebakanime[id][0])
-        conn.sendMessage(m.chat, { delete: msg.key }).catch(e => e)
-    
-        delete conn.tebakanime[id]
-      }, timeout)
+        await conn.sendFile(m.chat, json.img, 'dann.jpg', caption, m),
+        json, poin,
+        setTimeout(async () => {
+            if (conn.tebakanime[id]) conn.reply(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, conn.tebakanime[id][0])
+            delete conn.tebakanime[id]
+        }, timeout)
     ]
-  } catch (e) {
-    throw e //'Error, Fitur dalam perbaikan'
-  }
 }
 handler.help = ['tebakanime']
 handler.tags = ['game']
 handler.command = /^tebakanime/i
-handler.group = true
+handler.register = true
+handler.limit = true
+handler.game = true 
+
 module.exports = handler

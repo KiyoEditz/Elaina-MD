@@ -1,11 +1,10 @@
 let handler = async (m, { conn }) => {
-    conn.tebaklagu = conn.tebaklagu ? conn.tebaklagu : {}
-    let id = m.chat
-    if (!(id in conn.tebaklagu)) throw false
-    let json = conn.tebaklagu[id][1]
-    let nyanya = json.replace(/[bcdfghjklmnpqrstvwxyz]/g, '_')
-    m.reply('```' + nyanya + '```')
+    conn.game = conn.game ? conn.game : {}
+    let id = 'tebaklagu-' + m.chat
+    if (!(id in conn.game)) return
+    let json = conn.game[id][1]
+    m.reply('Clue : ' + '' + json.judul.replace(/[AIUEOaiueo]/ig, '_') + '' + '\n\n_*Jangan Balas Chat Ini Tapi Balas Soalnya*_')
 }
-handler.command = /^hintlagu$/i
+handler.command = /^hlagu$/i
 handler.limit = true
 module.exports = handler
