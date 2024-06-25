@@ -7,7 +7,7 @@ let handler = async (m, { conn, command, text, args }) => {
   }
 
   const botChoice = pickRandom([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-  const bonus = Math.floor(Math.random() * 3000); // Calculate bonus inside the handler
+  const bonus = Math.floor(Math.random() * 3000); 
 
   let message = `*「 TEBAK ANGKA 」*\n\n`;
   message += `Angka Kamu: ${userChoice}\n`;
@@ -15,7 +15,7 @@ let handler = async (m, { conn, command, text, args }) => {
 
   if (userChoice === botChoice) {
       message += `🎉 Selamat! Angkamu sama dengan bot.\n`;
-      global.db.data.users[m.sender].exp += bonus; // Add bonus XP only if the guess is correct
+      global.db.data.users[m.sender].exp += bonus; 
   } else {
       message += `❌ Sayang sekali, angkamu tidak sama dengan bot.\n`;
   }
@@ -26,7 +26,7 @@ let handler = async (m, { conn, command, text, args }) => {
 
 handler.help = ['tebakangka <0-9>'];
 handler.tags = ['game'];
-handler.command = /^tebakangka|angka$/i; // Fixed regex for "tebakangka"
+handler.command = /^tebakangka|angka$/i; 
 
 handler.tigame = true;
 handler.group = true;
