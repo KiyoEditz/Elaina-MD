@@ -23,8 +23,9 @@ CFonts.say(`${package.name} Oleh @${package.author.name || package.author}`, {
 
 var isRunning = false
 /**
- * Start a js file
- * @param {String} file `path/to/file`
+* Starts the main application file, managing clustering and restarts.
+ * @param {String} file Path to the main application file.
+ * @param {Array} args Additional arguments to pass to the child process.
  */
 function start(file) {
   if (isRunning) return

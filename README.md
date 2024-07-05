@@ -18,7 +18,7 @@
 * Don't sell this source bot. 
 * If you are caught selling source bots, you will be dealt with seriously and you will have to make compensation according to the mistake.
 * Jika ketahuan menjual source bot maka akan di tindak secara serius dan harus melakukan ganti rugi sesuai dengan dengan kesalahan.
-
+* ada bug di panel yang membuat tidak bisa install module, saat ini sedang di perbaiki, sebagai solusi gunakan yarn install untuk proses install. setelah terinstall module nya silahkan run seperti biasa mengunakan index.js
 ## NOTES
 
 * bot bakal update berkala jika saya menemukan bug atau laporan bug.
@@ -39,7 +39,7 @@
 ```bash
 git clone https://github.com/KiyoEditz/Elaina-MD.git
 cd Elaina-MD 
-npm i
+npm install
 node .
 ```
 
@@ -57,7 +57,7 @@ $ pkg install nodejs-lts
 $ pkg install git
 $ git clone https://github.com/KiyoEditz/Elaina-MD.git
 $ cd Elaina-MD
-$ npm i
+$ npm install
 $ node .
 ```
 ---------
