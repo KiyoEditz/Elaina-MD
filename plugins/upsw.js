@@ -1,39 +1,91 @@
-const colors = [
-    0xff26c4dc, 0xff792138,
-    0xff8b6990, 0xfff0b330,
-    0xffae8774, 0xff5696ff,
-    0xffff7b6b, 0xff57c9ff,
-    0xff243640, 0xffb6b327,
-    0xffc69fcc, 0xff54c265,
-    0xff6e257e, 0xffc1a03f,
-    0xff90a841, 0xff7acba5,
-    0xff8294ca, 0xffa62c71,
-    0xffff8a8c, 0xff7e90a3,
-    0xff74676a
-]
+const fetch = require("node-fetch");
+const uploadFile = require('../lib/uploadFile.js')
+const uploadImage = require('../lib/uploadImage.js')
 
-let handler = async (m, { conn, text }) => {
-    let _m = Promise.resolve({ key: { id: '' } })
-    if (!m.quoted && !text) throw 'reply pesan atau sebagai argumen'
-    if (m.quoted && m.quoted.mtype !== 'conversation' && !text) _m = m.quoted.forward('status@broadcast')
-    if (m.quoted && m.quoted.mtype === 'conversation' && !text) _m = conn.sendMessage('status@broadcast', {
-        text: m.quoted.text,
-        textArgb: 0xffffffff,
-        backgroundArgb: conn.pickRandom(colors)
-    }, 'extendedTextMessage')
-    if (!m.quoted && text) _m = conn.sendMessage('status@broadcast', {
-        text,
-        textArgb: 0xffffffff,
-        backgroundArgb: conn.pickRandom(colors)
-    }, 'extendedTextMessage')
-    if (m.quoted && text) _m = conn.forwardMessage('status@broadcast', await m.quoted.cMod('status@broadcast', text))
-    m.reply((await _m).key.id)
+let commandList = ["upsw"];
+
+let mimeAudio = 'audio/mpeg';
+let mimeVideo = 'video/mp4';
+let mimeImage = 'image/jpeg';
+
+let handler = async (m, { conn, command, args }) => {
+  let teks
+    if (args.length >= 1) {
+        teks = args.slice(0).join(" ")
+    } else if (m.quoted && m.quoted.text) {
+        teks = m.quoted.text
+    }
+
+  if (m.quoted && m.quoted.mtype) {
+    let mtype = m.quoted.mtype;
+    let type;
+
+    if (mtype === 'audioMessage') {
+      type = 'vn';
+    } else if (mtype === 'videoMessage') {
+      type = 'vid';
+    } else if (mtype === 'imageMessage') {
+      type = 'img';
+    } else if (mtype === 'extendedTextMessage') {
+      type = 'txt';
+    } else {
+      throw "❌ Media type tidak valid!";
+    }
+
+    let doc = {};
+    
+    if (type === 'vn') {
+    	let link = await (type === 'img' ? uploadImage : uploadFile)(await m.quoted.download());
+      doc.mimetype = mimeAudio;
+      doc.audio = { url: link } ? { url: link } : generateVoice("id-ID", "id-ID-ArdiNeural", teks);
+    } else if (type === 'vid') {
+    	let link = await (type === 'img' ? uploadImage : uploadFile)(await m.quoted.download());
+      doc.mimetype = mimeVideo;
+      doc.caption = teks;
+      doc.video = { url: link } ? { url: link } : { url: giflogo };
+    } else if (type === 'img') {
+    	let link = await (type === 'img' ? uploadImage : uploadFile)(await m.quoted.download());
+      doc.mimetype = mimeImage;
+      doc.caption = teks;
+      doc.image = { url: link } ? { url: link } : { url: logo };
+    } else if (type === 'txt') {
+      doc.text = teks;
+    }
+    
+    await conn.sendMessage('status@broadcast', doc, {
+      backgroundColor: getRandomHexColor(),
+      font: Math.floor(Math.random() * 9),
+      statusJidList: Object.keys(global.db.data.users)
+    }).then((res) => {
+      conn.reply(m.chat, `Sukses upload ${type}`, res);
+    }).catch(() => {
+      conn.reply(m.chat, `Gagal upload ${type}`, m);
+    });
+  } else {
+    throw "❌ Tidak ada media yang diberikan!";
+  }
+};
+
+handler.help = commandList;
+handler.tags = ["main"];
+handler.owner = true;
+handler.rowner = true
+handler.command = new RegExp(`^(${commandList.join('|')})$`, 'i');
+
+module.exports = handler;
+
+async function generateVoice(Locale = "id-ID", Voice = "id-ID-ArdiNeural", Query) {
+    let content = `<voice name="${Voice}">${Query}</voice>`; 
+    let formData = new FormData();
+    formData.append("locale", Locale);
+    formData.append("content", content); 
+    formData.append("ip", '46.161.194.33');
+    let response = await fetch('https://app.micmonster.com/restapi/create', {
+        method: 'POST',
+        body: formData
+    });
+    return Buffer.from(('data:audio/mpeg;base64,' + await response.text()).split(',')[1], 'base64');
 }
-handler.help = ['upsw [text] (Reply Media)', 'upsw <text>']
-handler.tags = ['owner']
-
-handler.command = /^upsw$/i
-
-handler.owner = true
-
-module.exports = handler
+function getRandomHexColor() {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
+}

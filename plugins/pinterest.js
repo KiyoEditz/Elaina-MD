@@ -8,6 +8,6 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 }
 handler.help = ['pinterest <keyword>']
 handler.tags = ['image', 'search']
-handler.command = /^(pinterest)$/i
+handler.command = /^(pinterest|pin)$/i
 
 module.exports = handler

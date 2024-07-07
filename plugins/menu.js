@@ -13,10 +13,12 @@ let handler = async (m, { conn, usedPrefix: _p, args }) => {
       fromMe: false
     },
     message: {
-      "imageMessage": {
-        "mimetype": "image/jpeg",
-        "caption": `Elaina-bot WhatsApp`,
-        "jpegThumbnail": fs.readFileSync(`./thumbnail.jpg`)
+      imageMessage: {
+        //mimetype: "image/jpeg",
+        caption: `Elaina-bot WhatsApp`,
+        thumbnail: global.menu,
+        mediaType: 1,
+      renderLargerThumbnail: true
       }
     }
   }
