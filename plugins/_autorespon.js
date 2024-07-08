@@ -146,7 +146,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
                 'Sudah faham', '.sayasudahfaham', 'Apa itu Bot?', '.help']
 
             let or = chatSender.faham ? init : notInit
-            await this.reply(m.chat, or[0].trim() + ' \n\n ' + or[1].trim(), m, { contextInfo: { mentionedJid: conn.parseMention(teks2) } })
+            conn.reply(m.chat, or[0].trim() + ' \n\n ' + or[1].trim(), m, { contextInfo: { mentionedJid: conn.parseMention(teks2) } })
         }
 
         // ketika ada yang invite/kirim link grup di chat pribadi
