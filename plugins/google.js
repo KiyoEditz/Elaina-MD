@@ -10,7 +10,7 @@ let handler = async (m, { conn, command, args }) => {
     return `*${title}*\n_${link}_\n_${snippet}_`
   }).join`\n\n`
 
-  let ss = await (await fetch(global.API('nrtm', '/api/ssweb', { delay: 1000, url, full }))).buffer()
+  let ss = await (await fetch(global.API('nrtm2', '/api/ssweb', { delay: 1000, url, full }))).buffer()
   await conn.sendFile(m.chat, ss, 'screenshot.png', url, m)
   m.reply(msg)
 }

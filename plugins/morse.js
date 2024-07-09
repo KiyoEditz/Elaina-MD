@@ -1,49 +1,27 @@
 let handler = (m, { text, usedPrefix, command }) => {
     let teks = text || (m.quoted && m.quoted.text) || false;
     if (!teks) throw '_Masukkan teks!_\n\nContoh\n' + usedPrefix + command + ' ' + global.author;
-    let morse = teks.replace(/[a-zA-Z0-9]/g, v => {
-        switch (v.toLowerCase()) {
-            case 'a': return '•–';
-            case 'b': return '–•••';
-            case 'c': return '–•–•';
-            case 'd': return '–••';
-            case 'e': return '•';
-            case 'f': return '••–•';
-            case 'g': return '––•';
-            case 'h': return '••••';
-            case 'i': return '••';
-            case 'j': return '•–––';
-            case 'k': return '–•–';
-            case 'l': return '•–••';
-            case 'm': return '––';
-            case 'n': return '–•';
-            case 'o': return '–––';
-            case 'p': return '•––•';
-            case 'q': return '––•–';
-            case 'r': return '•–•';
-            case 's': return '•••';
-            case 't': return '–';
-            case 'u': return '••–';
-            case 'v': return '•••–';
-            case 'w': return '•––';
-            case 'x': return '–••–';
-            case 'y': return '–•––';
-            case 'z': return '––••';
-            case '1': return '•––––';
-            case '2': return '••–––';
-            case '3': return '•••––';
-            case '4': return '••••–';
-            case '5': return '•••••';
-            case '6': return '–••••';
-            case '7': return '––•••';
-            case '8': return '–––••';
-            case '9': return '––––•';
-            case '0': return '–––––';
-            default: return v;
-        }
-    });
-    m.reply(`Kode morse:\n\n*${morse}*`);
+
+    // Dictionary untuk konversi (dengan karakter yang diubah)
+    const morseDict = {
+        'a': '•–', 'b': '–•••', 'c': '–•–•', 'd': '–••', 'e': '•',
+        'f': '••–•', 'g': '––•', 'h': '••••', 'i': '••', 'j': '•–––',
+        'k': '–•–', 'l': '•–••', 'm': '––', 'n': '–•', 'o': '–––',
+        'p': '•––•', 'q': '––•–', 'r': '•–•', 's': '•••', 't': '–',
+        'u': '••–', 'v': '•••–', 'w': '•––', 'x': '–••–', 'y': '–•––',
+        'z': '––••', '1': '•––––', '2': '••–––', '3': '•••––', '4': '••••–',
+        '5': '•••••', '6': '–••••', '7': '––•••', '8': '–––••', '9': '––––•',
+        '0': '–––––', ' ': '/' 
+    };
+
+    // Konversi setiap karakter ke Morse
+    let morse = teks.toLowerCase().split('').map(char => {
+        return morseDict[char] || char; // Jika karakter tidak ada di kamus, biarkan apa adanya
+    }).join(' ');
+
+    m.reply(`Kode morse:\n\n${morse}`);
 };
+
 handler.tags = ['fun', 'tools'];
 handler.command = handler.help = ['morse'];
 module.exports = handler;
