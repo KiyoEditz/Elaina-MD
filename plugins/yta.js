@@ -86,7 +86,7 @@ _File terlalu besar, Download langsung dengan browser sekali klik menggunakan li
       asDocument: false
     })
   }
-}*/
+}
 
 handler.help = ['mp3', 'a'].map(v => 'yt' + v + ` <link>`)
 handler.tags = ['downloader']
@@ -105,3 +105,4 @@ handler.exp = 0
 handler.limit = true
 
 module.exports = handler
+*/

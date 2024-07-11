@@ -26,40 +26,59 @@ handler.command = /^(t(ik)?t(ok)?2?)(musi[ck])?$/i
 
 module.exports = handler
 */
-const { tiktok } = require('api-dylux');
 let fetch = require('node-fetch');
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) throw `Masukkan URL!\n\nContoh: ${usedPrefix + command} https://tiktok.com/xxx`
-try {
-conn.sendMessage(m.chat, {
-		react: {
-			text: '🕒',
-			key: m.key,
-		}  
-	})
-  let thumb = 'https://telegra.ph/file/72883ee07496d215ae797.jpg'
-  let json = await tiktok(text)
-var hasil = `${layout.xl} T I K T O K  W M
-◦ Username: ${json.nickname}  
-◦ NicknameID: ${json.unique_id}
-◦ Description: ${json.description}
-◦ Duration: ${json.duration}
-`
-conn.sendMessage(m.chat, {
-		react: {
-			text: '✅',
-			key: m.key,
-		}
-	})
-await conn.sendFile(m.chat, json.wmplay, '', hasil, m)
+  if (!text) throw `Masukkan URL!\n\nContoh: ${usedPrefix + command} https://tiktok.com/xxx`;
+
+  try {
+    conn.sendMessage(m.chat, {
+      react: { text: '🕒', key: m.key },
+    });
+
+    let tt = await fetch(global.API('alya', 'api/tiktok', { url: text }, 'apikey'));
+    let res = await tt.json();
+
+    // Periksa apakah res.data ada dan merupakan array
+    if (!res.data || !Array.isArray(res.data)) {
+      throw 'Format data tidak valid atau tidak ada video yang ditemukan.';
+    }
+
+    let { title, duration, music_info, author, data } = res;
+
+    // Temukan video tanpa watermark jika ada
+    let vid = data.find(v => v.type == 'nowatermark')?.url;
+
+    // Jika tidak ada video tanpa watermark, ambil video pertama
+    if (!vid) {
+      vid = data[0]?.url; // Gunakan optional chaining untuk keamanan
+    }
+
+    // Handle jika tidak ada video sama sekali
+    if (!vid) {
+      throw 'Tidak ada video yang ditemukan.';
+    }
+
+    var hasil = `⬣───「 *TIKTOK* 」───⬣
+○ Username: ${author.nickname} 
+○ NicknameID: @${author.fullname}
+○ Duration: ${duration}
+○ Description: ${title}
+
+`;
+
+    conn.sendMessage(m.chat, {
+      react: { text: '✅', key: m.key },
+    });
+
+    await conn.sendFile(m.chat, vid, '', hasil, m);
   } catch (error) {
-    console.log(error);
-    throw 'Tidak Dapat Mengambil Informasi Url';
+    console.error(error);
+    throw 'Tidak Dapat Mengambil Informasi URL atau terjadi kesalahan lainnya.';
   }
-}
+};
 
-handler.command = handler.help = ['tiktokwm', 'ttwm', 'tmp4wm', 'ttmp4wm']
-handler.tags = ['downloader']
+handler.command = handler.help = ['tt', 'tiktok'];
+handler.tags = ['downloader'];
 
-module.exports = handler
+module.exports = handler;

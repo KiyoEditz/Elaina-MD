@@ -72,7 +72,7 @@ handler.before = async function (m, { isPrems, match }) {
     //         for (let { url } of json.data) {
     //             this.sendFile(m.chat, url, 'tw' + (/mp4/i.test(url) ? '.mp4' : '.jpg'), '© stikerin', m)
     //         }
-    //     }).catch(_ => _)
+    //     }).catch(_ => _) 
     // }
 
     if (ytIdRegex.test(m.text)) {

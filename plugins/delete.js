@@ -1,4 +1,8 @@
-const handler = async (m, { conn, command }) => {
+const handler = async (m, { conn, command, isAdmin, isOwner }) => {
+  if (!(isAdmin || isOwner)) {
+    global.dfail('admin', m, conn)
+    throw false
+  }
   if (!m.quoted) throw 'Reply pesan yang ingin dihapus';
   try {
     let bilek = m.message.extendedTextMessage.contextInfo.participant;
@@ -13,7 +17,6 @@ handler.help = ['delete']
 handler.tags = ['main']
 
 handler.command = /^del(ete)?$/i
-handler.admin = true
 handler.botAdmin = true
 
 module.exports = handler

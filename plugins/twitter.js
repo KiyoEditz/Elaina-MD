@@ -30,7 +30,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 };
 handler.help = ['x (twitter)']
 handler.tags = ['downloadersosmed']
-handler.command = /^(Twitter)$/i;
+handler.command = /^(Twitter|x)$/i;
 module.exports = handler;
 const _twitterapi = (id) => `https://info.tweeload.site/status/${id}.json`;
 const getAuthorization = async () => {
