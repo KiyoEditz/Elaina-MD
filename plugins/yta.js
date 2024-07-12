@@ -2,7 +2,7 @@ const ytdl = require('ytdl-core');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 
-const handler = async (m, { conn, text, command, usedPrefix }) => {
+const handler = async (m, { args, conn, text, command, usedPrefix }) => {
   conn.ytmp3 = conn.ytmp3 || {};
   if (m.sender in conn.ytmp3) {
     return;
@@ -11,6 +11,21 @@ const handler = async (m, { conn, text, command, usedPrefix }) => {
   conn.reply(m.chat, wait, m);
   conn.ytmp3[m.sender] = true;
   try {
+    let info = await ytdl.getInfo(text);
+    let durationSeconds = parseInt(info.videoDetails.lengthSeconds, 10);
+    let formattedDuration = new Date(durationSeconds * 1000).toISOString().substr(11, 8);
+    let viewCount = parseInt(info.videoDetails.viewCount, 10);
+    let formattedViewCount = viewCount >= 1000000
+      ? (viewCount / 1000000).toFixed(1) + "Jt"
+      : (viewCount / 1000).toFixed(0) + "Rb";
+      let isi = `
+╭──── 〔 Y O U T U B E 〕 ─⬣
+ ⬡ *Title:* ${info.videoDetails.title}
+ ⬡ *Channel:* ${info.videoDetails.author.name}
+ ⬡ *Duration:* ${formattedDuration} 
+ ⬡ *View:* ${formattedViewCount}
+ ⬡ *Rating:* ${info.videoDetails.averageRating}
+╰────────⬣`;
     let audio = ytdl(text, { quality: 'highestaudio' });
     let inputFilePath = './tmp/music.webm';
     let outputFilePath = './tmp/music.mp3';
@@ -19,6 +34,7 @@ const handler = async (m, { conn, text, command, usedPrefix }) => {
         .toFormat('mp3')
         .on('end', async () => {
           let buffer = fs.readFileSync(outputFilePath);
+          conn.reply(m.chat, isi, m)
           conn.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mpeg', asDocument: true }, { quoted: m });
           delete conn.ytmp3[m.sender];
           fs.unlinkSync(inputFilePath);

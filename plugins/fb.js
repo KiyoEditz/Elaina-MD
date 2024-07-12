@@ -18,35 +18,50 @@ handler.command = /^(f(ace)?b(ook)?(dl)?)$/i
 module.exports = handler
 */
 
-const fg = require('api-dylux');
+const fg = require('api-dylux'); // Pastikan package ini terinstal dan up-to-date
+const fetch = require('node-fetch'); // Tambahkan library node-fetch jika belum ada
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   if (!args[0]) {
-    throw `Input link atau reply link yang ingin di download!\n\n*Contoh:*\n${usedPrefix + command} link`;
+    throw `Masukkan link atau reply link yang ingin diunduh!\n\n*Contoh:*\n${usedPrefix + command} link`;
   }
 
-  let urlRegex = /^(?:https?:\/\/)?(?:www\.)?(?:facebook\.com|fb\.watch)\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i;
+  // Perbaiki regex untuk menangani fb.watch dan URL yang lebih beragam
+  let urlRegex = /^(?:https?:\/\/)?(?:www\.|m\.)?(?:facebook\.com|fb\.watch)\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i;
   if (!urlRegex.test(args[0])) {
-    throw '⚠️ PLEASE GIVE A VALID URL.';
+    throw '⚠️ URL TIDAK VALID.'; // Pesan error lebih jelas
   }
 
-  conn.reply(`_*Tunggu sedang di proses...*_`);
+  conn.reply(`_*Tunggu sedang diproses...*_`);
 
   try {
     let result = await fg.fbdl(args[0]);
+
+    // Cek apakah hasil unduhan valid
+    if (!result || !result.videoUrl) {
+      throw '⚠️ Video tidak ditemukan atau tidak dapat diunduh.';
+    }
+
+    // Format informasi video lebih rapi
     let text = `
-⊱ ─── {*FACEBOOK*} ─── ⊰
-↳ *VIDEO TITLE:* ${result.title}
-⊱ ────── {⋆♬⋆} ────── ⊰`;
+*FACEBOOK DOWNLOADER*
 
-    let response = await fetch(result.videoUrl);
-    let arrayBuffer = await response.arrayBuffer();
-    let videoBuffer = Buffer.from(arrayBuffer);
+*Judul:* ${result.title}
+*URL:* ${result.videoUrl}
+    `;
 
-    conn.sendFile(m.chat, videoBuffer, 'fb.mp4', text, m);
+    // Gunakan node-fetch untuk streaming video secara langsung (lebih efisien)
+    conn.reply(m.chat, await fetch(result.videoUrl), 'fb.mp4', text, m); 
   } catch (error) {
-    console.log(error);
-    m.reply('⚠️ An error occurred while processing the request. Please try again later.');
+    console.error(error);
+    let errorMessage = '⚠️ Terjadi kesalahan saat mengunduh video.';
+
+    // Berikan pesan error lebih spesifik jika ada
+    if (error.message) {
+      errorMessage += `\n\nDetail: ${error.message}`;
+    }
+
+    m.reply(errorMessage);
   }
 };
 

@@ -31,7 +31,7 @@ handler.all = async function (m) {
   }
 }
 
-handler.command = /^(helpe)$/i
+handler.command = /^(help)$/i
 
-module.exports = handler
+module.exports = handler;
 

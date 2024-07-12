@@ -34,7 +34,7 @@ global.btc = 'PjoZNP4j'
 
 global.APIs = { // API Prefix
   // name: 'https://website'
-  nrtm: 'https://nurutomo.herokuapp.com',//
+  nrtm: 'https://nurutomo.herokuapp.com',//git clone from nurutomo api and start node on dekstop
   nrtm2: 'http://localhost:5000', //just my local host
   xteam: 'https://api.xteam.xyz',//
   vhtear: 'https://api.vhtear.com',//
