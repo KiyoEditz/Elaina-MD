@@ -34,8 +34,8 @@ let handler = async (m, {
     text: "⬣───「 *Elaina* 」───⬣" + "\n\n" + res,
     contextInfo: {
       externalAdReply: {  
-        title: "Elaina-Ai",
-        body: '',
+        title: "Elaina-AI",
+        body: 'Elaina cuman milik owner seorang 😘☝',
         thumbnailUrl: global.menu,
         sourceUrl: null,
         mediaType: 1,

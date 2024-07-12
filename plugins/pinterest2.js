@@ -68,7 +68,7 @@ let handler = async(m, { conn, command, text, args }) => {
   });
 }
 
-handler.help = ['pinterest'];
+handler.help = ['pinterest2'];
 handler.tags = ['downloader'];
 handler.command = /^(pinterest2|pin2)$/i;
 handler.limit = true;
