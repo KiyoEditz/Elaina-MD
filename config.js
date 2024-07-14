@@ -47,7 +47,7 @@ global.APIKeys = { // APIKey Here
   // 'https://website': 'apikey'
   'https://api.zeks.xyz': 'qyVJpszt0uSAL0lGCfOQIV3BVfp',
   'https://api.xteam.xyz': 'Syahrulidhamz30',
-  'http://api.lolhuman.xyz': 'Syahrulidhamz30',
+  'http://api.lolhuman.xyz': 'd5d9e369ab0bf0c231d43b17',
   'https://api.vhtear.com': 'Syahrulidhamz30',
   'https://api.betabotz.eu.org': 'XwxIaeoY',
   'https://api.botcahx.eu.org': 'PjoZNP4j',

@@ -1,16 +1,65 @@
-let fetch = require('node-fetch')
-let handler = async (m, { conn, command, args }) => {
-  let full = /f$/i.test(command)
-  if (!args[0]) return conn.reply(m.chat, '_Masukkan url/link_', m)
-  let url = /https?:\/\//.test(args[0]) ? args[0] : 'https://' + args[0]
-  let ss = await (await fetch(global.API('nrtm2', '/api/ssweb', { delay: 1000, url, full }))).buffer()
-  if (ss.status !== 200) throw 'Server Error.. Harap lapor owner'
-  conn.sendFile(m.chat, ss, 'screenshot.png', url, m)
+const axios = require('axios')
+
+let handler = async (m, { 
+conn, text, command, usedPrefix
+}) => {
+if (!text) return m.reply(`Gunakan format ${usedPrefix + command} <url>\n\n*Contoh :* ${usedPrefix + command} https://github.com/KiyoEditz`)
+m.reply(wait)
+var phone = await ssweb(text, 'phone')
+var desktop = await ssweb(text, 'desktop')
+var tablet = await ssweb(text, 'tablet')
+var res = ``
+if (command === 'sshp') {
+await conn.sendFile(m.chat, phone.result, '',res, m, false)
 }
-handler.help = ['ssweb <link>']
-handler.tags = ['image']
-handler.command = /^ss|ssweb$/i
-handler.fail = null
+if (command === 'ssweb' || command === 'sstablet') {
+await conn.sendFile(m.chat, tablet.result, '',res, m, false)
+}
+if (command === 'sspc') {
+await conn.sendFile(m.chat, desktop.result, '',res, m, false)
+}
+}
+handler.help = ['ssweb','sspc','sshp','sstablet'].map(v => v + ' <url>')
+handler.tags = ['internet']
+handler.command = /^(ssweb|sstablet|sspc|sshp)$/i
+
+handler.limit = false
 
 module.exports = handler
 
+async function ssweb(url, device = 'desktop'){
+     return new Promise((resolve, reject) => {
+          const base = 'https://www.screenshotmachine.com'
+          const param = {
+            url: url,
+            device: device,
+            cacheLimit: 0
+          }
+          axios({url: base + '/capture.php',
+               method: 'POST',
+               data: new URLSearchParams(Object.entries(param)),
+               headers: {
+                    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+               }
+          }).then((data) => {
+               const cookies = data.headers['set-cookie']
+               if (data.data.status == 'success') {
+                    axios.get(base + '/' + data.data.link, {
+                         headers: {
+                              'cookie': cookies.join('')
+                         },
+                         responseType: 'arraybuffer'
+                    }).then(({ data }) => {
+                       let result = {
+                            status: 200,
+                            author: 'Ryzn',
+                            result: data
+                        }
+                         resolve(result)
+                    })
+               } else {
+                    reject({ status: 404, author: 'Ryzn', message: data.data })
+               }
+          }).catch(reject)
+     })
+}

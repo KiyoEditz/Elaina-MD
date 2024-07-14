@@ -2,6 +2,7 @@ const axios = require('axios');
 var handler = async (m, { conn, usedPrefix, command, text }) => {
 try {
             if (!text) return m.reply(`Chat dengan AI.\n\nContoh:\n${usedPrefix}${command} Apa itu resesi`);
+            conn.reply(`_*Tunggu sedang diproses...*_`);
             const data = await(await axios.get('https://widipe.com/dalle?text=' + text, {responseType:'arraybuffer'})).data
          return conn.sendFile(m.chat, data, '', `Result From : ${text}`, m) 
           } catch (error) {
