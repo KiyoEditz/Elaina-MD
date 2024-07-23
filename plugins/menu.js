@@ -493,12 +493,11 @@ try {
   //━━━━━━━━[ DEFAULT MENU ]━━━━━━━━//
 const defaultMenu = {
   before:``.trimStart(), 
-  header: '『  *%category*  』',
-  body: '▸ %cmd %islimit %isPremium',
-  footer: '________\n', 
+  header: '*〘 %category 〙*\n╔══════════════',
+  body: '╟ %cmd %islimit %isPremium',
+  footer: '╚════════════════\n', 
   after: `Made With ${global.nameowner}`,
 }
-
 
 //━━━━━━━━[ DATABASE USER ]━━━━━━━━//
     let package = JSON.parse(await fs.promises.readFile(path.join(__dirname, '../package.json')).catch(_ => '{}'))
@@ -563,14 +562,15 @@ let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(
 
 
 //━━━━━━━━[ BAGIAN MENU ]━━━━━━━━//
-let skntex = `Hai ${tag} %ucap
-[ 𝐃 𝐀 𝐒 𝐇 𝐁 𝐎 𝐀 𝐑 𝐃 ]
-• 𝐍𝐚𝐦𝐚 𝐁𝐨𝐭: *R E M B O T Z*
-• 𝐖𝐚𝐤𝐭𝐮: *${time}*
-• 𝐓𝐚𝐧𝐠𝐠𝐚𝐥: *${week} ${weton}*
-• 𝐈𝐬𝐥𝐚𝐦𝐢𝐜 𝐃𝐚𝐭𝐞: *${dateIslamic}*
-• 𝐔𝐩𝐭𝐢𝐦𝐞: *${uptime}*
-• 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞: *${rtotalreg} dari ${totalreg}*`
+let skntex = `Hai ${tag} ${global.ucapan}
+┏❏──「 *𝐃𝐀𝐒𝐇𝐁𝐎𝐀𝐑𝐃* 」───⬣
+│○ 𝐍𝐚𝐦𝐚 𝐁𝐨𝐭: *Elaina-MD*
+│○ 𝐖𝐚𝐤𝐭𝐮: *${time}*
+│○ 𝐓𝐚𝐧𝐠𝐠𝐚𝐥: *${week} ${weton}*
+│○ 𝐈𝐬𝐥𝐚𝐦𝐢𝐜 𝐃𝐚𝐭𝐞: *${dateIslamic}*
+│○ 𝐔𝐩𝐭𝐢𝐦𝐞: *${uptime}*
+│○ 𝐃𝐚𝐭𝐚𝐛𝐚𝐬𝐞: *${rtotalreg} dari ${totalreg}*
+┗––––––––––✦`
 if (teks == '404') {
 let sections = [
       {
@@ -606,7 +606,7 @@ let sections = [
       }
     ]
     const fcon = { key: {participant: `0@s.whatsapp.net`, ...(m.chat ? { remoteJid: `status@broadcast` } : {}) }, message: { 'contactMessage': { 'displayName': `${name}`,}}}
-     let media = await prepareWAMessageMedia({ image: { url: 'https://btch.pages.dev/file/115260d4449d8d98f212e.jpg' } }, { upload: conn.waUploadToServer });
+     let media = await prepareWAMessageMedia({ image: { url: './thumbnail.jpg' } }, { upload: conn.waUploadToServer });
     let msg = {
 		viewOnceMessage: {
 			message: {
@@ -705,7 +705,7 @@ JSON.stringify({
       xp4levelup: max - exp,
       github: package.homepage ? package.homepage.url || package.homepage : '[unknown github url]',
       name,
-      ucap: ucap(),
+      ucap: ucapan(),
       level, limit, money, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
       readmore: readMore
     }
@@ -723,7 +723,7 @@ JSON.stringify({
       externalAdReply: {
       title: namebot3,
       body: nameowner,
-      thumbnailUrl: 'https://btch.pages.dev/file/7081ad0d533f9f9d3db9c.jpg',
+      thumbnailUrl: './src/elaina.png',
       sourceUrl: ``,
       mediaType: 1,
       renderLargerThumbnail: true
