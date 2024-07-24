@@ -1,4 +1,4 @@
-/*
+
 let fs = require('fs')
 let path = require('path')
 let fetch = require('node-fetch')
@@ -369,7 +369,9 @@ function clockString(ms) {
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }
-  */
+
+
+  /*
  //━━━━━━━━[ DEFAULT SETTINGS ]━━━━━━━━//
 let { default: makeWASocket, BufferJSON, WA_DEFAULT_EPHEMERAL, generateWAMessageFromContent, downloadContentFromMessage, downloadHistory, proto, getMessage, generateWAMessageContent, prepareWAMessageMedia } = require('@adiwajshing/baileys')
 let levelling = require('../lib/levelling')
@@ -786,3 +788,4 @@ function ucapan() {
   }
   return res
 }
+  */
