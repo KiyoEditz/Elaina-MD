@@ -20,6 +20,7 @@
 * Jika ketahuan menjual source bot maka akan di tindak secara serius dan harus melakukan ganti rugi sesuai dengan dengan kesalahan.
 * ada bug di panel yang membuat tidak bisa install module, saat ini sedang di perbaiki, sebagai solusi gunakan yarn install untuk proses install. setelah terinstall module nya silahkan run seperti biasa mengunakan index.js
 ## NOTES
+* gak bakal rajin update di sini, saya pindah ke module ESM, silahkan gunakan versi ke dua nya [`klik disini`](https://github.com/KiyoEditz/Elaina-MD2)
 * bug ajg capek gua bgst, yang gak bisa install pakek yarn install ya ajg, kalok engga chat owner di wa 
 * bot bakal update berkala jika saya menemukan bug atau laporan bug.
 * sc ini selalu di belakang bot yang saya run pribadi, jadi silahkan cek fitur terbaru di nomor [`Klik Disini`](Https://wa.me/kontol)

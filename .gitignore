@@ -6,3 +6,4 @@ session
 database.json
 plugins/jadibot/
 .vs
+temp_script.py
