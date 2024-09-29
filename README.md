@@ -173,3 +173,5 @@ conn.logger.level = 'debug'
 [![KiyoEditz](https://github.com/KiyoEditz.png?size=100)](https://github.com/KiyoEditz)
 [![syahrularranger](https://github.com/syahrularranger.png?size=100)](https://github.com/syahrularranger)
 
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/KiyoEditz/Elaina-MD.svg?background=%23FFFFFF&axis=%23333333&line=%23e76060)](https://starchart.cc/KiyoEditz/Elaina-MD)
