@@ -24,6 +24,6 @@ XP bisa kamu dapatkan dengan bermain game Bot di *${usedPrefix}menu game*
 }
 handler.help = ['cek']
 handler.tags = ['xp']
-handler.command = /^(cek|limit)$/i
+handler.command = /^(cek|limit|me)$/i
 handler.register = true
 module.exports = handler
