@@ -18,22 +18,22 @@ handler.before = async function (m, { isPrems, match }) {
         return
     }
 
-    if (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com/i.test(m.text)) {
-        if (/..?(t(ik)?t(ok)?2?) /i.test(m.text)) {
-            return m.reply(can_drop)
-        }
-        let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
+    //if (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com/i.test(m.text)) {
+       // if (/..?(t(ik)?t(ok)?2?) /i.test(m.text)) {
+      //      return m.reply(can_drop)
+      //  }
+      //  let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
 
-        m.reply(acc)
-        let tt = await fetch(global.API('alya', 'api/tiktok', { url: link }, 'apikey'))
-        let res = await tt.json()
-        if (!res.status) throw `Error`
-        let { title, music_info, author, data } = res
-        let vid = data.find(v => v.type == 'nowatermark').url
+      //  m.reply(acc)
+      //  let tt = await fetch(global.API('alya', 'api/tiktok', { url: link }, 'apikey'))
+      //  let res = await tt.json()
+      //  if (!res.status) throw `Error`
+      //  let { title, music_info, author, data } = res
+      //  let vid = data.find(v => v.type == 'nowatermark').url
 
-        await conn.sendFile(m.chat, vid, (new Date * 1) + '.mp4', `@${author.fullname}\n${author.nickname}\n${title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
-        return true
-    }
+      //  await conn.sendFile(m.chat, vid, (new Date * 1) + '.mp4', `@${author.fullname}\n${author.nickname}\n${title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+      //  return true
+   // }
 
     // if (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.test(m.text)) {
     //     let res = await fetch(API('neoxr', '/api/download/fb', { url: m.text.match(/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)\/.*/i)[0].split(/\n| /i)[0] }, 'apikey'))

@@ -1,4 +1,4 @@
-
+/*
 const limit = 30
 const yts = require('yt-search')
 const fetch = require('node-fetch')
@@ -110,9 +110,9 @@ handler.tags = ['media']
 handler.command = /^(play2?|lagu|vid(e|i)o)$/i
 
 module.exports = handler
-  
+  */
 /** !! BACKUP CODE!! **/
-/*
+
 let ytdl = require('ytdl-core');
 let fs = require('fs');
 let ffmpeg = require('fluent-ffmpeg');
@@ -210,4 +210,3 @@ function formatViews(views) {
   }
 }
 
-*/

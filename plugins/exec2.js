@@ -6,7 +6,7 @@ let handler = async (m, { conn, isOwner, command, text }) => {
   m.reply('Executing...')
   let o
   try {
-    o = await exec(command.trimStart() + ' ' + text.trimEnd())
+    o = await exec(command.trimStart()  + ' ' + text.trimEnd())
   } catch (e) {
     o = e
   } finally {
@@ -15,7 +15,9 @@ let handler = async (m, { conn, isOwner, command, text }) => {
     if (stderr.trim()) m.reply(stderr)
   }
 }
-handler.customPrefix = /^[£] /
+handler.help = ['£']
+handler.tags = ['advanced']
+handler.customPrefix = /^[$] /
 handler.command = new RegExp
 handler.rowner = true
 module.exports = handler

@@ -1,41 +1,30 @@
+let handler  = async (m, { conn, text }) => {
+  
+let chats = Object.keys(await conn.chats)
+conn.reply(m.chat, `_Mengirim pesan broadcast ke ${chats.length} chat_`, m)
+for (let id of chats) {
+ await sleep(3000)
+ conn.relayMessage(id, {
+extendedTextMessage:{
+                text: text.trim(), 
+                contextInfo: {
+                     externalAdReply: {
+                        title: wm,
+                        mediaType: 1,
+                        previewType: 0,
+                        renderLargerThumbnail: true,
+                        thumbnailUrl: 'https://telegra.ph/file/aa76cce9a61dc6f91f55a.jpg',
+                        sourceUrl: ''
+                    }
+                }, mentions: [m.sender]
+}}, {})    
 
-
-var crypto = require('crypto')
-
-let handler = async (m, { conn, text }) => {
-  let chats = Object.entries(conn.chats).filter(([_, chat]) => chat.isChats).map(v => v[0])
-  let cc = conn.serializeM(text ? m : m.quoted ? await m.getQuotedObj() : false || m)
-  let teks = text ? text : cc.text
-  conn.reply(m.chat, `_Mengirim pesan broadcast ke ${chats.length} chat_`, m)
-  for (let id of chats) await conn.copyNForward(id, conn.cMod(m.chat, cc, /bc|broadcast/i.test(teks) ? teks : teks + '\n' + readMore + set.footer + randomID(32)), true).catch(_ => _)
-  m.reply(`_Selesai broadcast ${chats.length} chat!_`)
+     }
+  m.reply('Broadcast selesai')
 }
-handler.help = ['broadcast', 'bc'].map(v => v + ' <teks>')
+handler.help = ['broadcast','bc'].map(v => v + ' <teks>')
 handler.tags = ['owner']
-handler.command = /^(broadcast|bc|bcs)$/i
-
-handler.owner = true
-
-module.exports = handler
-
-const more = String.fromCharCode(8206)
-const readMore = more.repeat(4001)
-
-const randomID = length => require('crypto').randomBytes(Math.ceil(length * .5)).toString('hex').slice(0, length)
-
-
-/*let handler = async (m, { conn, text, command }) => {
-  let chats = conn.chats.all().filter(v => !v.read_only && v.message).map(v => v.jid)
-  if (/pc/i.test(command)) chats = conn.chats.all().filter(v => !v.read_only && v.message && !v.jid.endsWith('g.us')).map(v => v.jid)
-  let cc = conn.serializeM(text ? m : m.quoted ? await m.getQuotedObj() : false || m)
-  let teks = text ? text : cc.text
-  let content = conn.cMod(m.chat, cc, /bc|broadcast/i.test(teks) ? teks : teks + '\n' + conn.readmore + '「 All Chat Broadcast 」')
-  for (let id of chats) conn.copyNForward(id, content, true)
-  conn.reply(m.chat, `_Mengirim pesan broadcast ke ${chats.length} chat_`, m)
-}
-handler.help = ['broadcast', 'bc'].map(v => v + ' <teks>')
-handler.tags = ['owner']
-handler.command = /^(broadcast|bc)(pc)?$/i
+handler.command = /^(broadcast|bc)$/i
 handler.owner = true
 handler.mods = false
 handler.premium = false
@@ -47,4 +36,8 @@ handler.botAdmin = false
 
 handler.fail = null
 
-module.exports = handler*/
+module.exports = handler
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

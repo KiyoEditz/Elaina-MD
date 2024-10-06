@@ -1,4 +1,5 @@
 let handler = async (m, { conn }) => {
+	if (m.fromMe) return false
   conn.reply(m.chat, `
 Ketoprak 🤤
 `.trim(), m)

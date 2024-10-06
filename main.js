@@ -78,6 +78,7 @@
         },
         logger: P({ level: 'silent' }),
         browser: ['Elaina-MD', 'Safari', '1.0.0'],
+        version: [2, 3000, 1015901307],
         printQRInTerminal: opts['pairing'] ? false : true,
         getMessage: async (key) => {
             let jid = jidNormalizedUser(key.remoteJid)

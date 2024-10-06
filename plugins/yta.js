@@ -1,3 +1,4 @@
+/*
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
@@ -61,7 +62,7 @@ handler.limit = false;
 
 module.exports = handler;
 
-/*
+
 let limit = 30
 
 const { youtubedl } = require('@bochilteam/scraper')
@@ -122,3 +123,47 @@ handler.limit = true
 
 module.exports = handler
 */
+const axios = require('axios');
+
+let handler = async (m, { conn, text, usedPrefix, command }) => {
+    if (!text) throw `Masukan URL!\n\ncontoh:\n${usedPrefix + command} https://youtu.be/4rDOsvzTicY?si=3Ps-SJyRGzMa83QT`;    
+   
+        if (!text) throw 'masukan link youtube';   
+        m.reply(wait);      
+        const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=btzKiyoEditz`);        
+        const res = response.data.result;      
+        var { mp3, id, title, source, duration, thumb } = res;
+        let caption = `
+╭──── 〔 Y O U T U B E 〕 ─⬣
+ ⬡ *Title:* ${title}
+ ⬡ *Id:* ${id}
+ ⬡ *Duration:* ${duration} 
+ ⬡ *Link:* ${source}
+ ⬡ *Rating:* unknown
+╰────────⬣`
+    // Mengirim gambar dengan caption
+    await conn.sendMessage(m.chat, { 
+        image: { url: thumb }, 
+        caption: caption
+    }, { quoted: m });
+    
+        // await conn.sendFile(m.chat, mp3, null, m);
+        await conn.sendMessage(m.chat, { 
+            document: { url: mp3 }, 
+            mimetype: 'audio/mpeg',
+            fileName: `${title}.mp3`
+        }, { quoted: m });
+};
+handler.help = ['ytmp3'];
+handler.command = /^(ytmp3)$/i
+handler.tags = ['downloader'];
+handler.limit = true;
+handler.group = false;
+handler.premium = false;
+handler.owner = false;
+handler.admin = false;
+handler.botAdmin = false;
+handler.fail = null;
+handler.private = false;
+
+module.exports = handler;

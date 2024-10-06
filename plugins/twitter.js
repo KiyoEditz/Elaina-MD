@@ -1,117 +1,64 @@
-const axios = require('axios');
-let mengirim = false;
-const handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) throw `*_Masukkan tautan dari X (twitter)_*\n *example:* ${usedPrefix + command}* https://twitter.com/auronplay/status/1586487664274206720?s=20&t=3snvkvwGUIez5iWYQAehpw`;
-  if (mengirim) return;
-  mengirim = true;
-  try {
-    await conn.sendMessage(m.chat, { text: global.wait }, { quoted: m });
-    const res = await TwitterDL(text);
-    if (res?.result.type == 'video') {
-      const caption = res?.result.caption ? res.result.caption : '*ini Videonya om*';
-      for (let i = 0; i < res.result.media.length; i++) {
-        await conn.sendMessage(m.chat, { video: { url: res.result.media[i].result[0].url }, caption: caption }, { quoted: m });
-      };
-      mengirim = false;
-      return;
-    } else if (res?.result.type == 'photo') {
-      const caption = res?.result.caption ? res.result.caption : '*ini gambarnya om*';
-      for (let i = 0; i < res.result.media.length; i++) {
-        await conn.sendMessage(m.chat, { image: { url: res.result.media[i].url }, caption: caption }, { quoted: m });
-      };
-      mengirim = false;
-      return;
-    }
-  } catch {
-    mengirim = false;
-    throw '*[❌]  Error *';
-    return;
-  }
-};
-handler.help = ['x (twitter)']
-handler.tags = ['downloadersosmed']
-handler.command = /^(Twitter|x)$/i;
-module.exports = handler;
-const _twitterapi = (id) => `https://info.tweeload.site/status/${id}.json`;
-const getAuthorization = async () => {
-  const { data } = await axios.default.get("https://pastebin.com/raw/SnCfd4ru");
-  return data;
-};
-const TwitterDL = async (url) => {
-  return new Promise(async (resolve, reject) => {
-    const id = url.match(/\/([\d]+)/);
-    if (!id)
-      return resolve({
-        status: "error",
-        message:
-          "There was an error getting twitter id. Make sure your twitter url is correct!",
-      });
-    const response = await axios.default(_twitterapi(id[1]), {
-      method: "GET",
-      headers: {
-        Authorization: await getAuthorization(),
-        "user-agent":
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.132 Safari/537.36",
-      },
-    });
-    if (response.data.code !== 200) {
-      return resolve({
-        status: "error",
-        message: "An error occurred while sending the request.",
-      });
-    }
-    const author = {
-      id: response.data.tweet.author.id,
-      name: response.data.tweet.author.name,
-      username: response.data.tweet.author.screen_name,
-      avatar_url: response.data.tweet.author.avatar_url,
-      banner_url: response.data.tweet.author.banner_url,
-    };
-    let media = [];
-    let type;
-    if (response.data.tweet?.media?.videos) {
-      type = "video";
-      response.data.tweet.media.videos.forEach((v) => {
-        const resultVideo = [];
-        v.video_urls.forEach((z) => {
-          resultVideo.push({
-            bitrate: z.bitrate,
-            content_type: z.content_type,
-            resolution: z.url.match(/([\d ]{2,5}[x][\d ]{2,5})/)[0],
-            url: z.url,
-          });
-        });
-        if (resultVideo.length !== 0) {
-          media.push({
-            type: v.type,
-            duration: v.duration,
-            thumbnail_url: v.thumbnail_url,
-            result: v.type === "video" ? resultVideo : v.url,
-          });
+const fetch = require('node-fetch');
+const { apivisit } = require('./kanghit.js');
+
+let handler = async (m, { conn, text }) => {
+    if (!text) throw 'Input URL';
+    let res = await twitterDl(text);
+    await m.reply('_In progress, please wait..._');
+    
+    if (res.media && res.media.length > 0) {
+        for (let x = 0; x < res.media.length; x++) {
+            let caption = x === 0 ? res.caption.replace(/https:\/\/t.co\/[a-zA-Z0-9]+/gi, '').trim() : '';
+            await conn.sendFile(m.chat, res.media[x].url, '', caption, m);
         }
-      });
     } else {
-      type = "photo";
-      response.data.tweet.media.photos.forEach((v) => {
-        media.push(v);
-      });
+        throw 'No media found';
     }
-    resolve({
-      status: "success",
-      result: {
-        id: response.data.tweet.id,
-        caption: response.data.tweet.text,
-        created_at: response.data.tweet.created_at,
-        created_timestamp: response.data.tweet.created_timestamp,
-        replies: response.data.tweet.replies,
-        retweets: response.data.tweet.retweets,
-        likes: response.data.tweet.likes,
-        url: response.data.tweet.url,
-        possibly_sensitive: response.data.tweet.possibly_sensitive,
-        author,
-        type,
-        media: media.length !== 0 ? media : null,
-      },
-    });
-  });
+    
+    await apivisit;
 };
+
+handler.help = ['twitter'].map(v => v + ' <url>');
+handler.tags = ['downloader'];
+handler.alias = ['x', 'twitter'];
+handler.command = /^(x|twitter)$/i;
+
+module.exports = handler;
+
+async function twitterDl(url) {
+    // Tambahkan regex untuk mendukung x.com
+    let idMatch = /(?:x|twitter)\.com\/[^/]+\/status\/(\d+)/.exec(url);
+    
+    if (!idMatch || !idMatch[1]) throw 'Invalid URL';
+    let id = idMatch[1];
+
+    let res = await fetch(`https://tweetpik.com/api/tweets/${id}`);
+    
+    if (res.status !== 200) throw res.statusText;
+    let json = await res.json();
+
+    if (json.media && json.media.length > 0) {
+        let media = [];
+        for (let i of json.media) {
+            if (/video|animated_gif/.test(i.type)) {
+                let vid = await (await fetch(`https://tweetpik.com/api/tweets/${id}/video`)).json();
+                vid = vid.variants.pop(); // Mengambil varian terakhir (kualitas tertinggi)
+                media.push({
+                    url: vid.url,
+                    type: i.type
+                });
+            } else {
+                media.push({
+                    url: i.url,
+                    type: i.type
+                });
+            }
+        }
+        return {
+            caption: json.text,
+            media
+        };
+    } else {
+        throw 'No media found';
+    }
+}

@@ -1,65 +1,40 @@
-const axios = require('axios')
+var fs = require('fs');
+var path = require('path');
+var fetch = require('node-fetch');
+var handler = async (m, { conn, command, args }) => {
+  if (!args[0]) return conn.reply(m.chat, 'Input URL!', m);
+  if (args[0].match(/aduh\.com|hore\.com|poi\.care/i)) {
+    return conn.reply(m.chat, 'Link tersebut dilarang!', m);
+  }
+  await m.reply('_Ｌｏａｄｉｎｇ．．._');
+  var url = args[0].startsWith('http') ? args[0] : 'https://' + args[0]
+  try {
+    var img = await fetch(`https://skizo.tech/api/ssweb?apikey=sweattheartkyl&url=${url}`);
+    if (!img) {
+      await m.reply('Gagal saat percobaan pertama. Memulai percobaan kedua...');
+      img = await fetch(`https://skizo.tech/api/ssweb?type=desktop&url=${url}&apikey=sweattheartkyl `);
+      if (!img) return conn.reply(m.chat, 'Gambar tidak tersedia', m);
+    }
+    var filepath = path.join(__dirname, '../tmp/') + (+new Date) + '.jpeg'; // Ubah ke tmp folder
+    if (!fs.existsSync(path.join(__dirname, '../tmp/'))) fs.mkdirSync(path.join(__dirname, '../tmp/'));
+    const dest = fs.createWriteStream(filepath);
+    dest.on('finish', () => {
+    conn.sendFile(m.chat, filepath, 'screenshot.jpeg', 'Nih gambarnya.', m)
+        .then(() => {
+        })
+        .catch(() => { });
+    });
+    img.body.pipe(dest);    img.body.pipe(fs.createWriteStream(filepath));
+  } catch (e) {
+    console.log(e);
+    conn.reply(m.chat, `Terjadi error!`, m);
+  }
+}
+handler.help = ['ssweb'];
+handler.tags = ['tools'];
+handler.command = ['ssweb',]
 
-let handler = async (m, { 
-conn, text, command, usedPrefix
-}) => {
-if (!text) return m.reply(`Gunakan format ${usedPrefix + command} <url>\n\n*Contoh :* ${usedPrefix + command} https://github.com/KiyoEditz`)
-m.reply(wait)
-var phone = await ssweb(text, 'phone')
-var desktop = await ssweb(text, 'desktop')
-var tablet = await ssweb(text, 'tablet')
-var res = ``
-if (command === 'sshp') {
-await conn.sendFile(m.chat, phone.result, '',res, m, false)
-}
-if (command === 'ssweb' || command === 'sstablet') {
-await conn.sendFile(m.chat, tablet.result, '',res, m, false)
-}
-if (command === 'sspc') {
-await conn.sendFile(m.chat, desktop.result, '',res, m, false)
-}
-}
-handler.help = ['ssweb','sspc','sshp','sstablet'].map(v => v + ' <url>')
-handler.tags = ['internet']
-handler.command = /^(ssweb|sstablet|sspc|sshp)$/i
+handler.limit = true;
+handler.fail = null;
 
-handler.limit = false
-
-module.exports = handler
-
-async function ssweb(url, device = 'desktop'){
-     return new Promise((resolve, reject) => {
-          const base = 'https://www.screenshotmachine.com'
-          const param = {
-            url: url,
-            device: device,
-            cacheLimit: 0
-          }
-          axios({url: base + '/capture.php',
-               method: 'POST',
-               data: new URLSearchParams(Object.entries(param)),
-               headers: {
-                    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-               }
-          }).then((data) => {
-               const cookies = data.headers['set-cookie']
-               if (data.data.status == 'success') {
-                    axios.get(base + '/' + data.data.link, {
-                         headers: {
-                              'cookie': cookies.join('')
-                         },
-                         responseType: 'arraybuffer'
-                    }).then(({ data }) => {
-                       let result = {
-                            status: 200,
-                            author: 'Ryzn',
-                            result: data
-                        }
-                         resolve(result)
-                    })
-               } else {
-                    reject({ status: 404, author: 'Ryzn', message: data.data })
-               }
-          }).catch(reject)
-     })
-}
+module.exports = handler;

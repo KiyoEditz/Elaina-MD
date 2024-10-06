@@ -26,5 +26,5 @@ let handler = (m, { text, usedPrefix, command }) => {
 };
 
 handler.tags = ['fun', 'tools'];
-handler.command = handler.help = ['dmorse']; // Mengubah command name
+handler.command = handler.help = ['dmorse','demorse']; // Mengubah command name
 module.exports = handler;

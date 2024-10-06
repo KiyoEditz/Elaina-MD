@@ -1,3 +1,4 @@
+/*
 const axios = require('axios');
 const PDFDocument = require('pdfkit');
 const { extractImageThumb } = require('@adiwajshing/baileys');
@@ -59,6 +60,37 @@ function toPDF(images, opt = {}) {
         doc.end();
     });
 }
+*/
 
+const fetch = require('node-fetch');
 
+let handler = async(m, { conn, usedPrefix, command, text, wait }) => {
+    try {
+        if (!text) return m.reply(`Masukan Judul Yang Ingin Dicari!\n\nContoh :\n${usedPrefix + command} Gotoubun`)
+        
+        m.reply(`*Tunggu sedang diproses!....*)
 
+        let api = await fetch(API('lol', '/api/nhentaisearch', { query: text }, 'apikey'))
+        let { result } = await api.json()
+
+        let caption = result.map((v, i) => {
+            return `
+                _*${i + 1}. ${v.title_native}*_ 
+                ❃ Link: https://nhentai.net/${v.id} 
+                ❃ Page: ${v.page} 
+                ❃ Code: ${v.id}
+            `.trim()
+        }).join('\n\n')
+
+        m.reply(caption)
+    } catch (error) {
+        console.error(error);
+        throw 'Tidak Dapat Mengambil Informasi URL atau terjadi kesalahan lainnya.\n\nAnak anjing di bilangin ngebug ngeyel';
+    }
+}
+
+handler.command = handler.help = ['nhentai'];
+handler.tags = ['nsfw'];
+handler.limit = true;
+
+module.exports = handler;
