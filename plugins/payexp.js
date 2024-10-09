@@ -27,8 +27,8 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   m.reply(`(${-xp} XP) + (${-pjk} XP (Pajak 2%)) = ( ${-exp} XP)`)
   conn.fakeReply(m.chat, `+${xp} XP`, who, m.text)
 }
-handler.help = ['pay @user <jumlah>']
+handler.help = ['payexp @user <jumlah>']
 handler.tags = ['xp']
-handler.command = /^pay$/
+handler.command = /^payexp$/
 
 module.exports = handler
