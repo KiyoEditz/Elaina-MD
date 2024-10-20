@@ -147,6 +147,14 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
       }
       setting.backup = isEnable
       break
+          case 'backupsc':
+      isAll = true
+      if (!isOwner) {
+        global.dfail('owner', m, conn)
+        throw false
+      }
+      setting.backupsc = isEnable
+      break
     case 'anticall':
       isAll = true
       if (!isOwner) {
@@ -219,6 +227,7 @@ let handler = async (m, { conn, usedPrefix, command, args, isOwner, isAdmin, isR
 ╟ anticall
 ╟ grouponly
 ╟ backup
+╟ backupsc
 ╟ public
 ╟ whitelistmycontacts
 ╟ autodelvn

@@ -1,4 +1,9 @@
 let fs = require('fs')
+const { exec } = require("child_process");
+const cp = require("child_process");
+const { promisify } = require("util");
+let exec_ = promisify(exec).bind(cp);
+
 let handler = m => m
 
 handler.all = async function (m, { isOwner }) {
@@ -196,6 +201,42 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             })
             conn.reply(global.owner[0] + '@s.whatsapp.net', `Database: ${date}`, null)
             conn.sendFile(global.owner[0] + '@s.whatsapp.net', fs.readFileSync('./database.json'), 'database.json', '', false, false, { mimetype: 'application/json' })
+        }
+    }
+     if (setting.backupsc) {
+        if (new Date() * 1 - setting.backupSc > 1000 * 60 * 60) {
+            setting.backupSc = new Date() * 1
+            let d = new Date
+            let dates = d.toLocaleDateString('id', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            })
+            conn.reply(global.owner[0] + '@s.whatsapp.net', `BackupSc: ${dates}`, null)
+      let zipFileName = `BackupScript.zip`;
+     
+         const file = fs.readFileSync('./BackupScript.zip');
+         conn.sendMessage(
+            global.owner[0] + '@s.whatsapp.net',
+            {
+               document: file,
+               mimetype: "application/zip",
+               fileName: zipFileName,
+               caption: "Backup selesai. Silakan unduh file backup.",
+            },
+            { quoted: m }
+         );
+
+         setTimeout(() => {
+            fs.unlinkSync(zipFileName);
+            conn.reply(global.owner[0] + '@s.whatsapp.net', `File backup telah dihapus.`);
+      }, 3000);
+
+      setTimeout(() => {
+         let zipCommand = `zip -r ${zipFileName} * -x "node_modules/*"`;
+         exec_(zipCommand, (err, stdout) => {
+         });
+      }, 1000);
         }
     }
 }
