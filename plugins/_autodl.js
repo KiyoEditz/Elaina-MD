@@ -1,7 +1,9 @@
 //const { igdl, twitter, pin } = require('../lib/scrape')
 const { ytIdRegex, servers, yta, ytv } = require('../lib/y2mate')
 const fetch = require('node-fetch')
-const { tiktokdl, youtubedl, savefrom, instagramdl } = require('@bochilteam/scraper')
+const fg = require('api-dylux'); 
+const { tiktokdl } = require('tiktokdl');
+const {youtubedl, savefrom, instagramdl } = require('@bochilteam/scraper')
 let eror = `Link salah`
 let acc = `Link accept`
 const can_drop = 'Kamu bisa download link ini langsung tanpa harus menulis perintah!\nCukup langsung kirim link ke chat ini'
@@ -18,31 +20,37 @@ handler.before = async function (m, { isPrems, match }) {
         return
     }
 
-    //if (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com/i.test(m.text)) {
-       // if (/..?(t(ik)?t(ok)?2?) /i.test(m.text)) {
-      //      return m.reply(can_drop)
-      //  }
-      //  let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
+    if (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com/i.test(m.text)) {
+        if (/..?(t(ik)?t(ok)?2?) /i.test(m.text)) {
+            return m.reply(can_drop)
+        }
+        let link = (/https?:\/\/(www\.|v(t|m)\.|t\.)?tiktok\.com\/.*/i.exec(m.text))[0].split(/\n| /i)[0]
 
-      //  m.reply(acc)
-      //  let tt = await fetch(global.API('alya', 'api/tiktok', { url: link }, 'apikey'))
-      //  let res = await tt.json()
-      //  if (!res.status) throw `Error`
+       m.reply(acc)
+        let tt = await tiktokdl(link)
+        const { video, music } = tt;
+        //let res = await tt.json()
+        //if (!res.status) throw `Error`
       //  let { title, music_info, author, data } = res
       //  let vid = data.find(v => v.type == 'nowatermark').url
 
-      //  await conn.sendFile(m.chat, vid, (new Date * 1) + '.mp4', `@${author.fullname}\n${author.nickname}\n${title}`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
-      //  return true
-   // }
+        //await conn.sendFile(m.chat, video, (new Date * 1) + '.mp4', `*TIKTOK DINWLODER*`, m, null, { asDocument: global.db.data.users[m.sender].useDocument })
+        await conn.sendFile(m.chat, video, (new Date * 1) + '.mp4', '*TikTok Video Downloader*', m, null, { asDocument: global.db.data.users[m.sender].useDocument});
+    await conn.sendFile(m.chat, music,  (new Date * 1) + '.mp3', '*TikTok Music Downloader*', m, null, { asDocument: global.db.data.users[m.sender].useDocument});
+        return true
+    }
 
-    // if (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.test(m.text)) {
-    //     let res = await fetch(API('neoxr', '/api/download/fb', { url: m.text.match(/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)\/.*/i)[0].split(/\n| /i)[0] }, 'apikey'))
-    //     if (!res.ok) return m.reply(eror)
-    //     let json = await res.json()
-    //     if (!json.status) return m.reply(this.format(json))
-    //     await m.reply(wait)
-    //     await conn.sendFile(m.chat, json.data.sd.url, '', `HD: ${json.data.hd.url}\nUkuran: ${json.data.hd.size}\n\n© stikerin`, m)
-    // }
+     if (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.test(m.text)) {
+     	let fb = (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.exec(m.text))[0].split(/\n| /i)[0]
+         let res = await fg.fbdl(fb)
+       //  if (!res.ok) return m.reply(eror)
+        // let json = await res.json()
+        // if (!json.status) return m.reply(this.format(json))
+        const { videoUrl, size, title } = res;
+        let vid = videoUrl;
+         await m.reply(wait)
+         await conn.sendFile(m.chat, vid, '', `Title: ${title}\nUkuran: ${size}\n\n© stikerin`, m)
+     }
 
     if (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)/i.test(m.text)) {
         if (/..?(ig|instagram)2? /i.test(m.text)) {

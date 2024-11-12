@@ -26,6 +26,7 @@ ${usedPrefix + command} tai @user
 • gembel
 • gila
 • goblok
+• hina
 • iblis
 • idiot
 • jablay
@@ -36,7 +37,6 @@ ${usedPrefix + command} tai @user
 • keparat
 • kontol
 • kunyuk
-• maho
 • memek
 • monyet
 • ngentot
@@ -83,7 +83,7 @@ ${usedPrefix + command} tai @user
             case 'keparat':
             case 'kontol':
             case 'kunyuk':
-            case 'maho':
+            case 'hina':
             case 'memek':
             case 'monyet':
             case 'ngentot':

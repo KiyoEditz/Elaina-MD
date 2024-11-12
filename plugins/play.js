@@ -118,6 +118,9 @@ let fs = require('fs');
 let ffmpeg = require('fluent-ffmpeg');
 let search = require ('yt-search');
 const path = require('path');
+const agent = ytdl.createAgent(JSON.parse(fs.readFileSync("./lib/coklat.json")));
+
+
 
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
@@ -131,7 +134,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
     let results = await search(text);
     let videoId = results.videos[0].videoId;
-    let info = await ytdl.getInfo(videoId);
+    let info = await ytdl.getInfo(videoId, { agent });
     let title = info.videoDetails.title.replace(/[^\w\s]/gi, '');
     let thumbnailUrl = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
     let url = info.videoDetails.video_url;
@@ -209,4 +212,3 @@ function formatViews(views) {
     return views.toString();
   }
 }
-

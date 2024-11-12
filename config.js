@@ -1,4 +1,7 @@
 let fs = require('fs')
+function pickRandom(list) {
+	return list[Math.floor(list.length * Math.random())]
+}
 global.owner = ['6285874068202'] // Put your number here
 global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
@@ -62,6 +65,8 @@ global.set = {
 //global.scrap = new (require('./lib/scrape')) //just scraper 
 global.packname = 'Hi' // another Watermark 
 global.author = '⫹⫺ ᴇʟᴀɪɴᴀ 𝙱𝙾𝚃' //watermark author?
+global.htjava = pickRandom(["乂", "❏", "⫹⫺", "⎔", "✦", "⭔", "⬟"])
+global.pmenus = pickRandom(["乂", "◈", "➭", "ଓ", "⟆•", "⳻", "•", "↬", "◈", "⭑", "ᯬ", "◉", "᭻", "»", "〆", "々", "✗", "♪"])
 
 global.dtu = 'ɪɴꜱᴛᴀɢʀᴀᴍ'//just message 
 global.urlnya = "-" //apa lah 

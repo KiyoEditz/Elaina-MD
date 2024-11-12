@@ -36,7 +36,7 @@ Selengkapnya klik di Menu Premium`.trim(), 1, [`Menu Premium`, `${usedPrefix}men
         require('../config');
     } catch (e) {
         console.error(e);
-        m.reply(`Terjadi kesalahan saat menambahkan premium member: ${e.message}`);
+        m.reply(`Terjadi kesalahan saat menambahkan premium member: ${e}`);
     }
 };
 

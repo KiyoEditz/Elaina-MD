@@ -1,6 +1,6 @@
-const { G4F } = require("g4f");
-
-let g4f = new G4F();
+const { generate } = require('@genkit-ai/ai');
+const { gpt4o } = require('genkitx-openai');
+//const { z } = require('zod');
 
 let handler = async (m, {
   conn,
@@ -13,15 +13,15 @@ let handler = async (m, {
       `Masukkan Prompt!\n\nContoh: *${usedPrefix + command} apakah kamu gpt4?*`
     );
   }
-  const options = [
-    {model: "gpt-4"}
-];
-  const messages = [
-    { role: "system", content: "Elaina-MD adalah bot WhatsApp yang terbuat dari Nodejs, Python. Untuk membantu anda dalam mengerjakan dalam hal apapun." },
-    { role: "user", content: text },
-  ];
-  let res = await g4f.chatCompletion(messages, options);
-  conn.reply(m.chat, res, m);
+try {
+    const response = await generate({
+      model: gpt4o,
+      prompt: text,
+    });
+    conn.reply(m.chat, await response.text(), m);
+} catch (e) {
+conn.reply(m.chat, " ERROR: {e}", m):
+  }
 };
 
 handler.command = /^(gpt4|ai)$/i

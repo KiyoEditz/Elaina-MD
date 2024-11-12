@@ -1,43 +1,31 @@
+// Fungsi untuk mengimpor secara dinamis Gemini dari module ESM
+const loadGemini = async () => {
+  const { Gemini } = await import("gemini-g4f");  // Mengimpor menggunakan import dinamis
+  return new Gemini("AIzaSyB16RCXdrdGtm-GbWB4EFMSENly_-Iur7I");
+};
 
-
-const axios = require("axios")
-
-let danz = async (m, {
-conn,
-text,
-usedPrefix,
-command
-}) => {
+let handler = async (m, { conn, text, usedPrefix, command }) => {
   if (!text) {
-    return m.reply(`Masukkan Pertanyaan!\n\nContoh: *${usedPrefix + command} siapa kamu*`)
+    return m.reply(
+      `Masukkan Prompt!\n\nContoh: *${usedPrefix + command} apakah kamu gpt4?*`, m
+    );
   }
-  
-  let res = await bard(text)
-  conn.reply(m.chat, res, m)
-}
 
-handler.command = handler.help = ["bard2", "gbard2"]
-handler.tags = ["ai"]
+  // Memuat Gemini menggunakan dynamic import
+  const gemini = await loadGemini();
 
-module.exports = handler
+  let res = await gemini.ask(text, {
+    model: "gemini-1.5-pro-latest",
+  });
 
-async function bard(prompt) {
-  try {
-    const response = await axios.post('https://bard.rizzy.eu.org/backend/conversation/gemini', {
-      ask: prompt
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': 'application/json'
-      }
-    });
-    return response.data.content;
-  } catch (error) {
-    console.error(error);
-  }
-}
+  conn.reply(m.chat, res, m);
+};
 
-/**
- * DannTeam
- * ig: @dannalwaysalone
-*/
+// Penamaan command handler
+handler.command = /^(gemini2)$/i;
+handler.help = ["gemini2"];
+handler.tags = ["ai"];
+handler.limit = true;
+
+// Ekspor handler menggunakan CommonJS
+module.exports = handler;

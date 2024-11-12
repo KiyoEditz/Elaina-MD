@@ -1,7 +1,10 @@
-/*
+
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
+const axios = require('axios');
+const agent = ytdl.createAgent(JSON.parse(fs.readFileSync("./lib/coklat.json")));
+
 
 const handler = async (m, { args, conn, text, command, usedPrefix }) => {
   conn.ytmp3 = conn.ytmp3 || {};
@@ -12,7 +15,7 @@ const handler = async (m, { args, conn, text, command, usedPrefix }) => {
   conn.reply(m.chat, wait, m);
   conn.ytmp3[m.sender] = true;
   try {
-    let info = await ytdl.getInfo(text);
+    let info = await ytdl.getInfo(text, {agent});
     let durationSeconds = parseInt(info.videoDetails.lengthSeconds, 10);
     let formattedDuration = new Date(durationSeconds * 1000).toISOString().substr(11, 8);
     let viewCount = parseInt(info.videoDetails.viewCount, 10);
@@ -52,6 +55,30 @@ const handler = async (m, { args, conn, text, command, usedPrefix }) => {
   } catch (e) {
     console.log(e);
     m.reply(`*Error:* ${e.message}`);
+    m.reply(`*Mencoba matode lain!...*`);
+    const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=btzKiyoEditz`);        
+        const res = response.data.result;      
+        var { mp3, id, title, source, duration, thumb } = res;
+        let caption = `
+╭──── 〔 Y O U T U B E 〕 ─⬣
+ ⬡ *Title:* ${title}
+ ⬡ *Id:* ${id}
+ ⬡ *Duration:* ${duration} 
+ ⬡ *Link:* ${source}
+ ⬡ *Rating:* unknown
+╰────────⬣`
+    // Mengirim gambar dengan caption
+    await conn.sendMessage(m.chat, { 
+        image: { url: thumb }, 
+        caption: caption
+    }, { quoted: m });
+    
+        // await conn.sendFile(m.chat, mp3, null, m);
+        await conn.sendMessage(m.chat, { 
+            document: { url: mp3 }, 
+            mimetype: 'audio/mpeg',
+            fileName: `${title}.mp3`
+        }, { quoted: m });
   }
 };
 
@@ -61,7 +88,7 @@ handler.premium = false;
 handler.limit = false;
 
 module.exports = handler;
-
+/*
 
 let limit = 30
 
@@ -69,19 +96,20 @@ const { youtubedl } = require('@bochilteam/scraper')
 let fetch = require('node-fetch')
 const ytIdRegex = /(?:http(?:s|):\/\/|)(?:(?:www\.|)?youtube(?:\-nocookie|)\.com\/(?:shorts\/)?(?:watch\?.*(?:|\&)v=|embed\/|v\/)?|youtu\.be\/)([-_0-9A-Za-z]{11})/
 
-let handler = async (m, { conn, args, isPrems, isOwner, usedPrefix, command }) => {
-  if (!args || !args[0] || !ytIdRegex.test(args[0])) throw `
+let handler = async (m, { conn, text, args, isPrems, isOwner, usedPrefix, command }) => {
+  //if (!args || !args[0] || !ytIdRegex.test(args[0])) throw 
+  if (!text) throw `
   Ketik ${usedPrefix + command} link/url 
     
   Contoh
   ${usedPrefix + command} https://youtu.be/inihuruf`.trim()
 
-  let yt = await youtubedl(args[0])
+  let yt = await youtubedl(text)
   let { fileSize, fileSizeH, download } = yt.audio['128kbps']
   let isLimit = (isPrems || isOwner ? 99 : limit) * 1024 < fileSize
   conn.reply(m.chat, `
 ${isLimit ? `
-*Source:* ${args[0]}
+*Source:* ${text}
 *Ukuran File:* ${fileSizeH}
 _File terlalu besar, Download langsung dengan browser sekali klik menggunakan link:_ ${download()}` : '_Sedang proses mengirim..._\n_Mohon tunggu sebentar jangan spam desu_ ^_^'}
 `.trim(), {
@@ -122,7 +150,7 @@ handler.exp = 0
 handler.limit = true
 
 module.exports = handler
-*/
+////////////
 const axios = require('axios');
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
@@ -167,3 +195,4 @@ handler.fail = null;
 handler.private = false;
 
 module.exports = handler;
+*/

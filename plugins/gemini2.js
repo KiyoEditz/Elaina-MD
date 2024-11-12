@@ -17,7 +17,6 @@ command
   if (!text) {
     return m.reply(`Masukkan Pertanyaan!\n\nContoh: *${usedPrefix + command} Hai*`)
   }
-  m.react('🕒')
   if (/image/.test(mime)) {
   let img = await q.download();
   let url = await uploadImage(img);

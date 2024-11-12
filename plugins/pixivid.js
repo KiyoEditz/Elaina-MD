@@ -33,7 +33,7 @@ await conn.sendMessage(m.chat, {
     m.reply(`An error occurred while donwloading for the pixivid: ${e.message}`);
   }
 }
-handler.help = ['pixiv *<búsqueda>*']
+handler.help = ['pixiv *<search>*']
 handler.tags = ['downloader', 'img']
 handler.command = /^(pixiv|pixivdl)$/i
 handler.limit = 1
