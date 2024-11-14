@@ -1,7 +1,7 @@
 // Fungsi untuk mengimpor secara dinamis Gemini dari module ESM
 const loadGemini = async () => {
   const { Gemini } = await import("gemini-g4f");  // Mengimpor menggunakan import dinamis
-  return new Gemini("AIzaSyB16RCXdrdGtm-GbWB4EFMSENly_-Iur7I");
+  return new Gemini("");
 };
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
