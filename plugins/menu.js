@@ -56,6 +56,7 @@ let handler = async (m, { conn, usedPrefix: _p, args }) => {
         "anonymous": "Anonymous",
         "islami": "Islami",
         "game": "Game",
+        "anime": "Anime",
         "tools": "Tools",
         "fun": "Fun",
         "primbon": "Primbon",
@@ -101,6 +102,15 @@ ${_p}tiktok https://vm.tiktok.com/abcdefghi
 Ini adalah fitur untuk mendownload media melalui keyword
 Contoh:
 ${_p}play bertaut
+`
+case 'anime':
+        tags = {
+          'anime': 'Menu anime',
+        }
+        desc = `
+Ini adalah fitur untuk mendownload anime melalui judul
+Contoh:
+${_p}anichin yosuga no sora
 `
         break
       case 'gambar':
