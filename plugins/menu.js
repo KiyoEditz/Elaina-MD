@@ -341,7 +341,24 @@ _%ucap *%name!*_
       readmore: conn.readmore
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-    conn.reply(m.chat, text.trim(), fakeOption)
+    //conn.reply(m.chat, text.trim(), fakeOption)
+    conn.relayMessage(m.chat, {
+            extendedTextMessage:{
+                text: text, 
+                contextInfo: {
+                    mentionedJid: [m.sender],
+                    externalAdReply: {
+                        title: date,
+                        mediaType: 1,
+                        previewType: 0,
+                        renderLargerThumbnail: true,
+                        thumbnailUrl: 'https://telegra.ph/file/cce9ab4551f7150f1970d.jpg',
+                        sourceUrl: 'https://whatsapp.com/channel/0029ValggF79mrGXnImOmk1F'
+                    }
+                }, 
+                mentions: [m.sender]
+            }
+        }, {})
   } catch (e) { throw e }
 }
 handler.help = [

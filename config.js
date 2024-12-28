@@ -63,7 +63,7 @@ global.set = {
 }
 //global.Func = new (require('./lib/functions')) //just function 
 //global.scrap = new (require('./lib/scrape')) //just scraper 
-global.packname = 'Hi' // another Watermark 
+global.packname = 'Kiyo•Editz™' // another Watermark 
 global.author = '⫹⫺ ᴇʟᴀɪɴᴀ 𝙱𝙾𝚃' //watermark author?
 global.htjava = pickRandom(["乂", "❏", "⫹⫺", "⎔", "✦", "⭔", "⬟"])
 global.pmenus = pickRandom(["乂", "◈", "➭", "ଓ", "⟆•", "⳻", "•", "↬", "◈", "⭑", "ᯬ", "◉", "᭻", "»", "〆", "々", "✗", "♪"])
