@@ -1,4 +1,3 @@
-
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
@@ -56,7 +55,7 @@ const handler = async (m, { args, conn, text, command, usedPrefix }) => {
     console.log(e);
     m.reply(`*Error:* ${e.message}`);
     m.reply(`*Mencoba matode lain!...*`);
-    const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=btzKiyoEditz`);        
+    const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=btzElainaMD`);        
         const res = response.data.result;      
         var { mp3, id, title, source, duration, thumb } = res;
         let caption = `
@@ -158,7 +157,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
    
         if (!text) throw 'masukan link youtube';   
         m.reply(wait);      
-        const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=btzKiyoEditz`);        
+        const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=btzElainaMD`);        
         const res = response.data.result;      
         var { mp3, id, title, source, duration, thumb } = res;
         let caption = `

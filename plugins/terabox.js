@@ -1,45 +1,66 @@
-const fetch = require('node-fetch');
+const teradlx = require('../lib/terabox');
 
-let handler = async (m, { conn, args }) => {
-  try {
-    if (!args[0]) throw 'Masukkan link.\nContoh: *.tera https://www.4funbox.com/wap/share/filelist?surl=9JnFO9C3BX-ggDStXMDRkA';
-    
-    m.reply('Tunggu sebentar...');
-
-    let url = encodeURIComponent(args[0]);
-    let apiUrl = `https://xzn.wtf/api/teraboxdl?url=${url}&apikey=mufar`; // Pastikan API key valid
-
-    let res = await fetch(apiUrl);
-
-    if (!res.ok) { // Periksa status respons HTTP
-      throw 'Terjadi kesalahan saat mengambil data dari API';
+let handler = async (m, { conn, command, text, args }) => {
+    if (!text) {
+        throw `_*Link nya mana?!*_\n\nContoh:\n${usedPrefix}${command} https://www.terabox.app/wap/share/filelist?surl=qx26_6N3phpSAfwtefjT-g`;
     }
 
-    let json = await res.json();
+    try {
+        conn.reply(m.chat, `_Sedang memproses, harap tunggu..._`, m);
 
-    if (json.list && json.list.length > 0) {
-      let fileInfo = json.list[0];
-      let message = `
-Nama File: ${fileInfo.filename}
-Ukuran File: ${fileInfo.filesize}
-Tanggal: ${fileInfo.date}
-Tautan Langsung: ${fileInfo.direct_link}
-      `;
-      await conn.sendMessage(m.chat, { text: message }, { quoted: m }); // Menggunakan sendMessage untuk mengirim pesan teks
-    } else {
-      throw 'Tidak ada tautan langsung yang ditemukan';
+        // Mengambil respons dari scraper
+        const response = await teradlx(text);
+        const { filename, size, download } = response;
+
+        // Membuat caption untuk file
+        let capt = `╭──── 〔 TERABOX 〕 ─⬣\n`;
+        capt += ` ⬡ *Title* : ${filename}\n`;
+        capt += ` ⬡ *Size* : ${size}\n`;
+        capt += `╰────────⬣\n`;
+
+        // Mengirim dokumen dengan nama file dan tipe MIME yang sesuai
+        conn.sendMessage(
+            m.chat,
+            {
+                document: download,
+                mimetype: getMimeType(filename),
+                fileName: filename,
+                caption: capt,
+            },
+            { quoted: m }
+        );
+    } catch (e) {
+        throw `Error: ${e.message || e}`;
     }
-  } catch (error) {
-    console.error(error); 
-    conn.sendMessage(m.chat, { text: 'Terjadi kesalahan: ' + error.message }, { quoted: m });
-  }
 };
 
-// ... (bagian lainnya sama)
+// Fungsi untuk mendapatkan MIME type berdasarkan ekstensi file
+function getMimeType(filename) {
+    const extension = filename.split('.').pop().toLowerCase();
+    const mimeTypes = {
+        zip: 'application/zip',
+        rar: 'application/x-rar-compressed',
+        pdf: 'application/pdf',
+        mp4: 'video/mp4',
+        mkv: 'video/x-matroska',
+        mp3: 'audio/mpeg',
+        jpg: 'image/jpeg',
+        jpeg: 'image/jpeg',
+        png: 'image/png',
+        gif: 'image/gif',
+        txt: 'text/plain',
+        docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        default: 'application/octet-stream', // MIME type default
+    };
 
-handler.help = ['terabox'];
-handler.tags = ['internet'];
-handler.command = /^(tera|terabox)$/i;
-handler.limit = true;
+    return mimeTypes[extension] || mimeTypes.default;
+}
+
+handler.help = ['teraboxdl'];
+handler.command = /^(teraboxdl|teradl|terabox)$/i;
+handler.tags = ['downloader', 'tools'];
+handler.premium = false;
 
 module.exports = handler;

@@ -14,12 +14,14 @@
 <a href="https://github.com/KiyoEditz/Elaina-MD/pulls?q=is%3Apr+is%3Aclosed"><img title="Pull Request" src="https://img.shields.io/github/issues-pr-closed/KiyoEditz/Elaina-MD?label=PullRequest&color=red&style=flat-square"></a>
 
 ## INFORMATION
+* minimal support run bot ini adalah 2GB rom dan 1GB ram, minimal CPU adalah 70% dengan core DO-Premium. jumlah core minimal 2. recomendation. 4GB rom, 3GB ram, 100% CPU, 4 core DO-premium AMD atau Intel.
 * A Multi Device based WhatsApp bot with various features.
 * Don't sell this source bot. 
 * If you are caught selling source bots, you will be dealt with seriously and you will have to make compensation according to the mistake.
 * Jika ketahuan menjual source bot maka akan di tindak secara serius dan harus melakukan ganti rugi sesuai dengan dengan kesalahan.
 * ada bug di panel yang membuat tidak bisa install module, saat ini sedang di perbaiki, sebagai solusi gunakan yarn install untuk proses install. setelah terinstall module nya silahkan run seperti biasa mengunakan index.js
 ## NOTES
+* tolong ganti nomor owner sebelum instalasi, capek gua di spam mulu. (ganti di config.js)
 * gak bakal rajin update di sini, saya pindah ke module ESM, silahkan gunakan versi ke dua nya [`klik disini`](https://github.com/KiyoEditz/Elaina-MD2)
 * bug ajg capek gua bgst, yang gak bisa install pakek yarn install ya ajg, kalok engga chat owner di wa 
 * bot bakal update berkala jika saya menemukan bug atau laporan bug.

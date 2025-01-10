@@ -2,8 +2,8 @@ const { createCanvas, registerFont } = require('canvas');
 const Jimp = require('jimp');
 const WSF = require('wa-sticker-formatter');
 
-let handler = async (m, { text, conn }) => {
-    if (!text) return m.reply(`Penggunaan: ${prefix + m.command} <teks>`);
+let handler = async (m, { conn, text, usedPrefix, command }) => {
+    if (!text) return m.reply(`Penggunaan: ${usedPrefix + command} <teks>`);
 
     try {
         const { createCanvas, registerFont } = require('canvas');
