@@ -2,7 +2,7 @@ let fs = require('fs')
 function pickRandom(list) {
 	return list[Math.floor(list.length * Math.random())]
 }
-global.owner = ['6285874068202'] // Put your number here
+global.owner = ['6285874068202','6281999284127'] // Put your number here
 global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))

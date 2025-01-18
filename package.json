@@ -42,7 +42,7 @@
     },
     "license": "GPL-3.0-or-later",
     "dependencies": {
-        "@adiwajshing/baileys": "npm:@whiskeysockets/baileys@6.7.8",
+        "@adiwajshing/baileys": "npm:@whiskeysockets/baileys@6.7.9",
         "@adiwajshing/keyed-db": "^0.2.4",
         "@anthropic-ai/sdk": "^0.32.1",
         "@bochilteam/scraper": "^5.0.1",
@@ -51,7 +51,7 @@
         "@sasmeee/wabetainfo": "^1.1.1",
         "@StarlightsTeam/Scraper": "github:StarlightsTeam/StarlightsTeam-Scraper",
         "@vitalets/google-translate-api": "^9.2.0",
-        "@whiskeysockets/baileys": "^6.7.8",
+        "@whiskeysockets/baileys": "^6.7.9",
         "@xct007/frieren-scraper": "github:xct007/frieren-scraper",
         "acrcloud": "^1.4.0",
         "aki-api": "*",

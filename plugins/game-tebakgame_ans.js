@@ -1,11 +1,9 @@
-
-
 const similarity = require('similarity')
 const threshold = 0.72
 let handler = m => m
 handler.before = async function (m) {
   let id = m.chat
-  if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/Ketik.*tghint/i.test(m.quoted.text)) return !0
+  if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/tghint/i.test(m.quoted.caption)) return !0
   this.tebakgame = this.tebakgame ? this.tebakgame : {}
   if (!(id in this.tebakgame)) return m.reply('Soal itu telah berakhir')
   if (m.quoted.id == this.tebakgame[id][0].id) {
