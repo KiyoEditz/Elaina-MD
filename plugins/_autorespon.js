@@ -8,7 +8,7 @@ let handler = m => m
 
 handler.all = async function (m, { isOwner }) {
     if (m.isBaileys) return
-    if (m.fromMe) return
+    //if (m.fromMe) return
     if (m.chat.endsWith('broadcast')) return
     // Yang diblock ga direspon
     let setting = global.db.data.settings[this.user.jid]
