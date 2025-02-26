@@ -32,13 +32,21 @@ const handler = async (m, { args, conn, text, command, usedPrefix }) => {
     let audio = ytdl(text, { quality: 'highestaudio' });
     let inputFilePath = './tmp/music.webm';
     let outputFilePath = './tmp/music.mp3';
+    let url = text;
+    let urlMatch = url.match(/(?:v=|be\/)([A-Za-z0-9-_]+)/i);
+    let thumb = `https://i.ytimg.com/vi/${urlMatch[1]}/hqdefault.jpg`;
     audio.pipe(fs.createWriteStream(inputFilePath)).on('finish', async () => {
       ffmpeg(inputFilePath)
         .toFormat('mp3')
         .on('end', async () => {
           let buffer = fs.readFileSync(outputFilePath);
-          conn.reply(m.chat, isi, m)
-          conn.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mpeg', asDocument: true }, { quoted: m });
+          conn.sendMessage(m.chat, { 
+        image: { url: thumb }, 
+        caption: isi
+    }, { quoted: m });
+       
+conn.sendFile(m.chat, buffer, `${info.videoDetails.title}.mp3`, `*${info.videoDetails.title}*`, m, null, { asDocument: global.db.data.users[m.sender].useDocument });
+///conn.sendMessage(m.chat, { audio: buffer, mimetype: 'audio/mpeg', fileName: `${info.videoDetails.title}.mp3`, asDocument: global.db.data.users[m.sender].useDocument }, { quoted: m });
           delete conn.ytmp3[m.sender];
           fs.unlinkSync(inputFilePath);
           fs.unlinkSync(outputFilePath);

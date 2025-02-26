@@ -21,7 +21,7 @@ var handler = async (m, {
 VERSION:3.0
 N:Sy;Bot;;;
 FN: ${name}
-item.ORG: Creator Bot
+item.ORG: Kiyo•Editz™
 item1.TEL;waid=${numberowner}:${numberowner}@s.whatsapp.net
 item1.X-ABLabel:Nomor Creator Bot 
 item2.EMAIL;type=INTERNET:${gmail}

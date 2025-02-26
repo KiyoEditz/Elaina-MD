@@ -40,17 +40,17 @@ handler.before = async function (m, { isPrems, match }) {
         return true
     }
 
-     if (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.test(m.text)) {
-     	let fb = (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.exec(m.text))[0].split(/\n| /i)[0]
-         let res = await fg.fbdl(fb)
+     //if (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.test(m.text)) {
+     	//let fb = (/https?:\/\/(fb\.watch|(www\.|web\.|m\.)?facebook\.com)/i.exec(m.text))[0].split(/\n| /i)[0]
+        // let res = await fg.fbdl(fb)
        //  if (!res.ok) return m.reply(eror)
         // let json = await res.json()
         // if (!json.status) return m.reply(this.format(json))
-        const { videoUrl, size, title } = res;
-        let vid = videoUrl;
-         await m.reply(wait)
-         await conn.sendFile(m.chat, vid, '', `Title: ${title}\nUkuran: ${size}\n\n© stikerin`, m)
-     }
+       // const { videoUrl, size, title } = res;
+       // let vid = videoUrl;
+        // await m.reply(wait)
+       // await conn.sendFile(m.chat, vid, '', `Title: ${title}\nUkuran: ${size}\n\n© stikerin`, m)
+   //  }
 
     if (/https?:\/\/(www\.)?instagram\.com\/(p|reel|tv)/i.test(m.text)) {
         if (/..?(ig|instagram)2? /i.test(m.text)) {

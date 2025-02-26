@@ -1,5 +1,5 @@
 const uploadFile = require('../lib/uploadFile');
-const uploadImage = require('../lib/uploadImage');
+const { CatBox } = require('../lib/uploadImage');
 const { webp2png } = require('../lib/webp2mp4'); 
 const { sticker } = require('../lib/sticker'); 
 
@@ -19,7 +19,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     if (/webp/.test(mime)) {
         link = await webp2png(img);
     } else {
-        link = await uploadImage(img).catch(e => uploadFile(img)); 
+        link = await CatBox(img).catch(e => uploadFile(img)); 
     }
     let hasil = global.API('https://api.memegen.link', `/images/custom/${encodeURIComponent(t1)}/${encodeURIComponent(t2)}.png`, {
         background: link

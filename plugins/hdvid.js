@@ -21,7 +21,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     if(fps > 30) throw `Maksimal fps adalah 30 fps!`
     await conn.sendMessage(m.chat, { text: 'Wait... Executing the [ffmpeg] and [remini] libraries, This process may take 5-15 minutes' }, { quoted: m })
 
-    const chdir = "hd_video";
+    const chdir = "tmp";
     const timestamp = Date.now();
     const pndir = `${chdir}/${m.sender}`;
     const rsdir = `${chdir}/result-${m.sender}`;

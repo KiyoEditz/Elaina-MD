@@ -112,5 +112,6 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 handler.help = ['brat'];
 handler.tags = ['fun'];
 handler.command = /^brat$/i;
+handler.limit = true;
 
 module.exports = handler;

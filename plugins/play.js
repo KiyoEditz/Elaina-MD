@@ -1,5 +1,6 @@
 /*
-const limit = 30
+const limit = 3
+const ytdl = require('ytdl-core');
 const yts = require('yt-search')
 const fetch = require('node-fetch')
 const { yta, ytv } = require('../lib/y2mate')
