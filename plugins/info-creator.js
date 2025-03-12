@@ -28,12 +28,14 @@ item2.EMAIL;type=INTERNET:${gmail}
 item2.X-ABLabel:Email Owner
 item3.ADR:;;🇮🇩 Indonesia;;;;
 item3.X-ABADR:ac
-item4.EMAIL;type=INTERNET:support@tioprm.eu.org
-item4.X-ABLabel:Email Developer 
-item3.ADR:;;🇮🇩 Indonesia;;;;
-item3.X-ABADR:ac 
-item5.URL:${instagram}
-item5.X-ABLabel:Website
+item4.URL:${instagram}
+item4.X-ABLabel:Website
+item5.EMAIL;type=INTERNET:abiandriansyah3@gmail.com
+item5.X-ABLabel:Email Developer 
+item6.ADR:;;🇮🇩 Indonesia;;;;
+item6.X-ABADR:ac 
+item7.URL:https://kiyoeditz.my.id
+item7.X-ABLabel:Website
 END:VCARD`
     const sentMsg = await conn.sendMessage(
         m.chat,

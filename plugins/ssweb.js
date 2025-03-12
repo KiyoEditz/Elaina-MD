@@ -1,40 +1,41 @@
-var fs = require('fs');
-var path = require('path');
-var fetch = require('node-fetch');
-var handler = async (m, { conn, command, args }) => {
-  if (!args[0]) return conn.reply(m.chat, 'Input URL!', m);
+const axios = require('axios');
+
+async function Screenshot(url) {
+    try {
+        const response = await axios.get(`https://image.thum.io/get/png/fullpage/viewportWidth/2400/${url}`, {
+            responseType: 'arraybuffer'
+        });
+
+        return {
+            status: 200,
+            type: 'image/png',
+            buffer: response.data
+        };
+    } catch (err) {
+        throw Error(err.message);
+    }
+}
+
+let handler = async (m, { args, conn }) => {
+    if (!args[0]) return conn.reply(m.chat, 'Input URL!\n\n*Example:* .ssweb https://www.nasa.gov', m);
   if (args[0].match(/aduh\.com|hore\.com|poi\.care/i)) {
     return conn.reply(m.chat, 'Link tersebut dilarang!', m);
   }
   await m.reply('_Ｌｏａｄｉｎｇ．．._');
-  var url = args[0].startsWith('http') ? args[0] : 'https://' + args[0]
-  try {
-    var img = await fetch(`https://skizo.tech/api/ssweb?apikey=sweattheartkyl&url=${url}`);
-    if (!img) {
-      await m.reply('Gagal saat percobaan pertama. Memulai percobaan kedua...');
-      img = await fetch(`https://skizo.tech/api/ssweb?type=desktop&url=${url}&apikey=sweattheartkyl `);
-      if (!img) return conn.reply(m.chat, 'Gambar tidak tersedia', m);
-    }
-    var filepath = path.join(__dirname, '../tmp/') + (+new Date) + '.jpeg'; // Ubah ke tmp folder
-    if (!fs.existsSync(path.join(__dirname, '../tmp/'))) fs.mkdirSync(path.join(__dirname, '../tmp/'));
-    const dest = fs.createWriteStream(filepath);
-    dest.on('finish', () => {
-    conn.sendFile(m.chat, filepath, 'screenshot.jpeg', 'Nih gambarnya.', m)
-        .then(() => {
-        })
-        .catch(() => { });
-    });
-    img.body.pipe(dest);    img.body.pipe(fs.createWriteStream(filepath));
-  } catch (e) {
-    console.log(e);
-    conn.reply(m.chat, `Terjadi error!`, m);
-  }
-}
-handler.help = ['ssweb'];
-handler.tags = ['tools'];
-handler.command = ['ssweb',]
 
-handler.limit = true;
-handler.fail = null;
+    try {
+        let result = await Screenshot(args[0]);
+
+        await conn.sendMessage(m.chat, { 
+            image: result.buffer
+        }, { quoted: m });
+    } catch (e) {
+        m.reply('Error');
+    }
+};
+
+handler.help = ['ssweb'];
+handler.command = ['ssweb'];
+handler.tags = ['tools'];
 
 module.exports = handler;

@@ -110,7 +110,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 };
 
 handler.help = ['brat'];
-handler.tags = ['fun'];
+handler.tags = ['fun','sticker'];
 handler.command = /^brat$/i;
 handler.limit = true;
 

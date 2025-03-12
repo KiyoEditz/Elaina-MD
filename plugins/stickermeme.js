@@ -1,5 +1,5 @@
 const uploadFile = require('../lib/uploadFile');
-const { CatBox } = require('../lib/uploadImage');
+const { UguuSe } = require('../lib/uploadImage');
 const { webp2png } = require('../lib/webp2mp4'); 
 const { sticker } = require('../lib/sticker'); 
 
@@ -19,14 +19,19 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     if (/webp/.test(mime)) {
         link = await webp2png(img);
     } else {
-        link = await CatBox(img).catch(e => uploadFile(img)); 
+        link = await UguuSe(img).catch(e => uploadFile(img)); 
     }
     let hasil = global.API('https://api.memegen.link', `/images/custom/${encodeURIComponent(t1)}/${encodeURIComponent(t2)}.png`, {
         background: link
     }); 
     try {
-        let stickerBuffer = await sticker(await fetch(hasil).then(v => v.buffer()), false, packname, author);
-        conn.sendMessage(m.chat, { sticker: stickerBuffer }, { quoted: m }); 
+        let stickerBuffer = await sticker(await fetch(hasil).then(v => v.buffer()), false, global.packname, global.author);
+        //conn.sendMessage(m.chat, { sticker: stickerBuffer }, { quoted: m }); 
+        conn.sendMessage(m.chat, { sticker: stickerBuffer }, {
+                quoted: m,
+                mimetype: 'image/webp',
+                ephemeralExpiration: 86400
+            })
     } catch (e) {
         conn.sendFile(m.chat, hasil, 'error.png', 'Terjadi kesalahan saat membuat sticker :(\n\ngunakan fitur image to stiker\nketik .s atau .sticker', m); // Send as image if error
     }

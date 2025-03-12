@@ -1,10 +1,25 @@
-let handler = async (m, { conn, args }) => {
-  let id = args && /\d+\-\d+@g.us/.test(args[0]) ? args[0] : m.chat
-  let online = [...Object.keys(conn.chats.get(id).presences), conn.user.jid]
-  conn.reply(m.chat, 'List Online (Kurang akurat):\n' + online.map(v => '- @' + v.replace(/@.+/, '')).join`\n`, m, {
-    contextInfo: { mentionedJid: online }
-  })
-}
+const handler = async (m, { conn }) => {
+  const chatID = m.chat;
+  const onlineMembers = [];
+
+  const members = await conn.groupMetadata(chatID);
+  for (const member of members.participants) {
+    console.log('Member:', member);
+    if (member.id && member.id && conn.user.jid && member.id.includes('@s.whatsapp.net')) {
+      onlineMembers.push(`│ ○ Name: ${conn.getName(member.id.split(`@`)[0] + `@s.whatsapp.net`)}\n│ wa.me/${member.id.split('@')[0]}`);
+    }
+  }
+
+  if (onlineMembers.length > 0) {
+    const onlineList = onlineMembers.join('\n');
+    conn.reply(m.chat, `╭───「 *LIST•ONLINE* 」───⬣\n│ *Anak haram yang cuman nyimak* \n│\n${onlineList}\n╰──── •`, m, {
+    contextInfo: { mentionedJid: members.participants }
+  });
+  } else {
+    m.reply('Tidak ada anggota yang sedang online.');
+  }
+};
+
 handler.help = ['here', 'listonline']
 handler.tags = ['group']
 handler.command = /^(here|(list)?online)$/i
@@ -13,4 +28,3 @@ handler.admin = true
 handler.limit = true
 
 module.exports = handler
-
