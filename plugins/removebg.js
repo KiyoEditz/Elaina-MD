@@ -1,5 +1,5 @@
 const { removeBackgroundFromImageUrl } = require('remove.bg');
-const uploadImage = require ('../lib/uploadImage.js')
+const { UguuSe } = require ('../lib/uploadImage.js')
 let handler = async (m, { conn, usedPrefix, command }) => {
     try {
         let q = m.quoted ? m.quoted: m
@@ -8,7 +8,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
         if (!/image\/(jpe?g|png)/.test(mime)) throw `Tipe ${mime} tidak didukung!`
         m.reply(wait)
         let img = await q.download()
-        let url = await uploadImage(img)
+        let url = await UguuSe(img)
         let out = API('lol', '/api/removebg', { img: url }, 'apikey')
         await conn.sendFile(m.chat, out, 'out.png', '*DONE (≧ω≦)ゞ*', m)
     } catch {
@@ -18,7 +18,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
         if (!/image\/(jpe?g|png)/.test(mime)) throw `Tipe ${mime} tidak didukung!`
         m.reply(wait)
         let img = await q.download()
-        let url = await uploadImage(img)
+        let url = await UguuSe(img)
         let out = await nobg(url)
         await conn.sendFile(m.chat, out, 'out.png', '*DONE (≧ω≦)ゞ*', m)
     }

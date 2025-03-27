@@ -1,12 +1,3 @@
-/*
- • Fitur By Anomaki Team
- • Created : Nazand Code
- • Contributor : Daffa
- • Kusonime Detail & Search
- • Jangan Hapus Wm
- • https://whatsapp.com/channel/0029Vaio4dYC1FuGr5kxfy2l
-*/
-
 const axios = require('axios');
 const cheerio = require('cheerio');
 
@@ -119,7 +110,11 @@ const handler = async (m, { args, command }) => {
             }
         }
 
-        m.reply(message.trim());
+        //m.reply(message.trim());
+        conn.sendMessage(m.chat, { 
+        image: { url: thumbnail }, 
+        caption: message.trim()
+    }, { quoted: m });
     }
 };
 

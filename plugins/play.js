@@ -178,8 +178,8 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
           //let outputFileName = path.basename(inputFilePath, '.webm') + '.mp3';
           //let readStream = fs.createReadStream(path.join('tmp', outputFileName));
           //conn.sendFile(m.chat, buffer, outputFileName, null, m, { asDocument: true });
-          conn.sendFile(m.chat, buffer, `${title}.mp3`, '', m);
-          conn.sendFile(m.chat, buffer, fileName, '', m, null, { asDocument: true });
+          await conn.sendFile(m.chat, buffer, `${title}.mp3`, '', m);
+          await conn.sendFile(m.chat, buffer, fileName, '', m, null, { asDocument: true });
           fs.unlinkSync(inputFilePath);
           fs.unlinkSync(outputFilePath);
         })

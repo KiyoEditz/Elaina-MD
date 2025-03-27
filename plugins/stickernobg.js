@@ -1,4 +1,4 @@
-const uploadImage = require('../lib/uploadImage')
+const { UguuSe } = require('../lib/uploadImage')
 let { webp2png } = require('../lib/webp2mp4')
 const { sticker } = require('../lib/sticker')
 
@@ -13,7 +13,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     if (/webp/.test(mime)) {
       url = await webp2png(img)
     } else {
-      url = await uploadImage(img)
+      url = await UguuSe(img)
     }
     let nobg = global.API('lolhuman', '/api/removebg', {
       img: url

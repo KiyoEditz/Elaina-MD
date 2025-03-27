@@ -63,6 +63,7 @@ let handler = async (m, { conn, args, usedPrefix, command, text }) => {
 
     try {
         const mediaData = await igdl(text);
+m.reply(JSON.stringify(mediaData, null, 2));
         if (!mediaData.urls.length) throw new Error("No media found");
 
         await conn.sendMessage(m.chat, { react: { text: '🕐', key: m.key } });

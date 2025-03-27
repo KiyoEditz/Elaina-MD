@@ -55,7 +55,7 @@ const handler = async (m, { text }) => {
 handler.help = ['get'];
 handler.command = /^(get)$/i;
 handler.tags = ['owner', 'tools'];
-handler.owner = false;
+handler.owner = true;
 handler.group = false;
 handler.premium = false;
 

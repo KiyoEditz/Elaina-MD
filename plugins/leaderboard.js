@@ -6,7 +6,12 @@ let handler = async (m, { conn, args, participants, command, usedPrefix }) => {
   if (isGC) users = users.filter(v => participants.some(p => p.id == v.jid))
   let sortedExp = users.map(toNumber('exp')).sort(sort('exp'))
   let sortedLim = users.map(toNumber('limit')).sort(sort('limit'))
-  let sortedMmr = users.map(toNumber('suit')).sort(sort('suit'))
+  let sortedMmr = users
+  .map(user => ({ 
+    ...user, 
+    MMR: user.suit + (user.skata ? user.skata : 1) 
+  }))
+  .sort((a, b) => b.MMR - a.MMR); // Urutan dari terbesar ke terkecil, sumpah ribet sialan.
   let sortedLevel = users.map(toNumber('level')).sort(sort('level'))
   let usersExp = sortedExp.map(enumGetKey)
   let usersLim = sortedLim.map(enumGetKey)
@@ -28,7 +33,7 @@ ${sortedLevel.slice(0, len).map(({ jid, level, name }, i) => `${i + 1}. ${partic
 
 • *MMR Leaderboard ${isGC ? 'Group' : `Top ${len}*`} •
 Kamu: *${usersMmr.indexOf(m.sender) + 1}* dari *${usersLevel.length}*
-${sortedMmr.slice(0, len).map(({ jid, suit, name }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *MMR ${suit}*`).join`\n`}
+${sortedMmr.slice(0, len).map(({ jid, MMR, name }, i) => `${i + 1}. ${participants.some(p => jid === p.id) ? `(${conn.getName(jid)}) wa.me/${jid.split`@`[0]}` : name} *MMR ${MMR}*`).join`\n`}
 `.trim()
   conn.reply(m.chat, text + `\n\nUntuk mengetahui leaderboard group ketik ${usedPrefix}lbgroup`, m, {
     mentions: [...usersExp.slice(0, len), ...usersLim.slice(0, len), ...usersLevel.slice(0, len)].filter(v => !participants.some(p => v === p.id))
