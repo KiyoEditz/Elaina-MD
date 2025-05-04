@@ -9,6 +9,14 @@
         PHONENUMBER_MCC
     } = require('@whiskeysockets/baileys')
     const readline = require('readline')
+    const PHONENUMBER_MCC1 = {
+        "1": "US/Canada",
+        "44": "UK",
+        "49": "Germany",
+        "62": "Indonesia",
+        "91": "India"
+        // tambahkan negara lain jika perlu
+    }    
     const chalk = require('chalk')
     const cloudDBAdapter = require('./lib/cloudDBAdapter')
     const WebSocket = require('ws')
@@ -95,7 +103,7 @@
         let phoneNumber
         if (!!global.pairingNumber) {
             phoneNumber = global.pairingNumber.toString().replace(/[^0-9]/g, '')
-            if (!Object.keys(PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
+            if (!Object.keys(PHONENUMBER_MCC1).some(v => phoneNumber.startsWith(v))) {
                 console.log(chalk.bgBlack(chalk.redBright("Start with your country's WhatsApp code, Example : 62xxx")))
                 process.exit(0)
             }
@@ -103,7 +111,7 @@
             phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number : `)))
             phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
             // Ask again when entering the wrong number
-            if (!Object.keys(PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
+            if (!Object.keys(PHONENUMBER_MCC1).some(v => phoneNumber.startsWith(v))) {
                 console.log(chalk.bgBlack(chalk.redBright("Start with your country's WhatsApp code, Example : 62xxx")))
                 phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number : `)))
                 phoneNumber = phoneNumber.replace(/[^0-9]/g, '')

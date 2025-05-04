@@ -1,53 +1,145 @@
-const { removeBackgroundFromImageUrl } = require('remove.bg');
-const { UguuSe } = require ('../lib/uploadImage.js')
-let handler = async (m, { conn, usedPrefix, command }) => {
-    try {
-        let q = m.quoted ? m.quoted: m
-        let mime = (q.msg || q).mimetype || ''
-        if (!mime) throw 'Fotonya Mana?'
-        if (!/image\/(jpe?g|png)/.test(mime)) throw `Tipe ${mime} tidak didukung!`
-        m.reply(wait)
-        let img = await q.download()
-        let url = await UguuSe(img)
-        let out = API('lol', '/api/removebg', { img: url }, 'apikey')
-        await conn.sendFile(m.chat, out, 'out.png', '*DONE (≧ω≦)ゞ*', m)
-    } catch {
-        let q = m.quoted ? m.quoted: m
-        let mime = (q.msg || q).mimetype || ''
-        if (!mime) throw 'Fotonya Mana?'
-        if (!/image\/(jpe?g|png)/.test(mime)) throw `Tipe ${mime} tidak didukung!`
-        m.reply(wait)
-        let img = await q.download()
-        let url = await UguuSe(img)
-        let out = await nobg(url)
-        await conn.sendFile(m.chat, out, 'out.png', '*DONE (≧ω≦)ゞ*', m)
-    }
-}
-handler.help = ['removebg']
-handler.tags = ['tools', 'premium']
-handler.command = /^(removebg)$/i
-handler.premium = false
-module.exports = handler
+/*
+Jangan Hapus Wm Bang 
 
-async function nobg(url) {
+*Remove Background,Remove Background HD Plugins CJS*
+
+Ntah lah 
+
+*[Sumber]*
+https://whatsapp.com/channel/0029Vb3u2awADTOCXVsvia28
+
+*[Sumber Scrape]*
+
+https://whatsapp.com/channel/0029Vb5EZCjIiRotHCI1213L/189
+*/
+
+const axios = require('axios');
+const FormData = require('form-data');
+
+const clyrBg = {
+  api: {
+    base: "https://s5ash41h3g.execute-api.ap-south-1.amazonaws.com/default/api/v1/rmbg",
+    endpoints: { predict: "/predict" }
+  },
+
+  headers: {
+    'authority': 's5ash41h3g.execute-api.ap-south-1.amazonaws.com',
+    'origin': 'https://clyrbg.com',
+    'referer': 'https://clyrbg.com/',
+    'user-agent': 'Postify/1.0.0'
+  },
+
+  getFileExt: (url) => {
+    const extension = url.split('.').pop().toLowerCase();
+    if (extension === 'webp') return 'webp';
+    if (extension === 'jpg' || extension === 'jpeg') return 'jpeg';
+    if (extension === 'png') return 'png';
+    return 'png';
+  },
+
+  remove: async (img, isHD = false) => {
     try {
-    const result = await removeBackgroundFromImageUrl({
-      url,
-      apiKey: apikey.getRandom(),
-      size: "regular",
-      type: "auto",
-    });
-    return Buffer.from(result.base64img, "base64");
-  } catch (e) {
-    return {
+      const ex = clyrBg.getFileExt(img);      
+      const response = await axios.get(img, { responseType: 'arraybuffer' });
+      const contentType = response.headers['content-type'];
+      if (!contentType || !contentType.startsWith('image/')) {
+        return {
+          status: false,
+          code: 400,
+          result: { error: "Kagak bisa ngambil link hasil remove bgnya bree" }
+        };
+      }
+
+      const b = Buffer.from(response.data, 'binary').toString('base64');
+      const data = { file_extension: ex, image_bytes: b, hd: isHD };
+
+      const result = await axios.post(
+        `${clyrBg.api.base}${clyrBg.api.endpoints.predict}`,
+        data,
+        { headers: clyrBg.headers }
+      );
+
+      return {
+        status: true,
+        code: 200,
+        result: {
+          id: result.data.id,
+          url: result.data.url,
+          extension: ex,
+          hd: isHD
+        }
+      };
+    } catch (error) {
+      return {
         status: false,
-        error: e
+        code: error.response?.status || 500,
+        result: {
+          error: error.response?.data?.message || error.message
+        }
+      };
     }
+  }
+};
+
+async function Uguu(buffer, filename) {
+  try {
+    const form = new FormData();
+    form.append('files[]', buffer, { filename });
+
+    const { data } = await axios.post('https://uguu.se/upload.php', form, {
+      headers: form.getHeaders(),
+    });
+
+    if (data.files && data.files[0]) {
+      return {
+        name: data.files[0].name,
+        url: data.files[0].url,
+        size: data.files[0].size,
+      };
+    } else {
+      throw new Error('Upload gagal.');
+    }
+  } catch (err) {
+    throw `${err.message}`;
   }
 }
 
-const apikey = [
-    't4DJWibUPdxTbCiZs6wXUTMB',
-    'Divb33Vh3YANNFJMPkv4QJs3',
-    '61N7EMLJURGuTdYpavHwkWTC'
-]
+const handler = async (m, { conn, command }) => {
+  try {
+    let q = m.quoted ? m.quoted : m;
+    let mime = (q.msg || q).mimetype || '';
+    if (!mime || !mime.startsWith('image/')) 
+      throw '*Kirim Gambar Atau Kirim Url Gambar Yang Valid Yaa*';
+
+    let media = await q.download();
+    let ext = mime.split('/')[1];
+    let filename = `upload.${ext}`;
+
+    let uploaded = await Uguu(media, filename);
+    let isHD = /hd/i.test(command);
+    let removed = await clyrBg.remove(uploaded.url, isHD);
+
+    if (!removed.status) throw removed.result.error;
+
+    let { url, extension, hd, id } = removed.result;
+    let resultBuffer = await axios.get(url, { responseType: 'arraybuffer' });
+
+    let caption = `*Background Removed Successfully*\n\n• *Quality Image :* ${hd ? 'HD' : 'Standard'}\n• *Format :* ${extension.toUpperCase()}\n• *ID :* ${id}`;
+
+    await conn.sendMessage(m.chat, {
+      image: Buffer.from(resultBuffer.data, 'binary'),
+      caption,
+      mimetype: `image/${extension}`,
+      fileName: `removed-bg.${extension}`
+    }, { quoted: m });
+
+  } catch (error) {
+    await conn.sendMessage(m.chat, { text: `${error}` }, { quoted: m });
+  }
+};
+
+handler.help = ['removebg', 'removebghd'];
+handler.command = ['removebg', 'removebghd'];
+handler.tags = ['tools'];
+
+module.exports = handler;

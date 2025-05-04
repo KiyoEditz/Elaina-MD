@@ -19,8 +19,9 @@ const kusonime = {
                 };
             }).get();
             return { data: result };
-        } catch (error) {
-            return { data: [] };
+       } catch (error) {
+            console.error('Error saat mencari di Kusonime:', error.message);
+            return { data: [], error: 'Gagal mengambil data pencarian. Mungkin server menolak permintaan.' };
         }
     },
 
@@ -62,7 +63,8 @@ const kusonime = {
                 }
             };
         } catch (error) {
-            return { data: null };
+            console.error('Error saat mengambil detail dari Kusonime:', error.message);
+            return { data: null, error: 'Gagal mengambil detail anime dari URL yang diberikan.' };
         }
     }
 };
