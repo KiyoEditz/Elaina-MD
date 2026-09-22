@@ -1,4 +1,5 @@
 let fs = require('fs')
+const path = require('path')
 const { exec } = require("child_process");
 const cp = require("child_process");
 const { promisify } = require("util");
@@ -7,16 +8,17 @@ let exec_ = promisify(exec).bind(cp);
 let handler = m => m
 
 handler.all = async function (m, { isOwner }) {
+    let conn = this
     if (m.isBaileys) return
     //if (m.fromMe) return
     if (m.chat.endsWith('broadcast')) return
     // Yang diblock ga direspon
-    let setting = global.db.data.settings[this.user.jid]
-    let chats = global.db.data.chats[m.chat]
-    let user = global.db.data.users[m.sender]
+    let setting = global.db.data.settings[this.user.jid] || {}
+    let chats = global.db.data.chats[m.chat] || {}
+    let user = global.db.data.users[m.sender] || {}
     let { name, banned, registered } = user
 
-    let teks2 = `${`Bot utama: @${global.conn.user.jid.split`@`[0]}`}\n\nInstagram Bot: https://instagram.com/lev_botwa`.trim()
+    let teks2 = `${`Bot utama: @${(global.conn.user.jid || '').split`@`[0]}`}\n\nInstagram Bot: https://instagram.com/lev_botwa`.trim()
 
     /*
     //////////////
@@ -52,7 +54,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             bot: 0,
             date: 0
         }
-        m.reply(this.pickRandom(['Iyaa.. Apa?', 'Hai, Bot disini', 'Saya terpanggil', 'Ciee manggil"', 'Apa sob?', 'Apa panggil" -_-', 'Bot bot bot bot tross', 'Kalau mau pakai, pakai aja.. Jngn pnggil" trus..', 'Piuuuu.... Dummmm... ', 'Tetetetetetete mantapu jiwaa']), m.chat, fakeImgReply)
+        m.reply(this.pickRandom(['Iyaa.. Apa?', 'Hai, Bot disini', 'Saya terpanggil', 'Ciee manggil"', 'Apa sob?', 'Apa panggil" -_-', 'Bot bot bot bot tross', 'Kalau mau pakai, pakai aja.. Jngn pnggil" trus..', 'Piuuuu.... Dummmm... ', 'Tetetetetetete mantapu jiwaa']), m.chat, global.fakeImgReply || {})
     }
 
     /*
@@ -63,12 +65,12 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
 
 
     if (/audio/i.test(m.quoted && m.quoted.mimetype) && (m.quoted.seconds == 1) && m.quoted.isBaileys && m.quoted.fromMe) {
-        m.reply(this.pickRandom(['Kenafahh🙄', 'Bagus ya suaraku :v', 'Aku masih bocil kaka 😶']), m.chat, fakeImgReply)
+        m.reply(this.pickRandom(['Kenafahh🙄', 'Bagus ya suaraku :v', 'Aku masih bocil kaka 😶']), m.chat, global.fakeImgReply || {})
     }
     // salam
 
     if (/(ass?alam)/i.test(m.text)) {
-        m.reply(`_Wa'alaikumsalam Wr. Wb._`, m.chat, fakeImgReply)
+        m.reply(`_Wa'alaikumsalam Wr. Wb._`, m.chat, global.fakeImgReply || {})
     }
 
     //hai
@@ -80,12 +82,13 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     //sepi
 
     if (/^sepi/i.test(m.text)) {
-        m.reply('Ramein lah ka', m.chat, fakeImgReply)
+        m.reply('Ramein lah ka', m.chat, global.fakeImgReply || {})
     }
 
     // di tag
     if (setting.antitag) {
-        if (m.mentionedJid && m.mentionedJid.includes(db.data.settings[this.user.jid].owner || (owner[2] + '@s.whatsapp.net')) && !chats.isBanned) m.reply(`Kenapa ngetag" ownerku _-`)
+        let ownerTarget = (global.db?.data?.settings?.[this.user.jid]?.owner || global.owner?.[0] || '6285874068202').replace(/[^0-9]/g, '') + '@s.whatsapp.net'
+        if (m.mentionedJid && m.mentionedJid.includes(ownerTarget) && !chats.isBanned) m.reply(`Kenapa ngetag" ownerku _-`)
     }
     /* 
     //////////////
@@ -134,8 +137,10 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
             if (m.fromMe) {
                 chats.pc = new Date * 1
                 return
-            } let chatSender = global.db.data.chats[m.sender]
-            if (new Date - global.db.data.chats[m.sender].pc < 43200000) return
+            }
+            if (!global.db.data.chats[m.sender]) global.db.data.chats[m.sender] = {}
+            let chatSender = global.db.data.chats[m.sender]
+            if (new Date - (chatSender.pc || 0) < 43200000) return
 
             chatSender.pc = new Date * 1
             chatSender.faham = true
@@ -146,12 +151,13 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
                 'Silahkan gunakan Bot dengan sebaik mungkin\nDilarang spam, telfon, ddos\nJika ada yang ditanyakan silahkan hubungi Owner' + `\n\n${teks2}`,
                 'Menu', '.menu', 'Link Group Bot', `.group`, 'Owner', '.owner']
 
-            let notInit = [`Hai, Selamat Datang! 😁\n\nAku adalah *Bot Whatsapp* yang siap membantu kamu😅\n\nTerimakasih telah menghubungi *Bot: ${conn.user.name}*`,
+            let notInit = [`Hai, Selamat Datang! 😁\n\nAku adalah *Bot Whatsapp* yang siap membantu kamu😅\n\nTerimakasih telah menghubungi *Bot: ${conn.user?.name || global.namebot || 'Bot'}*`,
                 `Sejauh apa kamu tahu tentang Bot ? \n\n__________`,
                 'Sudah faham', '.sayasudahfaham', 'Apa itu Bot?', '.help']
 
             let or = chatSender.faham ? init : notInit
-            conn.reply(m.chat, or[0].trim() + ' \n\n ' + or[1].trim(), m, { contextInfo: { mentionedJid: conn.parseMention(teks2) } })
+            let mentions = conn.parseMention ? await conn.parseMention(teks2) : []
+            conn.reply(m.chat, or[0].trim() + ' \n\n ' + or[1].trim(), m, { contextInfo: { mentionedJid: mentions } })
         }
 
         // ketika ada yang invite/kirim link grup di chat pribadi
@@ -165,7 +171,7 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
 ║
 ╟ Hubungi Owner
 ╚════
-`.trim(), m, { contextInfo: { mentionedJid: [global.owner[2] + '@s.whatsapp.net'] } })
+`.trim(), m, { contextInfo: { mentionedJid: [(global.owner?.[0] || '6285874068202').replace(/[^0-9]/g, '') + '@s.whatsapp.net'] } })
         }
     }
 

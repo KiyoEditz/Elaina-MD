@@ -31,7 +31,8 @@
     const simple = require('./lib/simple')
     const more = String.fromCharCode(8206)
     const readMore = more.repeat(4001)
-    const { initDatabase, loadDatabase: loadSqliteDB, saveDatabase: saveSqliteDB, migrateFromJson, closeDB } = require('./lib/sqliteDatabase')
+    const { initDatabase, loadDatabase: loadSqliteDB, saveDatabase: saveSqliteDB, migrateFromJson, deleteUser, deleteChat, closeDB } = require('./lib/sqliteDatabase')
+    const { mergeLidUsers } = require('./lib/lidMerge')
 
     const NodeCache = require('node-cache')
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
@@ -67,6 +68,14 @@
             if (this.data && this.sqlite) {
                 saveSqliteDB(this.sqlite, this.data)
             }
+        },
+        deleteUser: function (jid) {
+            if (this.data?.users?.[jid]) delete this.data.users[jid]
+            if (this.sqlite) deleteUser(this.sqlite, jid)
+        },
+        deleteChat: function (jid) {
+            if (this.data?.chats?.[jid]) delete this.data.chats[jid]
+            if (this.sqlite) deleteChat(this.sqlite, jid)
         }
     }
     global.DATABASE = global.db // Backwards Compatibility
@@ -198,7 +207,17 @@
         global.timestamp.connect = new Date
 
         if (connection === 'connecting') console.log(chalk.redBright('⚡ Mengaktifkan Bot, Mohon tunggu sebentar...'))
-        if (connection === 'open') console.log(chalk.green('✅ Tersambung'))
+        if (connection === 'open') {
+            console.log(chalk.green('✅ Tersambung'))
+            // Otomatis sinkronisasi dan merge data @lid ke JID nomor WhatsApp (@s.whatsapp.net)
+            setTimeout(async () => {
+                try {
+                    await mergeLidUsers(conn)
+                } catch (err) {
+                    console.error('[LID-Merge Error]', err)
+                }
+            }, 5000)
+        }
         if (isOnline === true) console.log(chalk.green('Status Aktif'))
         else if (isOnline === false) console.log(chalk.red('Status Mati'))
         if (receivedPendingNotifications) console.log(chalk.yellow('Menunggu Pesan Baru'))

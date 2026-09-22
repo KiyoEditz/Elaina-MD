@@ -181,8 +181,8 @@ module.exports = {
 
             let groupMetadata = (m.isGroup ? (await this.groupMetadata(m.chat).catch(_ => null)) : {}) || {}
             let participants = (m.isGroup ? groupMetadata.participants : []) || []
-            let user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender) : {}) || {} // User Data
-            let bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid) : {}) || {} // Your Data
+            let user = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) === m.sender || (u.lid && conn.decodeJid(u.lid) === m.sender) || (u.phoneNumber && conn.decodeJid(u.phoneNumber) === m.sender)) : {}) || {} // User Data
+            let bot = (m.isGroup ? participants.find(u => conn.decodeJid(u.id) == this.user.jid || (u.lid && conn.decodeJid(u.lid) === conn.decodeJid(this.user.lid))) : {}) || {} // Your Data
             let isAdmin = user && user.admin || false // Is User Admin?
             let isBotAdmin = bot && bot.admin || false // Are you Admin?
             for (let name in global.plugins) {
@@ -416,16 +416,20 @@ module.exports = {
         if (opts['self']) return
         // if (id in conn.chats) return // First login will spam
         if (global.isInit) return
+        let conn = this
         let chat = global.db.data.chats[id] || {}
         let text = ''
         switch (action) {
             case 'add':
             case 'remove':
                 if (chat.welcome) {
-                    let groupMetadata = await this.groupMetadata(id).catch(_ => null) || (conn.chats[id] || {}).metadata
-                    for (let user of participants) {
+                    let groupMetadata = await this.groupMetadata(id).catch(_ => null) || (conn.chats[id] || {}).metadata || {}
+                    for (let rawUser of (participants || [])) {
+                        let userJid = typeof rawUser === 'object' && rawUser !== null ? (rawUser.id || rawUser.jid || rawUser.phoneNumber || rawUser.lid) : rawUser
+                        let user = this.getJid ? this.getJid(userJid) : userJid
+                        if (!user || typeof user !== 'string') continue
                         let pp = false
-                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', groupMetadata.subject).replace('@desc', groupMetadata.desc) :
+                        text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', groupMetadata.subject || '').replace('@desc', groupMetadata.desc || '') :
                             (chat.sBye || this.bye || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0])
                         try {
                             pp = await this.profilePictureUrl(user, 'image')
@@ -440,11 +444,15 @@ module.exports = {
                 text = (chat.sPromote || this.spromote || conn.spromote || '@user ```is now Admin```')
             case 'demote':
                 if (!text) text = (chat.sDemote || this.sdemote || conn.sdemote || '@user ```is no longer Admin```')
-                text = text.replace('@user', '@' + participants[0].split('@')[0])
+                let rawTarget = Array.isArray(participants) && participants.length > 0 ? participants[0] : ''
+                let targetJid = typeof rawTarget === 'object' && rawTarget !== null ? (rawTarget.id || rawTarget.jid || rawTarget.phoneNumber || rawTarget.lid) : rawTarget
+                let targetUser = this.getJid ? this.getJid(targetJid) : targetJid
+                if (targetUser && typeof targetUser === 'string') {
+                    text = text.replace('@user', '@' + targetUser.split('@')[0])
+                }
                 if (chat.detect) this.sendMessage(id, {
                     text,
                     mentions: await this.parseMention(text)
-
                 })
                 break
         }

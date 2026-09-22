@@ -17,40 +17,37 @@ handler.before = async function (m) {
         let mime = (q.msg || q).mimetype || ''
         if (/webp/.test(mime)) return
         if (/image/.test(mime)) {
-            let img = await q.download()
-            if (!img) return
-            wsf = new WSF.Sticker(img, {
-                pack: global.packname,
-                author: global.author,
-                crop: false,
-            })
+            let img = await q.download?.()
+            if (!img || !Buffer.isBuffer(img) || img.length === 0) return
+            try {
+                let wsf = new WSF.Sticker(img, {
+                    pack: global.packname,
+                    author: global.author,
+                    type: 'full',
+                })
+                stiker = await wsf.build()
+            } catch (e) {
+                console.error('autosticker WSF error:', e)
+            }
+            if (!stiker || !Buffer.isBuffer(stiker) || !stiker.includes('RIFF')) {
+                stiker = await sticker(img, false, global.packname, global.author)
+            }
         } else if (/video/.test(mime)) {
             if ((q.msg || q).seconds > 11) return m.reply('Maksimal 10 detik!')
-            let img = await q.download()
-            if (!img) return
-            wsf = new WSF.Sticker(img, {
-                pack: global.packname,
-                author: global.author,
-                crop: true,
-            })
+            let img = await q.download?.()
+            if (!img || !Buffer.isBuffer(img) || img.length === 0) return
+            stiker = await sticker(img, false, global.packname, global.author)
         } else if (m.text.split` `[0]) {
             if (isUrl(m.text.split` `[0])) stiker = await sticker(false, m.text.split` `[0], global.packname, global.author)
             else return
         }
-        if (wsf) {
-            await wsf.build()
-            const sticBuffer = await wsf.get()
-            if (sticBuffer) await this.sendMessage(m.chat, { sticker: sticBuffer }, {
+        if (stiker && Buffer.isBuffer(stiker) && stiker.length > 0) {
+            await this.sendMessage(m.chat, { sticker: stiker }, {
                 quoted: m,
                 mimetype: 'image/webp',
                 ephemeralExpiration: 86400
             })
         }
-        if (stiker) await this.sendMessage(m.chat, { sticker: stiker }, {
-            quoted: m,
-            mimetype: 'image/webp',
-            ephemeralExpiration: 86400
-        })
         // } finally {
         //     if (stiker) {
         //     }
