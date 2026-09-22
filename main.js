@@ -1,13 +1,14 @@
 (async () => {
     require('./config')
     const {
-        useMultiFileAuthState,
         DisconnectReason,
-        makeInMemoryStore,
+        fetchLatestWaWebVersion,
+        Browsers,
         jidNormalizedUser,
         makeCacheableSignalKeyStore,
         PHONENUMBER_MCC
     } = require('@whiskeysockets/baileys')
+    const useSQLite = require('./lib/useSQLite')
     const readline = require('readline')
     const PHONENUMBER_MCC1 = {
         "1": "US/Canada",
@@ -18,7 +19,6 @@
         // tambahkan negara lain jika perlu
     }    
     const chalk = require('chalk')
-    const cloudDBAdapter = require('./lib/cloudDBAdapter')
     const WebSocket = require('ws')
     const path = require('path')
     const fs = require('fs')
@@ -31,14 +31,7 @@
     const simple = require('./lib/simple')
     const more = String.fromCharCode(8206)
     const readMore = more.repeat(4001)
-    var low
-    try {
-        low = require('lowdb')
-    } catch (e) {
-        low = require('./lib/lowdb')
-    }
-    const { Low, JSONFile } = low
-    const mongoDB = require('./lib/mongoDB')
+    const { initDatabase, loadDatabase: loadSqliteDB, saveDatabase: saveSqliteDB, migrateFromJson, closeDB } = require('./lib/sqliteDatabase')
 
     const NodeCache = require('node-cache')
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
@@ -53,61 +46,95 @@
     global.opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse())
     // console.log({ opts })
     global.prefix = new RegExp('^[' + (opts['prefix'] || '!+/#.') + ']')
-    const store = makeInMemoryStore({ logger: P().child({ level: 'fatal', stream: 'store' }) })
 
-    global.db = new Low(/https?:\/\//.test(opts['db'] || '') ? new cloudDBAdapter(opts['db']) : /mongodb/.test(opts['db']) ? new mongoDB(opts['db']) : new JSONFile(`${opts._[0] ? opts._[0] + '_' : ''}database.json`))
+    const sqlitePath = opts['db'] || `./data/${opts._[0] ? opts._[0] + '_' : ''}database.db`
+    const sqliteInstance = initDatabase(sqlitePath)
+
+    // Migrasi otomatis dari database.json jika SQLite belum berisi data
+    if (fs.existsSync('./database.json')) {
+        migrateFromJson(sqliteInstance, './database.json')
+    }
+
+    global.db = {
+        sqlite: sqliteInstance,
+        data: null,
+        READ: false,
+        read: async function () {
+            this.data = loadSqliteDB(this.sqlite)
+            return this.data
+        },
+        write: async function () {
+            if (this.data && this.sqlite) {
+                saveSqliteDB(this.sqlite, this.data)
+            }
+        }
+    }
     global.DATABASE = global.db // Backwards Compatibility
     global.loadDatabase = async function loadDatabase() {
-        if (global.db.READ) return new Promise((resolve) => setInterval(function () {
-            (!global.db.READ ? (clearInterval(this), resolve(global.db.data == null ? global.loadDatabase() : global.db.data)) : null)
-        }, 1 * 1000))
-        if (global.db.data !== null) return
-        global.db.READ = true
+        if (global.db.data !== null) return global.db.data
         await global.db.read()
-        global.db.READ = false
-        global.db.data = { users: {}, chats: {}, settings: {}, sessions: {}, stats: {}, msgs: {}, menfess: {}, sticker: {}, chara: '', ...(global.db.data || {}) }
+        global.db.data = {
+            users: {},
+            chats: {},
+            settings: {},
+            sessions: {},
+            stats: {},
+            msgs: {},
+            menfess: {},
+            sticker: {},
+            chara: '',
+            ...(global.db.data || {})
+        }
         global.db.chain = _.chain(global.db.data)
+        return global.db.data
     }
     loadDatabase()
 
     // if (opts['cluster']) {
     //   require('./lib/cluster').Cluster()
     // }
-    const authFile = `${opts._[0] || 'session'}`
-    global.isInit = !fs.existsSync(authFile)
-    const { state, saveState, saveCreds } = await useMultiFileAuthState(authFile)
+    const authFolder = `${opts._[0] || 'session'}`
+    const { state, saveCreds, db: sessionDB } = await useSQLite(authFolder)
+    global.isInit = !state.creds.registered
+
+    let { version, isLatest } = await fetchLatestWaWebVersion().catch(() => ({
+        version: [2, 3000, 1048092860],
+        isLatest: false
+    }))
+    console.log(chalk.green(`Using WA Web v${version.join('.')}, isLatest: ${isLatest}`))
 
     const connectionOptions = {
-        markOnlineOnConnect: false,
+        version,
+        logger: P({ level: 'silent' }),
+        browser: Browsers.ubuntu('Edge'),
         generateHighQualityLinkPreview: true,
+        syncFullHistory: false,
+        shouldSyncHistoryMessage: () => false,
+        markOnlineOnConnect: true,
+        connectTimeoutMs: 60_000,
+        keepAliveIntervalMs: 30_000,
+        retryRequestDelayMs: 250,
+        maxMsgRetryCount: 5,
+        printQRInTerminal: opts['pairing'] || global.pairingNumber ? false : true,
         auth: {
             creds: state.creds,
             keys: makeCacheableSignalKeyStore(state.keys, P({ level: 'silent' }).child({ level: 'silent' })),
         },
-        logger: P({ level: 'silent' }),
-        browser: ['Elaina-MD', 'Safari', '1.0.0'],
-        version: [2, 3000, 1015901307],
-        printQRInTerminal: opts['pairing'] ? false : true,
         getMessage: async (key) => {
             let jid = jidNormalizedUser(key.remoteJid)
-            let msg = await store.loadMessage(jid, key.id)
+            let msg = await (global.conn?.loadMessage ? global.conn.loadMessage(key.id) : null)
             return msg?.message || ''
         },
         msgRetryCounterCache,
         defaultQueryTimeoutMs: undefined,
+        cachedGroupMetadata: (jid) => (global.conn && global.conn.chats ? global.conn.chats[jid] : undefined),
     }
 
     global.conn = simple.makeWASocket(connectionOptions)
 
-    if (opts['pairing'] && !conn.authState.creds.registered) {
-        let phoneNumber
-        if (!!global.pairingNumber) {
-            phoneNumber = global.pairingNumber.toString().replace(/[^0-9]/g, '')
-            if (!Object.keys(PHONENUMBER_MCC1).some(v => phoneNumber.startsWith(v))) {
-                console.log(chalk.bgBlack(chalk.redBright("Start with your country's WhatsApp code, Example : 62xxx")))
-                process.exit(0)
-            }
-        } else {
+    if (!conn.authState.creds.registered) {
+        let phoneNumber = global.pairingNumber ? global.pairingNumber.toString().replace(/[^0-9]/g, '') : ''
+        if (!phoneNumber) {
             phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number : `)))
             phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
             // Ask again when entering the wrong number
@@ -115,15 +142,26 @@
                 console.log(chalk.bgBlack(chalk.redBright("Start with your country's WhatsApp code, Example : 62xxx")))
                 phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number : `)))
                 phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
-                rl.close()
             }
+            rl.close()
         }
 
-        setTimeout(async () => {
-            let code = await conn.requestPairingCode(phoneNumber)
-            code = code?.match(/.{1,4}/g)?.join("-") || code
-            console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
-        }, 3000)
+        console.log(chalk.bgWhite(chalk.blue('Generating code...')))
+        const requestPairing = async (retry = 0) => {
+            try {
+                let code = await conn.requestPairingCode(phoneNumber)
+                code = code?.match(/.{1,4}/g)?.join("-") || code
+                console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
+            } catch (e) {
+                if (retry < 5) {
+                    console.log(chalk.yellow(`Waiting for connection to be ready, retrying pairing code in 3s (${retry + 1}/5)...`))
+                    setTimeout(() => requestPairing(retry + 1), 3000)
+                } else {
+                    console.error('Failed to get pairing code:', e)
+                }
+            }
+        }
+        setTimeout(() => requestPairing(), 3000)
     }
 
     if (!opts['test']) {
@@ -156,10 +194,41 @@
     }, 60 * 1000 * 10) // every 10 minute
 
     async function connectionUpdate(update) {
-        const { connection, lastDisconnect } = update
+        const { connection, lastDisconnect, isOnline, receivedPendingNotifications } = update
         global.timestamp.connect = new Date
-        if (lastDisconnect && lastDisconnect.error && lastDisconnect.error.output && lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut && conn.ws.readyState !== WebSocket.CONNECTING) {
-            console.log(global.reloadHandler(true))
+
+        if (connection === 'connecting') console.log(chalk.redBright('⚡ Mengaktifkan Bot, Mohon tunggu sebentar...'))
+        if (connection === 'open') console.log(chalk.green('✅ Tersambung'))
+        if (isOnline === true) console.log(chalk.green('Status Aktif'))
+        else if (isOnline === false) console.log(chalk.red('Status Mati'))
+        if (receivedPendingNotifications) console.log(chalk.yellow('Menunggu Pesan Baru'))
+
+        const output = lastDisconnect?.error?.output
+        if (output?.payload) {
+            if (output.statusCode === DisconnectReason.loggedOut || output.statusCode === 401) {
+                if (conn.authState?.creds?.registered) {
+                    console.log(chalk.red('Session logged out. Recreate session...'))
+                    if (sessionDB) {
+                        try { sessionDB.close() } catch { }
+                    }
+                    fs.rmSync(authFolder, { recursive: true, force: true })
+                    if (process.send) process.send('reset')
+                    else process.exit(1)
+                    return
+                }
+            } else if (output.statusCode === 403) {
+                console.log(chalk.red('WhatsApp account banned :D'))
+                process.exit(0)
+            } else if (output.statusCode === 515) {
+                console.log(chalk.yellow('Restart Required, Restarting....'))
+            } else if (output.statusCode === 428) {
+                console.log(chalk.yellow('Connection closed, Restarting....'))
+            } else if (output.statusCode === 408) {
+                console.log(chalk.yellow('Connection timed out, Restarting....'))
+            } else {
+                console.log(chalk.red(output.payload.message || output.statusCode))
+            }
+            await global.reloadHandler(true)
         }
         if (global.db.data == null) await loadDatabase()
         // console.log(JSON.stringify(update, null, 4))
@@ -182,11 +251,11 @@
     global.reloadHandler = function (restatConn) {
         let handler = imports('./handler')
         if (restatConn) {
+            const oldChats = global.conn?.chats || {}
             try { global.conn.ws.close() } catch { }
-            global.conn = {
-                ...global.conn,
-                ...simple.makeWASocket(connectionOptions)
-            }
+            if (global.conn?.ev) global.conn.ev.removeAllListeners()
+            global.conn = simple.makeWASocket(connectionOptions, { chats: oldChats })
+            isInit = true
         }
         if (!isInit) {
             conn.ev.off('messages.upsert', conn.handler)
@@ -223,15 +292,19 @@
     let pluginFolder = path.join(__dirname, 'plugins')
     let pluginFilter = filename => /\.js$/.test(filename)
     global.plugins = {}
-    for (let filename of fs.readdirSync(pluginFolder).filter(pluginFilter)) {
-        try {
-            global.plugins[filename] = require(path.join(pluginFolder, filename))
-        } catch (e) {
-            conn.logger.error(e)
-            delete global.plugins[filename]
+    async function filesInit() {
+        for (let filename of fs.readdirSync(pluginFolder).filter(pluginFilter)) {
+            try {
+                global.plugins[filename] = require(path.join(pluginFolder, filename))
+            } catch (e) {
+                conn.logger.error(e)
+                delete global.plugins[filename]
+            }
+            await new Promise(r => setImmediate(r))
         }
+        console.log(chalk.green(`Successfully Loaded ${Object.keys(global.plugins).length} Plugins`))
     }
-    console.log(Object.keys(global.plugins))
+    filesInit()
     global.reload = (_ev, filename) => {
         if (pluginFilter(filename)) {
             let dir = path.join(pluginFolder, filename)
@@ -302,4 +375,24 @@
     _quickTest()
         .then(() => conn.logger.info('Quick Test Done'))
         .catch(console.error)
+
+    const handleExit = () => {
+        if (global.db && global.db.data && global.db.sqlite) {
+            try {
+                console.log(chalk.yellow('Menyimpan perubahan database ke SQLite sebelum keluar...'))
+                saveSqliteDB(global.db.sqlite, global.db.data)
+                closeDB(global.db.sqlite)
+            } catch (e) {
+                console.error('Error saat menutup database SQLite:', e)
+            }
+        }
+        if (sessionDB) {
+            try { sessionDB.close() } catch { }
+        }
+    }
+    process.on('SIGINT', () => {
+        handleExit()
+        process.exit(0)
+    })
+    process.on('exit', handleExit)
 })()

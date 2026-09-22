@@ -1,20 +1,21 @@
 let fs = require('fs')
 function pickRandom(list) {
-	return list[Math.floor(list.length * Math.random())]
+  return list[Math.floor(list.length * Math.random())]
 }
-global.owner = ['6285874068202','6281999284127'] // Put your number here
+global.owner = ['6285874068202', '6281999284127'] // Put your number here
 global.mods = JSON.parse(fs.readFileSync('./src/mods.json')) // Want some help?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit // Premium user has unlimited limit
 global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
 global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n');
 global.numberowner = '6285874068202'
+global.pairingNumber = '6287791966892' // Masukkan nomor bot di sini untuk pairing code (awali dengan kode negara, contoh 628xxx)
 global.nameowner = 'KiyoEditz' //Owner name
 global.name = 'Kiyo•Editz™' // owner name for contacts
 global.namebot = 'Elaina-MD' // bot name 
 global.mail = 'abiandriansyah3@gmail.com' // email or gmail
 global.instagram = 'https://www.instagram.com/kiyoeditz'//Instagram 
 //global.community = {
-  //game: '120363242705186427@g.us',
+//game: '120363242705186427@g.us',
 //}
 global.partner = ''
 global.menu = 'https://telegra.ph/file/cce9ab4551f7150f1970d.jpg' //image menu , but not work 
@@ -23,7 +24,7 @@ global.eror = '_*Server Error*_' // for eror message
 global.wait = '_*Tunggu sedang di proses...*_' //wait message 
 global.wm = '*Elaina-MD*' // watermark bot 
 global.playlist = '37i9dQZF1DWTwnEm1IYyoj' //song play list
-const moment = require('moment-timezone') 
+const moment = require('moment-timezone')
 
 
 ////// ALL of apikey ///////
@@ -58,8 +59,8 @@ global.APIKeys = { // APIKey Here
 }
 global.footer = 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™'
 global.set = {
-    footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™', //another watermark message?
-    
+  footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™', //another watermark message?
+
 }
 //global.Func = new (require('./lib/functions')) //just function 
 //global.scrap = new (require('./lib/scrape')) //just scraper 

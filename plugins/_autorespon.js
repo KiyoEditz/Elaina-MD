@@ -200,7 +200,10 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
                 year: 'numeric'
             })
             conn.reply(global.owner[0] + '@s.whatsapp.net', `Database: ${date}`, null)
-            conn.sendFile(global.owner[0] + '@s.whatsapp.net', fs.readFileSync('./database.json'), 'database.json', '', false, false, { mimetype: 'application/json' })
+            const dbFilePath = fs.existsSync('./data/database.db') ? './data/database.db' : './database.json'
+            const dbFileName = path.basename(dbFilePath)
+            const dbMime = dbFileName.endsWith('.db') ? 'application/x-sqlite3' : 'application/json'
+            conn.sendFile(global.owner[0] + '@s.whatsapp.net', fs.readFileSync(dbFilePath), dbFileName, '', false, false, { mimetype: dbMime })
         }
     }
      if (setting.backupsc) {
