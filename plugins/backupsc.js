@@ -1,52 +1,38 @@
-const fs = require("fs");
-const { exec } = require("child_process");
-const cp = require("child_process");
-const { promisify } = require("util");
-let exec_ = promisify(exec).bind(cp);
+const fs = require('fs');
+const { createScriptBackup } = require('../lib/backup');
 
 let handler = async (m, { conn, isROwner }) => {
-   try {
-      let zipFileName = `BackupScript.zip`;
+    try {
+        await m.reply('⏳ Sedang memproses backup script ke dalam file zip...\n_Harap tunggu sebentar, folder `node_modules`, `.git`, dan `tmp` akan diabaikan._');
 
-      m.reply("Sedang memulai proses backup. Harap tunggu...");
+        const backup = await createScriptBackup();
+        const fileBuffer = fs.readFileSync(backup.path);
+        const sizeMb = (backup.size / (1024 * 1024)).toFixed(2);
+        const d = new Date();
+        const dateStr = d.toLocaleDateString('id', { day: 'numeric', month: 'long', year: 'numeric' });
 
-      setTimeout(() => {
-         if (fs.existsSync("node_modules")) {
-            m.reply("Modul 'node_modules' tidak ikut di backup.");
-         }
-         
-         const file = fs.readFileSync('./BackupScript.zip');
-         conn.sendMessage(
+        await conn.sendMessage(
             m.chat,
             {
-               document: file,
-               mimetype: "application/zip",
-               fileName: zipFileName,
-               caption: "Backup selesai. Silakan unduh file backup.",
+                document: fileBuffer,
+                mimetype: 'application/zip',
+                fileName: backup.filename,
+                caption: `📦 *Backup Script Elaina-MD*\n📅 Tanggal: ${dateStr}\n📁 Ukuran: ${sizeMb} MB\n\n_Silakan simpan file zip ini dengan aman._`,
             },
             { quoted: m }
-         );
+        );
 
-         setTimeout(() => {
-            fs.unlinkSync(zipFileName);
-            m.reply("File backup telah dihapus.");
-         }, 5000);
-      }, 3000);
-
-      setTimeout(() => {
-         let zipCommand = `zip -r ${zipFileName} * -x "node_modules/*"`;
-         exec_(zipCommand, (err, stdout) => {
-         });
-      }, 1000);
-   } catch (error) {
-      m.reply("Terjadi kesalahan saat melakukan backup.");
-      console.error(error);
-   }
+        // Hapus file zip sementara di folder tmp
+        try { fs.unlinkSync(backup.path); } catch (_) {}
+    } catch (error) {
+        console.error('[backupsc command error]', error);
+        m.reply(`❌ Terjadi kesalahan saat melakukan backup:\n${error.message}`);
+    }
 };
 
-handler.help = ["backupsc"];
-handler.tags = ["owner"];
-handler.command = ["backupsc"];
+handler.help = ['backupsc'];
+handler.tags = ['owner'];
+handler.command = ['backupsc'];
 handler.owner = true;
 
 module.exports = handler;

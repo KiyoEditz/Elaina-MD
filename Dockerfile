@@ -1,38 +1,88 @@
-FROM        --platform=$TARGETOS/$TARGETARCH node:17-bullseye-slim
+FROM        --platform=$TARGETOS/$TARGETARCH node:24.21.0-bookworm-slim
 
-LABEL       author="FokusDotId" maintainer="40955113+FokusDotId@users.noreply.github.com"
+LABEL       author="KiyoEditz" maintainer="https://github.com/KiyoEditz/Elaina-MD"
 
-RUN         apt update \
-            && apt -y install ffmpeg imagemagick iproute2 git sqlite3 libsqlite3-dev python3 python3-dev ca-certificates dnsutils tzdata zip tar curl build-essential libtool \
-            gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 \
-            libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 \
-            libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 \
-            libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 \
-            ca-certificates fonts-liberation libnss3 lsb-release xdg-utils wget neofetch sudo tesseract-ocr chromium touch \
-	    && curl -s https://install.speedtest.net/app/cli/install.deb.sh | bash && apt -y install speedtest \
-	    && speedtest --accept-license \
-            && npm install -g npm@latest \
-	    && npm install -g pm2 \
-	    && npm install -g nodemon \
-            && useradd -m -d /home/container container
+ENV         DEBIAN_FRONTEND=noninteractive \
+            USER=container \
+            HOME=/home/container \
+            NODE_ENV=production \
+            PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+            CHROME_BIN=/usr/bin/chromium
 
+# Install system dependencies (multimedia, OCR, native build tools, and headless chromium libs)
+RUN         apt-get update \
+            && apt-get install -y --no-install-recommends \
+               ffmpeg \
+               imagemagick \
+               graphicsmagick \
+               webp \
+               libwebp-dev \
+               tesseract-ocr \
+               tesseract-ocr-eng \
+               tesseract-ocr-ind \
+               git \
+               sqlite3 \
+               libsqlite3-dev \
+               python3 \
+               python3-dev \
+               build-essential \
+               ca-certificates \
+               curl \
+               wget \
+               dnsutils \
+               iproute2 \
+               procps \
+               tzdata \
+               zip \
+               tar \
+               chromium \
+               fonts-liberation \
+               fonts-noto-color-emoji \
+               libnss3 \
+               libatk1.0-0 \
+               libatk-bridge2.0-0 \
+               libcups2 \
+               libdrm2 \
+               libgbm1 \
+               libasound2 \
+               libpango-1.0-0 \
+               libx11-6 \
+               libx11-xcb1 \
+               libxcb1 \
+               libxcomposite1 \
+               libxcursor1 \
+               libxdamage1 \
+               libxext6 \
+               libxfixes3 \
+               libxi6 \
+               libxrandr2 \
+               libxrender1 \
+               libxss1 \
+               libxtst6 \
+               xdg-utils \
+               neofetch \
+               sudo \
+            && (curl -s https://install.speedtest.net/app/cli/install.deb.sh | bash && apt-get install -y speedtest && speedtest --accept-license || true) \
+            && rm -rf /var/lib/apt/lists/* \
+            && id -u container >/dev/null 2>&1 || useradd -m -d /home/container -s /bin/bash container
 
-USER        container
-ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
 
-COPY        ./entrypoint.sh /entrypoint.sh
+# Install dependencies first for optimal Docker layer caching
+COPY        package*.json ./
+RUN         npm install --omit=dev --legacy-peer-deps || npm install --legacy-peer-deps
 
-RUN         npm install -g nodemon
-
-COPY        package.json .
-
-RUN	     npm install
-
-COPY        ./entrypoint.sh /entrypoint.sh
-
-CMD         [ "/bin/bash", "/entrypoint.sh" ]
-
+# Copy application source code and entrypoint
 COPY        . .
+COPY        ./entrypoint.sh /entrypoint.sh
 
-CMD         nodemon -x "node index.js --server || touch main.js --server" -e  "js, html, sh, py"
+RUN         chmod +x /entrypoint.sh \
+            && mkdir -p /home/container/data /home/container/session /home/container/tmp \
+            && chown -R container:container /home/container /entrypoint.sh
+
+USER        container
+
+EXPOSE      3000
+
+ENTRYPOINT  [ "/bin/bash", "/entrypoint.sh" ]
+CMD         [ "node", "index.js" ]

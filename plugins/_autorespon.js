@@ -4,6 +4,7 @@ const { exec } = require("child_process");
 const cp = require("child_process");
 const { promisify } = require("util");
 let exec_ = promisify(exec).bind(cp);
+const { createDatabaseBackup, createScriptBackup } = require('../lib/backup');
 
 let handler = m => m
 
@@ -196,56 +197,68 @@ ${banned ? '_*Kamu telah di banned/dilarang menggunakan bot!*_\n_Hubungi Owner u
     //     setting.status = new Date() * 1
     // }
 
+    // Backup Database Otomatis ke Owner
     if (setting.backup) {
-        if (new Date() * 1 - setting.backupDB > 1000 * 60 * 60) {
+        if (new Date() * 1 - (setting.backupDB || 0) > 1000 * 60 * 60) {
             setting.backupDB = new Date() * 1
-            let d = new Date
-            let date = d.toLocaleDateString('id', {
+            const ownerJid = (global.owner[0] || '').replace(/[^0-9]/g, '') + '@s.whatsapp.net'
+            const d = new Date()
+            const dateStr = d.toLocaleDateString('id', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
             })
-            conn.reply(global.owner[0] + '@s.whatsapp.net', `Database: ${date}`, null)
-            const dbFilePath = fs.existsSync('./data/database.db') ? './data/database.db' : './database.json'
-            const dbFileName = path.basename(dbFilePath)
-            const dbMime = dbFileName.endsWith('.db') ? 'application/x-sqlite3' : 'application/json'
-            conn.sendFile(global.owner[0] + '@s.whatsapp.net', fs.readFileSync(dbFilePath), dbFileName, '', false, false, { mimetype: dbMime })
+
+            try {
+                const backup = await createDatabaseBackup(global.db?.sqlite)
+                const fileBuffer = fs.readFileSync(backup.path)
+                const sizeKb = (backup.size / 1024).toFixed(2)
+
+                await conn.sendMessage(ownerJid, {
+                    document: fileBuffer,
+                    mimetype: 'application/vnd.sqlite3',
+                    fileName: backup.filename,
+                    caption: `📦 *Auto Backup Database SQLite*\n📅 Tanggal: ${dateStr}\n📁 Ukuran: ${sizeKb} KB\n\n_File database otomatis dikirim untuk menjaga keamanan data._`
+                })
+
+                try { fs.unlinkSync(backup.path) } catch (_) {}
+            } catch (err) {
+                console.error('[AutoBackup DB Error]', err)
+                await conn.reply(ownerJid, `❌ Gagal melakukan backup database otomatis:\n${err.message}`, null)
+            }
         }
     }
-     if (setting.backupsc) {
-        if (new Date() * 1 - setting.backupSc > 1000 * 60 * 60) {
+
+    // Backup Script Otomatis ke Owner
+    if (setting.backupsc) {
+        if (new Date() * 1 - (setting.backupSc || 0) > 1000 * 60 * 60) {
             setting.backupSc = new Date() * 1
-            let d = new Date
-            let dates = d.toLocaleDateString('id', {
+            const ownerJid = (global.owner[0] || '').replace(/[^0-9]/g, '') + '@s.whatsapp.net'
+            const d = new Date()
+            const dateStr = d.toLocaleDateString('id', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
             })
-            conn.reply(global.owner[0] + '@s.whatsapp.net', `BackupSc: ${dates}`, null)
-      let zipFileName = `BackupScript.zip`;
-     
-         const file = fs.readFileSync('./BackupScript.zip');
-         conn.sendMessage(
-            global.owner[0] + '@s.whatsapp.net',
-            {
-               document: file,
-               mimetype: "application/zip",
-               fileName: zipFileName,
-               caption: "Backup selesai. Silakan unduh file backup.",
-            },
-            { quoted: m }
-         );
 
-         setTimeout(() => {
-            fs.unlinkSync(zipFileName);
-            conn.reply(global.owner[0] + '@s.whatsapp.net', `File backup telah dihapus.`);
-      }, 3000);
+            try {
+                await conn.reply(ownerJid, `⏳ *Auto Backup Script*\nMemulai kompresi script ke format zip...`, null)
+                const backup = await createScriptBackup()
+                const fileBuffer = fs.readFileSync(backup.path)
+                const sizeMb = (backup.size / (1024 * 1024)).toFixed(2)
 
-      setTimeout(() => {
-         let zipCommand = `zip -r ${zipFileName} * -x "node_modules/*"`;
-         exec_(zipCommand, (err, stdout) => {
-         });
-      }, 1000);
+                await conn.sendMessage(ownerJid, {
+                    document: fileBuffer,
+                    mimetype: 'application/zip',
+                    fileName: backup.filename,
+                    caption: `📦 *Auto Backup Script Elaina-MD*\n📅 Tanggal: ${dateStr}\n📁 Ukuran: ${sizeMb} MB\n\n_Folder node_modules, .git, dan tmp telah diabaikan._`
+                })
+
+                try { fs.unlinkSync(backup.path) } catch (_) {}
+            } catch (err) {
+                console.error('[AutoBackup SC Error]', err)
+                await conn.reply(ownerJid, `❌ Gagal melakukan backup script otomatis:\n${err.message}`, null)
+            }
         }
     }
 }

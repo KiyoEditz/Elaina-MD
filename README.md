@@ -62,12 +62,66 @@ $ npm install
 $ node .
 ```
 ---------
+## UNTUK PENGGUNA DOCKER (Node v24.21.0)
+
+### Cara 1: Menggunakan Docker Compose (Sangat Disarankan)
+Docker Compose mempermudah proses build dan otomatis menyimpan database SQLite & session WhatsApp agar tidak hilang saat container di-restart:
+
+```bash
+# 1. Clone repository & masuk ke direktori
+git clone https://github.com/KiyoEditz/Elaina-MD.git
+cd Elaina-MD
+
+# 2. Build dan jalankan container
+docker compose up -d
+
+# 3. Melihat log dan output terminal (untuk pairing code / scan QR)
+docker compose logs -f
+```
+
+Untuk mematikan bot:
+```bash
+docker compose down
+```
+
+### Cara 2: Menggunakan Docker CLI Manual
+```bash
+# Build image Docker
+docker build -t elaina-md .
+
+# Jalankan container dengan persistent volume
+docker run -it --name elaina-bot \
+  -v "$(pwd)/data:/home/container/data" \
+  -v "$(pwd)/session:/home/container/session" \
+  -p 3000:3000 \
+  elaina-md
+```
+
+> [!NOTE]
+> Container menggunakan image `node:24.21.0-bookworm-slim` dan telah dilengkapi seluruh dependensi multimedia seperti FFmpeg, ImageMagick, WebP, Tesseract OCR, serta pustaka headless Chromium.
+
+---------
 ## UNTUK PENGGUNA HEROKU
 
-### Instal Buildpack
-* heroku/nodejs
-* https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
-* https://github.com/mcollina/heroku-buildpack-imagemagick.git
+> [!IMPORTANT]
+> Heroku tidak lagi menyediakan tier gratis (Dyno Free dihapus sejak akhir 2022). Anda memerlukan dyno berbayar (Eco / Basic minimal $5/bulan) untuk menjalankan bot di Heroku.
+
+### Opsi A: Deploy via Docker Container (Direkomendasikan di Heroku)
+Heroku mendukung deployment Dockerfile secara langsung menggunakan konfigurasi `heroku.yml`:
+```bash
+heroku login
+heroku create nama-aplikasi-kamu
+heroku stack:set container
+git push heroku main
+heroku ps:scale worker=1
+```
+
+### Opsi B: Deploy via Buildpack
+Jika menggunakan Git deploy standar Heroku, tambahkan buildpack berikut:
+* `heroku/nodejs`
+* `https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git`
+* `https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git`
+* `https://github.com/clhuang/heroku-buildpack-webp-binaries.git`
 
 ---------
 ## Arguments `node . [--options] [<session name>]` 
@@ -87,41 +141,26 @@ Setel awalan
 
 Digunakan untuk [heroku](https://heroku.com/) atau pindai melalui situs web
 
-### `--db <url mongodb kamu>`
+### `--db <path database sqlite>`
 
-Buka file package.json dan isikan url mongodb kamu di bagian `mongo: --db url mongodb`!
+Menentukan path file database SQLite custom (default: `./data/database.db`).
 
-### `--db <json-server-url>`
+Contoh: `node index.js --db ./data/my_database.db`
 
-menggunakan db eksternal alih-alih db lokal, **disarankan** menggunakan mongodb
+---------
+## SISTEM BACKUP KE WHATSAPP OWNER
 
-contoh server dengan mongodb `mongodb+srv://<username>:<password>@name-of-your-db.thhce.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+Bot dilengkapi sistem backup otomatis dan manual yang mengirim file langsung ke nomor WhatsApp Owner:
 
-contoh server dengan repl `https://json-server.nurutomo.repl.co/`
+### 1. Backup Manual (Perintah Chat Owner)
+* `!backupdb` atau `!backup` : Membuat checkpoint WAL SQLite dan langsung mengirim file `.db` ke chat.
+* `!backupsc` : Mengompresi seluruh script bot (tanpa `node_modules`, `.git`, dan `tmp`) ke format `.zip` dan mengirimkannya ke chat.
 
-kode: `https://repl.it/@Nurutomo/json-server`
+### 2. Auto Backup (Otomatis Berkala)
+Owner dapat mengaktifkan/menonaktifkan auto backup yang dikirim berkala (setiap 1 jam):
+* `!on backup` / `!off backup` : Menyalakan/mematikan auto backup database SQLite ke WA Owner.
+* `!on backupsc` / `!off backupsc` : Menyalakan/mematikan auto backup script zip ke WA Owner.
 
-`node . --db 'https://json-server.nurutomo.repl.co/'`
-
-server harus memiliki spesifikasi seperti ini
-
-#### GET
-
-```http
-GET /
-Accept: application/json
-```
-
-#### POST
-
-```http
-POST /
-Content-Type: application/json
-
-{
- data: {}
-}
-```
 
 ### `--big-qr`
 

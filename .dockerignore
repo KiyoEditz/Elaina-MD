@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+yarn-error.log
+.git
+.gitignore
+.vs
+.vscode
+tmp/*
+!tmp/.keep
+*.log
+*.db-journal
+Dockerfile*
+docker-compose*.yml
+README.md
+LICENSE
+.github
