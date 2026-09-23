@@ -5,19 +5,10 @@
         fetchLatestWaWebVersion,
         Browsers,
         jidNormalizedUser,
-        makeCacheableSignalKeyStore,
-        PHONENUMBER_MCC
+        makeCacheableSignalKeyStore
     } = require('@whiskeysockets/baileys')
     const useSQLite = require('./lib/useSQLite')
-    const readline = require('readline')
-    const PHONENUMBER_MCC1 = {
-        "1": "US/Canada",
-        "44": "UK",
-        "49": "Germany",
-        "62": "Indonesia",
-        "91": "India"
-        // tambahkan negara lain jika perlu
-    }    
+    const readline = require('readline')    
     const chalk = require('chalk')
     const WebSocket = require('ws')
     const path = require('path')
@@ -35,8 +26,6 @@
     const { mergeLidUsers } = require('./lib/lidMerge')
 
     const NodeCache = require('node-cache')
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-    const question = (text) => new Promise((resolve) => rl.question(text, resolve))
     const msgRetryCounterCache = new NodeCache()
 
     global.API = (name, path = '/', query = {}, apikeyqueryname) => (name in global.APIs ? global.APIs[name] : name) + path + (query || apikeyqueryname ? '?' + new URLSearchParams(Object.entries({ ...query, ...(apikeyqueryname ? { [apikeyqueryname]: global.APIKeys[name in global.APIs ? global.APIs[name] : name] } : {}) })) : '')
@@ -124,7 +113,7 @@
         keepAliveIntervalMs: 30_000,
         retryRequestDelayMs: 250,
         maxMsgRetryCount: 5,
-        printQRInTerminal: opts['pairing'] || global.pairingNumber ? false : true,
+        printQRInTerminal: !opts['pairing'] && !global.pairingNumber && !!opts['qr'],
         auth: {
             creds: state.creds,
             keys: makeCacheableSignalKeyStore(state.keys, P({ level: 'silent' }).child({ level: 'silent' })),
@@ -143,22 +132,37 @@
 
     if (!conn.authState.creds.registered) {
         let phoneNumber = global.pairingNumber ? global.pairingNumber.toString().replace(/[^0-9]/g, '') : ''
+        if (phoneNumber.startsWith('0')) {
+            phoneNumber = '62' + phoneNumber.slice(1)
+        }
         if (!phoneNumber) {
-            phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number : `)))
-            phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
-            // Ask again when entering the wrong number
-            if (!Object.keys(PHONENUMBER_MCC1).some(v => phoneNumber.startsWith(v))) {
-                console.log(chalk.bgBlack(chalk.redBright("Start with your country's WhatsApp code, Example : 62xxx")))
+            const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
+            const question = (text) => new Promise((resolve) => rl.question(text, resolve))
+            try {
                 phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number : `)))
                 phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
+                if (phoneNumber.startsWith('0')) {
+                    phoneNumber = '62' + phoneNumber.slice(1)
+                }
+                while (!phoneNumber || phoneNumber.length < 9) {
+                    console.log(chalk.bgBlack(chalk.redBright("Nomor tidak valid! Awali dengan kode negara, contoh : 628xxx")))
+                    phoneNumber = await question(chalk.bgBlack(chalk.greenBright(`Please type your WhatsApp number : `)))
+                    phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
+                    if (phoneNumber.startsWith('0')) {
+                        phoneNumber = '62' + phoneNumber.slice(1)
+                    }
+                }
+            } finally {
+                rl.close()
             }
-            rl.close()
         }
 
         console.log(chalk.bgWhite(chalk.blue('Generating code...')))
         const requestPairing = async (retry = 0) => {
+            const activeConn = global.conn || conn
+            if (activeConn?.authState?.creds?.registered) return
             try {
-                let code = await conn.requestPairingCode(phoneNumber)
+                let code = await activeConn.requestPairingCode(phoneNumber)
                 code = code?.match(/.{1,4}/g)?.join("-") || code
                 console.log(chalk.black(chalk.bgGreen(`Your Pairing Code : `)), chalk.black(chalk.white(code)))
             } catch (e) {
@@ -225,16 +229,14 @@
         const output = lastDisconnect?.error?.output
         if (output?.payload) {
             if (output.statusCode === DisconnectReason.loggedOut || output.statusCode === 401) {
-                if (conn.authState?.creds?.registered) {
-                    console.log(chalk.red('Session logged out. Recreate session...'))
-                    if (sessionDB) {
-                        try { sessionDB.close() } catch { }
-                    }
-                    fs.rmSync(authFolder, { recursive: true, force: true })
-                    if (process.send) process.send('reset')
-                    else process.exit(1)
-                    return
+                console.log(chalk.red('Session logged out / pairing invalid. Recreate session...'))
+                if (sessionDB) {
+                    try { sessionDB.close() } catch { }
                 }
+                fs.rmSync(authFolder, { recursive: true, force: true })
+                if (process.send) process.send('reset')
+                else process.exit(1)
+                return
             } else if (output.statusCode === 403) {
                 console.log(chalk.red('WhatsApp account banned :D'))
                 process.exit(0)

@@ -1,68 +1,73 @@
-const axios = require("axios");
-const cheerio = require("cheerio");
+const axios = require('axios');
+const FormData = require('form-data');
+const cheerio = require('cheerio');
 
-const handler = async (m, { conn, text }) => {
-   if (!text) return m.reply("Masukkan URL Instagram!\nContoh: ig https://www.instagram.com/p/xxx");
+async function igdl(url) {
+    const formData = new FormData();
+    formData.append("url", url);
+    formData.append("ajax", "1");
+    formData.append("lang", "en");
 
-   try {
-      const igdl = async (url) => {
-         let { data } = await axios.get(`https://snapdownloader.com/tools/instagram-downloader/download?url=${url}`);
-         let $ = cheerio.load(data);
-         const result = [];
+    try {
+        const res = await axios({
+            method: "POST",
+            url: "https://ins1d.net/mates/en/analyze/ajax?retry=undefined&platform=instagram",
+            data: formData,
+            headers: {
+                ...formData.getHeaders(),
+                "accept": "application/json, text/javascript, */*; q=0.01",
+                "origin": "https://ins1d.net",
+                "referer": "https://ins1d.net/en/",
+                "user-agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36",
+                "x-requested-with": "XMLHttpRequest"
+            }
+        });
 
-         $(".download-item").each((i, el) => {
-            const type = $(el).find(".type").text().trim().toLowerCase();
-            const url = $(el).find(".btn-download").attr("href");
-            if (url) result.push({ type, url });
-         });
+        const $ = cheerio.load(res.data.result);
+        const hrefs = [];
+        $('.download-bottom a').each(function () {
+            const caption = $(this).text();
+            const typeMatch = caption.match(/Download (Photo|Video)/i);
+            const resolutionMatch = caption.match(/\((\d+x\d+)\)/);
+            const type = typeMatch ? (typeMatch[1] === 'Photo' ? 'Foto' : 'Video') : 'Tidak Diketahui';
+            const resolution = resolutionMatch ? resolutionMatch[1] : '';
+            const href = $(this).attr('href');
+            hrefs.push({
+                type: type,
+                resolution: resolution,
+                url: href
+            });
+        });
 
-         return result;
-      };
+        return {
+            status: hrefs.length > 0,
+            data: hrefs
+        };
+    } catch (error) {
+        console.error("Error in igdl:", error.message);
+        return { status: false, data: [] };
+    }
+}
 
-      await conn.sendMessage(m.chat, {
-         react: {
-            text: "⏳",
-            key: m.key
-         }
-      });
-
-      const res = await igdl(text);
-      if (!res.length) return m.reply("Gagal mengambil media.");
-
-      let linkList = res.map((v, i) => `${i + 1}. [${v.type}] ${v.url}`).join('\n');
-      let caption = `Berikut media yang berhasil diunduh:\n\n${linkList}`;
-
-      for (let i = 0; i < res.length; i++) {
-         let media = res[i];
-         if (media.type === "video") {
-            await conn.sendMessage(m.chat, {
-               video: { url: media.url },
-               caption
-            }, { quoted: m });
-         } else if (media.type === "photo" || media.type === "image") {
-            await conn.sendMessage(m.chat, {
-               image: { url: media.url },
-               caption
-            }, { quoted: m });
-         }
-      }
-
-      await conn.sendMessage(m.chat, {
-         react: {
-            text: "✔️",
-            key: m.key
-         }
-      });
-
-   } catch (e) {
-      m.reply("Gagal mengunduh media Instagram!\n\n" + e.message);
-   }
+var handler = async (m, { conn, args }) => {
+    try {
+        if (!args[0]) throw 'URL Instagram tidak diberikan.';
+        const result = await igdl(args[0]);
+        if (result.status) {
+            for (let media of result.data) {
+                await conn.sendFile(m.chat, media.url, '', '', m);
+            }
+        } else {
+            throw new Error('Gagal mendapatkan media dari Instagram.');
+        }
+    } catch (error) {
+        console.error(error);
+        await conn.reply(m.chat, `Terjadi kesalahan: ${error.message}`, m);
+    }
 };
 
-handler.command = ['igdl', 'ig', 'instagram'];
+handler.help = ['instagram'];
 handler.tags = ['downloader'];
-handler.help = ['ig <url>'];
-handler.premium = false;
-handler.limit = false;
+handler.command = /^(ig(dl)?|instagram(dl)?)$/i;
 
 module.exports = handler;
