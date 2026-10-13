@@ -1,4 +1,6 @@
+const axios = require('axios');
 const moewalls = require('../lib/moewalls');
+const { toVideo } = require('../lib/converter');
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   if (!text) {
@@ -42,15 +44,45 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 
     let capt = `╭──── 〔MOEWALLS〕 ─⬣\n`;
     capt += ` ⬡ *Pencarian* : ${res.query}\n`;
-    capt += ` ⬡ *Index* : ${res.total}\n`;
+    capt += ` ⬡  *Index* : ${res.total}\n`;
     capt += `╰────────⬣\n`;  
-    capt += ` ⬡ *Judul* : ${item.title}\n`;
-    capt += ` ⬡ *Source* : ${item.source}\n`;
-    capt += ` ⬡ *Menampilkan* : ${item.index} - ${res.total}\n`;
+    capt += ` ⬡  *Judul* : ${item.title}\n`;
+    capt += ` ⬡  *Source* : ${item.source}\n`;
+    capt += ` ⬡  *Menampilkan* : ${item.index} - ${res.total}\n`;
+
+    const isWebm = /\.webm($|\?)/i.test(videoUrl);
+    let videoPayload;
+
+    if (isWebm) {
+      try {
+        const response = await axios.get(videoUrl, {
+          responseType: 'arraybuffer',
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+          }
+        });
+
+        // Konversi WebM ke MP4 agar dapat diputar langsung di WhatsApp
+        const converted = await toVideo(Buffer.from(response.data), 'webm');
+        videoPayload = converted.data;
+        setTimeout(() => converted.delete().catch(() => {}), 15000);
+      } catch (convErr) {
+        console.error('Konversi webm ke mp4 gagal, mengirim sebagai dokumen:', convErr);
+        return await conn.sendMessage(m.chat, {
+          document: { url: videoUrl },
+          mimetype: 'video/webm',
+          fileName: `${item.title.replace(/[\\/:*?"<>|]/g, '_')}.webm`,
+          caption: capt
+        }, { quoted: m });
+      }
+    } else {
+      videoPayload = { url: videoUrl };
+    }
 
     await conn.sendMessage(m.chat, { 
-      video: { url: videoUrl }, 
-      caption: capt
+      video: videoPayload, 
+      caption: capt,
+      mimetype: 'video/mp4'
     }, { quoted: m });
   } catch (e) {
     throw `Error: ${e.message || e}`;

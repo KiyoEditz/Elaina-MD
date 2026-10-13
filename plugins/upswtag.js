@@ -111,6 +111,7 @@ function mapColorNameToHex(name) {
 
 handler.help = ['upswall <teks?> #<warna?>'];
 handler.command = ['upswall'];
+handler.tags = ['owner']
 handler.owner = true;
 
 module.exports = handler;

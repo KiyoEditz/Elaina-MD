@@ -11,7 +11,8 @@ let handler = async (m, { args, usedPrefix, command, conn }) => {
   if (!fileId) throw 'URL Google Drive tidak valid!'
 
   try {
-    const apiKey = 'AIzaSyAA9ERw-9LZVEohRYtCWka_TQc6oXmvcVU'
+    const apiKey = global.gdriveKey || global.gemini || ''
+    if (!apiKey) throw 'API key Google Drive belum diatur di config.js!'
     const metaUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?fields=name,size,mimeType&key=${apiKey}`
     const downloadUrl = `https://www.googleapis.com/drive/v3/files/${fileId}?alt=media&key=${apiKey}`
 

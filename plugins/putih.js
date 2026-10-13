@@ -17,7 +17,9 @@ let handler = async (m, { conn, args, text, usedPrefix, command }) => {
   
   try {
     let imgData = await q.download();
-    let genAI = new GoogleGenerativeAI("AIzaSyCGycrkgySg3r0BcOi-BNQuQ1BBZUplbmc");
+    let apiKey = global.gemini || global.geminiKey || "";
+    if (!apiKey) return m.reply("API key Gemini belum dikonfigurasi di config.js");
+    let genAI = new GoogleGenerativeAI(apiKey);
     
     const base64Image = imgData.toString("base64");
     

@@ -1,31 +1,58 @@
-// Fungsi untuk mengimpor secara dinamis Gemini dari module ESM
-const loadGemini = async () => {
-  const { Gemini } = await import("gemini-g4f");  // Mengimpor menggunakan import dinamis
-  return new Gemini("");
-};
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-let handler = async (m, { conn, text, usedPrefix, command }) => {
-  if (!text) {
-    return m.reply(
-      `Masukkan Prompt!\n\nContoh: *${usedPrefix + command} apakah kamu gpt4?*`, m
-    );
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+  const apiKey = global.gemini || global.geminiKey || "";
+  if (!apiKey) return m.reply("API key Gemini belum dikonfigurasi di config.js");
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const geminiModel = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  let text;
+  if (args.length >= 1) {
+    text = args.join(" ");
+  } else if (m.quoted && m.quoted.text) {
+    text = m.quoted.text;
+  } else {
+    return m.reply(`• *Example:* ${usedPrefix + command} selamat pagi`);
   }
 
-  // Memuat Gemini menggunakan dynamic import
-  const gemini = await loadGemini();
+  let q = m.quoted ? m.quoted : m;
+  let mime = (q.msg || q).mimetype || "";
 
-  let res = await gemini.ask(text, {
-    model: "gemini-1.5-pro-latest",
-  });
+  try {
+    if (!mime) {
+      const result = await geminiModel.generateContent(text);
+      const response = result.response.text();
 
-  conn.reply(m.chat, res, m);
+      if (!response) throw new Error("Response tidak valid dari API");
+
+      await conn.sendMessage(m.chat, { text: response }, { quoted: m });
+    } else {
+      let media = await q.download();
+      const imageBase64 = Buffer.from(media).toString("base64");
+      const mimeType = mime || "image/jpeg";
+
+      const imagePart = {
+        inlineData: {
+          data: imageBase64,
+          mimeType: mimeType
+        }
+      };
+
+      const result = await geminiModel.generateContent([imagePart, text]);
+      const response = result.response.text();
+
+      if (!response) throw new Error("Response tidak valid dari API");
+
+      await conn.sendMessage(m.chat, { text: response }, { quoted: m });
+    }
+  } catch (e) {
+    console.error(e);
+    m.reply(`Terjadi kesalahan saat memproses permintaan: ${e.message || e}`);
+  }
 };
 
-// Penamaan command handler
-handler.command = /^(gemini2)$/i;
-handler.help = ["gemini2"];
+handler.help = ["gemini"].map(a => a + " *<text>*");
 handler.tags = ["ai"];
+handler.command = /^(gemini)$/i;
 handler.limit = true;
-
-// Ekspor handler menggunakan CommonJS
+handler.register = true;
 module.exports = handler;

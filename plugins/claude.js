@@ -5,16 +5,8 @@ const Anthropic = require('@anthropic-ai/sdk');
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
   const apikey = () => {
-    const antro = [
-      "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",
-      "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",
-      "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",
-      "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",
-      "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",
-      "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",
-      "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",
-      "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"
-    ];
+    const antro = Array.isArray(global.anthropic) ? global.anthropic : [global.anthropic].filter(Boolean);
+    if (!antro.length) return '';
     return antro[Math.floor(Math.random() * antro.length)];
   };
 
@@ -31,7 +23,9 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     return res.files[0].url;
   };
 
-  const anthropic = new Anthropic({ apiKey: apikey() });
+  const currentKey = apikey();
+  if (!currentKey) return m.reply("API key Anthropic / Claude belum diatur di config.js!");
+  const anthropic = new Anthropic({ apiKey: currentKey });
 
   if (!m.quoted && !text) {
     m.reply("Mohon reply pesan dengan gambar atau ketik teks untuk menghasilkan pesan.");

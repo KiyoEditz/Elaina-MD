@@ -86,7 +86,7 @@ conn.sendFile(m.chat, buffer, `${info.videoDetails.title}.mp3`, `*${info.videoDe
     m.reply(`*Error:* ${e.message}`);
     m.reply(`*Mencoba matode lain!...*`);
     try {
-    const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=Btz-KiyoEditz`);        
+    const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=${global.lann}`);        
         const res = response.data.result;      
         var { mp3, id, title, source, duration, thumb } = res;
         let caption = `
@@ -196,7 +196,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
    
         if (!text) throw 'masukan link youtube';   
         m.reply(wait);      
-        const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=btzElainaMD`);        
+        const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp3?url=${text}&apikey=${global.lann}`);        
         const res = response.data.result;      
         var { mp3, id, title, source, duration, thumb } = res;
         let caption = `

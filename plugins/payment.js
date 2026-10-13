@@ -3,7 +3,7 @@ let handler = async (m, { conn }) => {
 ╔══「 *Pembayaran* 」
 ╟
 ╟ Dana:
-╟ 0821-8152-3670
+╟ 0858-7406-8202
 ╟ go-pay/ovo:
 ╟ 0858-7406-8202
 ╟ Pulsa indosat: 

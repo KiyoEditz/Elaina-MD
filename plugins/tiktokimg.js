@@ -5,7 +5,7 @@ const cheerio = require('cheerio');
 let handler = async(m, { conn, text, args, command, usedPrefix}) => {
 if (!text) throw 'Mana Kak Linknya?'
 
-let url = `https://dlpanda.com/id?url=${text}&token=G7eRpMaa`
+let url = `https://dlpanda.com/id?url=${text}&token=${global.dlpanda || 'G7eRpMaa'}`
 
 let response = await axios.get(url)
     const html = response.data;

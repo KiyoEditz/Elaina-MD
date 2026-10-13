@@ -78,7 +78,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
         if (!text) throw 'masukan link youtube';   
         m.reply(wait);   
     try {
-        const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp4?url=${text}&apikey=Btz-KiyoEditz`);        
+        const response = await axios.get(`https://api.betabotz.eu.org/api/download/ytmp4?url=${text}&apikey=${global.lann}`);        
         const res = response.data.result;      
         var { mp4, id, title, source, duration, thumb } = res;
         let capt = `╭──── 〔YTMP4〕 ─⬣\n`;

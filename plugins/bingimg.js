@@ -11,7 +11,8 @@ let handler = async (m, { conn, args, text, command, usedPrefix, isCreator, isPr
 	})
   m.react('🕒')
   try {
-  let url = await fetch(`https://api.alyachan.dev/api/bing-image?q=${text}&apikey=${api.alya}`)
+  let alyaKey = global.alya || (global.APIKeys && global.APIKeys['https://api.alyachan.dev/']) || ''
+  let url = await fetch(`https://api.alyachan.dev/api/bing-image?q=${text}&apikey=${alyaKey}`)
   const res1 = await url.json()
  let teks1 = `*B I N G - I M G*\n\n`
     teks1 += `  ∘  *Prompt* : ${text}`

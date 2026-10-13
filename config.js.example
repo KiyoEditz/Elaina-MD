@@ -9,72 +9,97 @@ global.link = JSON.parse(fs.readFileSync('./src/grouplink.json'))
 global.group = link.map((v, i) => `Group ${i + 1}\n${v}`).join('\n\n');
 global.numberowner = '6285874068202'
 global.pairingNumber = '6287791966892' // Masukkan nomor bot di sini untuk pairing code (awali dengan kode negara, contoh 628xxx)
-global.nameowner = 'KiyoEditz' //Owner name
+global.nameowner = 'KiyoEditz' // Owner name
 global.name = 'Kiyo•Editz™' // owner name for contacts
 global.namebot = 'Elaina-MD' // bot name 
 global.mail = 'abiandriansyah3@gmail.com' // email or gmail
-global.instagram = 'https://www.instagram.com/kiyoeditz'//Instagram 
+global.instagram = 'https://www.instagram.com/kiyoeditz' // Instagram 
 //global.community = {
 //game: '120363242705186427@g.us',
 //}
 global.partner = ''
-global.menu = 'https://telegra.ph/file/cce9ab4551f7150f1970d.jpg' //image menu , but not work 
+global.menu = 'https://telegra.ph/file/cce9ab4551f7150f1970d.jpg' // image menu
 global.eror = '_*Server Error*_' // for eror message 
-//global.rwait = '⌛' //wait message 
-global.wait = '_*Tunggu sedang di proses...*_' //wait message 
+//global.rwait = '⌛' // wait message 
+global.wait = '_*Tunggu sedang di proses...*_' // wait message 
 global.wm = '*Elaina-MD*' // watermark bot 
-global.playlist = '37i9dQZF1DWTwnEm1IYyoj' //song play list
+global.playlist = '37i9dQZF1DWTwnEm1IYyoj' // song play list
 const moment = require('moment-timezone')
 
 
 ////// ALL of apikey ///////
-//INI WAJIB DI ISI!//
-global.lann = 'XwxIaeoY'
-//Daftar terlebih dahulu https://api.betabotz.eu.org
+// Betabotz API Key (Daftar https://api.betabotz.eu.org)
+global.lann = 'YOUR_BETABOTZ_APIKEY'
 
-//INI OPTIONAL BOLEH DI ISI BOLEH JUGA ENGGA//
-global.btc = 'PjoZNP4j'
-//Daftar https://api.botcahx.eu.org 
+// Botcahx API Key (Daftar https://api.botcahx.eu.org)
+global.btc = 'YOUR_BOTCAHX_APIKEY'
+
+// Lolhuman API Key (Daftar https://api.lolhuman.xyz)
+global.lolkey = 'YOUR_LOLHUMAN_APIKEY'
+
+// Alyachan API Key (Daftar https://api.alyachan.dev/)
+global.alya = 'YOUR_ALYACHAN_APIKEY'
+
+// Google Gemini API Key (https://aistudio.google.com/)
+global.gemini = 'YOUR_GEMINI_APIKEY'
+global.geminiKey = global.gemini
+
+// Google Drive API Key (Google Cloud Console)
+global.gdriveKey = 'YOUR_GDRIVE_APIKEY'
+
+// Anthropic / Claude API Keys (https://console.anthropic.com/)
+global.anthropic = [
+  'YOUR_CLAUDE_APIKEY_1',
+  'YOUR_CLAUDE_APIKEY_2'
+]
+
+
+// DLPanda Token
+global.dlpanda = 'YOUR_DLPANDA_TOKEN'
+
+// Caliph & Zahwazein API Keys
+global.caliph = 'caliphkey'
+global.zahwa = 'YOUR_ZAHWA_APIKEY'
 
 global.APIs = { // API Prefix
   // name: 'https://website'
-  nrtm: 'https://nurutomo.herokuapp.com',//git clone from nurutomo api and start node on dekstop
-  nrtm2: 'http://localhost:5000', //just my local host
-  xteam: 'https://api.xteam.xyz',//
-  vhtear: 'https://api.vhtear.com',//
+  nrtm: 'https://nurutomo.herokuapp.com',
+  nrtm2: 'http://localhost:5000',
+  xteam: 'https://api.xteam.xyz',
+  vhtear: 'https://api.vhtear.com',
   lann: 'https://api.betabotz.eu.org',
   btc: 'https://api.botcahx.eu.org',
-  lolhuman: 'http://api.lolhuman.xyz',//
+  lolhuman: 'https://api.lolhuman.xyz',
   alya: 'https://api.alyachan.dev/'
 }
 global.APIKeys = { // APIKey Here
   // 'https://website': 'apikey'
-  'https://api.zeks.xyz': 'qyVJpszt0uSAL0lGCfOQIV3BVfp',
-  'https://api.xteam.xyz': 'Syahrulidhamz30',
-  'http://api.lolhuman.xyz': 'd5d9e369ab0bf0c231d43b17',
-  'https://api.vhtear.com': 'Syahrulidhamz30',
-  'https://api.betabotz.eu.org': 'XwxIaeoY',
-  'https://api.botcahx.eu.org': 'PjoZNP4j',
-  'https://api.alyachan.dev/': 'syah11'
+  'https://api.zeks.xyz': 'YOUR_ZEKS_APIKEY',
+  'https://api.xteam.xyz': 'YOUR_XTEAM_APIKEY',
+  'http://api.lolhuman.xyz': 'YOUR_LOLHUMAN_APIKEY',
+  'https://api.lolhuman.xyz': 'YOUR_LOLHUMAN_APIKEY',
+  'https://api.vhtear.com': 'YOUR_VHTEAR_APIKEY',
+  'https://api.betabotz.eu.org': 'YOUR_BETABOTZ_APIKEY',
+  'https://api.botcahx.eu.org': 'YOUR_BOTCAHX_APIKEY',
+  'https://api.alyachan.dev/': 'YOUR_ALYACHAN_APIKEY'
 }
 global.footer = 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™'
 global.set = {
-  footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™', //another watermark message?
-
+  footer: 'ꜱɪᴍᴘʟᴇ ᴡʜᴀᴛꜱᴀᴘᴘ ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ Kiyo•Editz™',
 }
-//global.Func = new (require('./lib/functions')) //just function 
-//global.scrap = new (require('./lib/scrape')) //just scraper 
-global.packname = 'Kiyo•Editz™' // another Watermark 
-global.author = '⫹⫺ ᴇʟᴀɪɴᴀ 𝙱𝙾𝚃' //watermark author?
+//global.Func = new (require('./lib/functions'))
+//global.scrap = new (require('./lib/scrape'))
+global.packname = 'Kiyo•Editz™'
+global.author = '⫹⫺ ᴇʟᴀɪɴᴀ 𝙱𝙾𝚃'
 global.htjava = pickRandom(["乂", "❏", "⫹⫺", "⎔", "✦", "⭔", "⬟"])
 global.pmenus = pickRandom(["乂", "◈", "➭", "ଓ", "⟆•", "⳻", "•", "↬", "◈", "⭑", "ᯬ", "◉", "᭻", "»", "〆", "々", "✗", "♪"])
 
-global.dtu = 'ɪɴꜱᴛᴀɢʀᴀᴍ'//just message 
-global.urlnya = "-" //apa lah 
+global.dtu = 'ɪɴꜱᴛᴀɢʀᴀᴍ'
+global.urlnya = "-"
 
 //============= callButtons =============//
-global.dtc = 'ᴄᴀʟʟ ᴏᴡɴᴇʀ' //don't change 
-global.phn = '+62 858-7406-8202' //tell me it work 
+global.dtc = 'ᴄᴀʟʟ ᴏᴡɴᴇʀ'
+global.phn = '+62 858-7406-8202'
 
 global.multiplier = 69 // The higher, The harder levelup
 
@@ -86,10 +111,6 @@ let wktuwib = `${wibh} H ${wibm} M ${wibs} S`
 
 let d = new Date(new Date + 3600000)
 let locale = 'id'
-// d.getTimeZoneOffset()
-// Offset -420 is 18.00
-// Offset    0 is  0.00
-// Offset  420 is  7.00
 let weton = ['Pahing', 'Pon', 'Wage', 'Kliwon', 'Legi'][Math.floor(d / 84600000) % 5]
 let week = d.toLocaleDateString(locale, { weekday: 'long' })
 let date = d.toLocaleDateString(locale, {

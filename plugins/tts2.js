@@ -3,77 +3,77 @@
 let fetch = require("node-fetch");
 let handler = async (m, { conn, isOwner, usedPrefix, command, args }) => {
     const lister = [
-    "Adult Female #1, American English (TruVoice)",
-    "Adult Female #2, American English (TruVoice)",
-    "Adult Male #1, American English (TruVoice)",
-    "Adult Male #2, American English (TruVoice)",
-    "Adult Male #3, American English (TruVoice)",
-    "Adult Male #4, American English (TruVoice)",
-    "Adult Male #5, American English (TruVoice)",
-    "Adult Male #6, American English (TruVoice)",
-    "Adult Male #7, American English (TruVoice)",
-    "Adult Male #8, American English (TruVoice)",
-    "Female Whisper",
-    "Male Whisper",
-    "Mary",
-    "Mary (for Telephone)",
-    "Mary in Hall",
-    "Mary in Space",
-    "Mary in Stadium",
-    "Mike",
-    "Mike (for Telephone)",
-    "Mike in Hall",
-    "Mike in Space",
-    "Mike in Stadium",
-    "RoboSoft Five",
-    "RoboSoft Four",
-    "RoboSoft One",
-    "RoboSoft Six",
-    "RoboSoft Three",
-    "RoboSoft Two",
-    "Sam",
-    "BonziBUDDY"
-];
+        "Adult Female #1, American English (TruVoice)",
+        "Adult Female #2, American English (TruVoice)",
+        "Adult Male #1, American English (TruVoice)",
+        "Adult Male #2, American English (TruVoice)",
+        "Adult Male #3, American English (TruVoice)",
+        "Adult Male #4, American English (TruVoice)",
+        "Adult Male #5, American English (TruVoice)",
+        "Adult Male #6, American English (TruVoice)",
+        "Adult Male #7, American English (TruVoice)",
+        "Adult Male #8, American English (TruVoice)",
+        "Female Whisper",
+        "Male Whisper",
+        "Mary",
+        "Mary (for Telephone)",
+        "Mary in Hall",
+        "Mary in Space",
+        "Mary in Stadium",
+        "Mike",
+        "Mike (for Telephone)",
+        "Mike in Hall",
+        "Mike in Space",
+        "Mike in Stadium",
+        "RoboSoft Five",
+        "RoboSoft Four",
+        "RoboSoft One",
+        "RoboSoft Six",
+        "RoboSoft Three",
+        "RoboSoft Two",
+        "Sam",
+        "BonziBUDDY"
+    ];
 
-const readMore = String.fromCharCode(8206).repeat(4001);
+    const readMore = String.fromCharCode(8206).repeat(4001);
 
-const query = `Input query!\n\n*Example:*\n${usedPrefix + command} [number]|[text]\n\n*Choose a number from the list*\n` + readMore + lister.map((v, index) => `  ${index + 1}. ${v}`).join("\n");
+    const query = `Input query!\n\n*Example:*\n${usedPrefix + command} [number]|[text]\n\n*Choose a number from the list*\n` + readMore + lister.map((v, index) => `  ${index + 1}. ${v}`).join("\n");
 
-if (args.length < 1 && (!m.quoted || !m.quoted.text)) {
-    throw query;
-}
-
-const text = args.length >= 1 ? args.join(" ") : m.quoted.text;
-const [atas, bawah, kiri, kanan] = text.split("|");
-
-if (!atas || !bawah) {
-    return m.reply(query);
-}
-await m.reply(global.wait + "\n" + lister[atas - 1])
-try {
-    const res = await SayTTS(lister[atas - 1], bawah, kiri || 140, kanan || 157);
-    if (res) {
-        await conn.sendMessage(m.chat, {
-            audio: res,
-            mimetype: 'audio/mp4',
-            ptt: true,
-            waveform: [100, 0, 100, 0, 100, 0, 100]
-        }, {
-            quoted: m
-        });
+    if (args.length < 1 && (!m.quoted || !m.quoted.text)) {
+        throw query;
     }
-} catch (e) {
-    await m.reply("Error: " + e.message);
-}
+
+    const text = args.length >= 1 ? args.join(" ") : m.quoted.text;
+    const [atas, bawah, kiri, kanan] = text.split("|");
+
+    if (!atas || !bawah) {
+        return m.reply(query);
+    }
+    await m.reply(global.wait + "\n" + lister[atas - 1])
+    try {
+        const res = await SayTTS(lister[atas - 1], bawah, kiri || 140, kanan || 157);
+        if (res) {
+            await conn.sendMessage(m.chat, {
+                audio: res,
+                mimetype: 'audio/mp4',
+                ptt: true,
+                waveform: [100, 0, 100, 0, 100, 0, 100]
+            }, {
+                quoted: m
+            });
+        }
+    } catch (e) {
+        await m.reply("Error: " + e.message);
+    }
 
 }
-handler.help = ["speech","tts2"]
-handler.tags = ["tools","ai"]
+handler.help = ["speech", "tts2"]
+handler.tags = ["tools", "ai"]
 handler.command = /^(speech|tts2)$/i
 module.exports = handler
 
 async function SayTTS(voice, text, pitch, speed) {
-// limits = { minPitch: 50, maxPitch: 400, minSpeed: 50, maxSpeed: 250, defPitch: 140, defSpeed: 157 };
+    // limits = { minPitch: 50, maxPitch: 400, minSpeed: 50, maxSpeed: 250, defPitch: 140, defSpeed: 157 };
     try {
         pitch = parseInt(pitch);
         speed = parseInt(speed);
@@ -98,7 +98,7 @@ async function SayTTS(voice, text, pitch, speed) {
 async function VoiceLimitations(voice) {
     try {
         const url = `https://tetyys.com/SAPI4/VoiceLimitations?voice=${encodeURIComponent(voice)}`;
-        
+
         const response = await fetch(url);
         if (!response.ok) throw new Error(`Failed to fetch voice limitations: ${response.statusText}`);
 
@@ -106,7 +106,7 @@ async function VoiceLimitations(voice) {
     } catch (error) {
         throw error;
     }
-    }
+}
 /*
 const fetch = require('node-fetch');
 
@@ -125,8 +125,8 @@ let handler = async (m, {
                 headers: {
                     accept: 'text/event-stream',
                     'content-type': 'application/json',
-                    AUTHORIZATION: 'd90ced3ede134f8fbd6980451d8a531e',
-                    'X-USER-ID': 'bDY64XTOGWYx3o2utszUCqPJG2D2'
+                    AUTHORIZATION: 'YOUR_PLAYHT_APIKEY',
+                    'X-USER-ID': 'YOUR_PLAYHT_USER_ID'
                 },
                 body: JSON.stringify({
                     text: `${text}`,
